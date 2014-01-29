@@ -1,3 +1,3 @@
 GestStock
 =========
-jbhvvyvyvjh
+Projet de gestion de stock
