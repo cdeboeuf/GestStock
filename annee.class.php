@@ -2,18 +2,18 @@
 include('connexion.php');
 class annee 
 {     
-    Public function ListeAnnee()
+        Public function ListeAnnee()
     {
-        $bdd=connexion_annee();
+        $bdd1=connexion_annee();
         $req="SELECT * FROM annee";
         $ligne= $bdd->query($req);
         return $ligne;
     }
         Public function AnneePrecedente($annee)
     {
-        $bdd=connexion_base($annee);
+        $bdd1=connexion_base($annee);
     }
-       Public function DerniereAnnee()
+        Public function DerniereAnnee()
     {
         $bdd1=connexion_annee();
         $req="SELECT Max(Details) FROM annee;";
