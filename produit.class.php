@@ -43,10 +43,7 @@
     //le stock de l’année n-1 sera alors clôturé.
     Public function ValorisationStock()
     {
-        //if () 
-        //{
-            
-        ///}
+      
         
     }
     
