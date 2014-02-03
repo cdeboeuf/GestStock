@@ -28,12 +28,13 @@
                 <?php 
                 include('annee.class.php');
                 $annee=new annee();
-                $annee=$annee->LireAnnée();
-                foreach ($annee as $unMois)
-		{
-			    echo $unMois[1];
-                            echo " ";
-                }
+//                $Lesannee=$annee->ListeAnnee();
+//                foreach ($Lesannee as $unMois)
+//		{
+//			    echo $unMois[1];
+//                            echo " ";
+//                }
+                $annee->DerniereAnnee();
                 ?>
             </div>
         </div>
