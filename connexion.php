@@ -21,7 +21,7 @@ function connexion_base($annee)
     {
         $bdd = new PDO('mysql:host=localhost;dbname='.$annee.'','root','') or die(print_r($bdd->errorInfo()));
         $bdd->exec('SET NAMES utf8');
-        echo"go";
+        echo"go  !!! Attaque  ";
         return $bdd;
         
     }
