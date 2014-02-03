@@ -2,22 +2,26 @@
 include('connexion.php');
 class annee 
 {     
-    private $id;
-    private $details;
-    
-    Public function ListeAnnée()
+    Public function ListeAnnee()
     {
         $bdd=connexion_annee();
         $req="SELECT * FROM annee";
         $ligne= $bdd->query($req);
         return $ligne;
     }
-        Public function AnnéePrécédente($annee)
+        Public function AnneePrecedente($annee)
     {
         $bdd=connexion_base($annee);
-        //$req="SELECT * FROM annee where annee=".$annee.";";
-        $ligne= $bdd->query($req);
-        return $ligne;
+    }
+       Public function DerniereAnnee()
+    {
+        $bdd1=connexion_annee();
+        $req="SELECT Max(Details) FROM annee;";
+        $ligne= $bdd1->query($req);
+        while ($donnees = $ligne->fetch()) 
+        {
+        $bdd=connexion_base($donnees[0]);
+        }
     }
 }
 ?>

@@ -28,14 +28,15 @@
                 <br>
                 <br>
                 <?php 
-                include('produit.class.php');
-                $produit =new produit();
-                $produit =$produit->ValorisationStock();
-                foreach ($produit as $unMois)
-		{
-			    echo $unMois[1];
-                            echo " ";
-                }
+                include('annee.class.php');
+                $annee=new annee();
+//                $Lesannee=$annee->ListeAnnee();
+//                foreach ($Lesannee as $unMois)
+//		{
+//			    echo $unMois[1];
+//                            echo " ";
+//                }
+                $annee->DerniereAnnee();
                 ?>
             </div>
         </div>
