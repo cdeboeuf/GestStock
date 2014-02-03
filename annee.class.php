@@ -16,12 +16,13 @@ class annee
        Public function DerniereAnnee()
     {
         $bdd1=connexion_annee();
-        $req="SELECT Max(Details) FROM annee;";
+        $req="SELECT Max(Ans) FROM annee;";
         $ligne= $bdd1->query($req);
         while ($donnees = $ligne->fetch()) 
         {
         $bdd=connexion_base($donnees[0]);
         }
+        return $bdd;
     }
 }
 ?>

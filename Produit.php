@@ -28,9 +28,30 @@
                 
                 <?php 
                 include('produit.class.php');
-                $produit =new PdoParde();
-                $produit->GetValorisationStock(); 
+
+                $produit =new Produit();
+                $Resultat = $produit->GetValorisationStock();
+                
+                foreach ($Resultat as $value) 
+                    {
+                        echo $value[0];
+                        echo "<br>";
+                        echo $value[1];
+                        echo "<br>";
+                        echo $value[2];
+                        echo "<br>";
+                        echo $value[3];
+                        echo "<br>";
+                        echo $value[4];
+                        echo "<br>";
+                        echo $value[5];
+                        echo "<br>";
+                        echo $value[6];
+                    }
+
                 ?>
+                
+                
             </div>
         </div>
         <!--Js -->
