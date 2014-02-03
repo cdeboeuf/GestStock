@@ -20,7 +20,7 @@ class annee
         $ligne= $bdd1->query($req);
         while ($donnees = $ligne->fetch()) 
         {
-        $bdd=connexion_base($donnees[0]);
+        return $donnees[0];
         }
     }
 }
