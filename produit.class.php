@@ -55,7 +55,7 @@ include('annee.class.php');
 			
         }
         
-        public function MajValorisationStock($QuantiteTotal, $PATTCPondere)
+        /*public function MajValorisationStock($QuantiteTotal, $PATTCPondere, $Id)
         {
             $requete1 = "INSERT INTO Produit(QuantiteTotal) VALUES('$QuantiteTotal');";
             $rs1 = Produit::$monPdo->query($requete1);
@@ -63,7 +63,7 @@ include('annee.class.php');
             $rs2 = Produit::$monPdo->query($requete2);
             $requete3 = "INSERT INTO Produit(PATTCPondere) VALUES('$PATTCPondere);";
             $rs3 = Produit::$monPdo->query($requete3);
-        }
+        }*/
     
 
 }
