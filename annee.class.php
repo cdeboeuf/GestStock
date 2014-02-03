@@ -1,25 +1,22 @@
-
 <?php
-    class annee {
+include('connexion.php');
+class annee 
+{     
     private $id;
     private $details;
     
-    Public function LireAnnée()
+    Public function ListeAnnée()
     {
-        include('connexion.php');
-$bdd = new PDO('mysql:host=localhost;dbname=annee','root','') or die(print_r($bdd->errorInfo()));
-        $bdd->exec('SET NAMES utf8');        
-//connexion_annee();
-        //$connexion=new connexion();
-       // $connexion->connexion_annee();
+        $bdd=connexion_annee();
         $req="SELECT * FROM annee";
-       $ligne= $bdd->query($req);
-       // foreach($bdd->query($req) as $row){
-        //echo $row['0']." ".$row['1'];}
-
-//$bdd->prepare($req);
-        //$bdd->exec($bdd);
-        //$ligne=$bdd->fletchAll();
+        $ligne= $bdd->query($req);
+        return $ligne;
+    }
+        Public function AnnéePrécédente($annee)
+    {
+        $bdd=connexion_base($annee);
+        //$req="SELECT * FROM annee where annee=".$annee.";";
+        $ligne= $bdd->query($req);
         return $ligne;
     }
 }
