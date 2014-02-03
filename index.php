@@ -21,15 +21,17 @@
                     <input type="text" placeholder="login">
                     <input type="password" placeholder="mot de passe">
                     <button type="submit" class="btn btn-primary">Envoyer</button>
+                        <!--<button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button> -->
+
                 </form>
                 <br>
                 <br>
                 <br>
                 <?php 
-                include('annee.class.php');
-                $annee=new annee();
-                $annee=$annee->LireAnnée();
-                foreach ($annee as $unMois)
+                include('produit.class.php');
+                $produit =new produit();
+                $produit =$produit->ValorisationStock();
+                foreach ($produit as $unMois)
 		{
 			    echo $unMois[1];
                             echo " ";
