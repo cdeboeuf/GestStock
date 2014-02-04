@@ -12,7 +12,7 @@ class annee
          
     }
     
-    // Connexion a une année passé en parametre /!\A revoire
+    //Connexion a une année passé en parametre /!\A revoire
         Public function AnneePrecedente($annee)
     {
         $bdd=connexion_base($annee);

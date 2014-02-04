@@ -1,19 +1,19 @@
 <!DOCTYPE html> 
-    <?php include('user.class.php');
+    <?php 
+    include('user.class.php');
         if(!empty($_POST))
         {
               extract($_POST);
               if(isset($_POST['nom']) && isset($_POST['mdp']))
               {
               $user=new Users($_POST['ans']);
-              echo $user->verification($_POST['nom'],$_POST['mdp']);
+              $resultat= $user->verification($_POST['nom'],$_POST['mdp']);
+              $resultatAnnee="Année ".$_SESSION['annee'];
               }
               else{
-                  echo "pas de nom ou de mdp";
+                  $erreur= "pas de nom ou de mdp";
               }
-        } ?>
-             
-                     
+        } ?>                    
 <html>
     <head>
         <title></title>
@@ -27,9 +27,10 @@
     <body>
         <div class="container-fluid">
             <div class="page-header">
-                <h1>
+                <h1><?php echo $resultatAnnee?>
                 <small>Connexion</small></h1>
-            </div>
+                   
+            </div> <h5><?php echo $resultat?></h5>
             <div class="hero-unit"> 
                 <div class="row-fluid"> 
                 <div class="span4"></div>

@@ -7,6 +7,7 @@
               {
               $user=new Users();
               echo $user->verification($_POST['nom'],$_POST['mdp']);
+              echo "<br> Année:".$_SESSION['annee'];
               }
               else{
                   echo "pas de nom ou de mdp";

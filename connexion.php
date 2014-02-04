@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //Connexion à la base de donnée annee.
 function connexion_annee()
 {
@@ -24,7 +24,6 @@ function connexion_base($annee)
         $bdd = new PDO('mysql:host=localhost;dbname='.$annee.'','root','') or die(print_r($bdd->errorInfo()));
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $bdd->exec('SET NAMES utf8');
-        echo "Base de donnée ".$annee." connecté";
         $_SESSION['annee']=$annee;
         return $bdd;     
     }
