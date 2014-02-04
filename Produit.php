@@ -11,10 +11,9 @@ if(isset($_POST['action']))
      {
                 extract($_POST);
                 for ($i = 0; $i<= count($_POST["QuantiteTotal"])-1; $i++)
-                {         
+                {     
                     $QuantiteTotal1=$QuantiteTotal[$i];
-                    
-
+                    $nb=$id[$i];            
                     $produit->MajValorisationStock($QuantiteTotal1, $nb);
                 }
                 
@@ -51,7 +50,7 @@ if(isset($_POST['action']))
                     <div class="hero-unit">
                         <div class="row-fluid">
                             <div class="span1"></div>                
-                            <form class="span3" method="POST" action="">
+                            <form class="span3" method="POST" action="Produit.php">
                             <table class="table table-bordered table-striped table-condensed">
                                 <caption> Tableau des produits </caption>
                                 <thead>  
@@ -97,6 +96,8 @@ if(isset($_POST['action']))
                                                 echo "<tr>";
                                                     echo "<td>";
                                                     echo $value["Id"];
+                                                    ?><input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
+                                                   <?php 
                                                     echo "</td>";
                                                     echo "</td>";
                                                     echo "<td>";
@@ -112,7 +113,6 @@ if(isset($_POST['action']))
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-
                                                     ?>  
                                                         <div class="controls">
                                                             <input type="text" name="QuantiteTotal[]" id="QuantiteTotal" value="<?php echo $value["QuantiteTotal"] ?>"/>
@@ -141,7 +141,7 @@ if(isset($_POST['action']))
                     </div>
                 </div>
                 
-                <div class="tab-pane active" id="Esthetique">
+                <div class="tab-pane" id="Esthetique">
                     <div class="hero-unit">
                         <div class="row-fluid">
                             <div class="span1"></div>                
@@ -187,6 +187,8 @@ if(isset($_POST['action']))
                                                 echo "<tr>";
                                                     echo "<td>";
                                                     echo $Id = $value["Id"];
+                                                  ?>  <input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
+                                                  <?php
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["RefLycee"];
@@ -227,7 +229,7 @@ if(isset($_POST['action']))
                     </div>
                 </div>
                 
-                <div class="tab-pane active" id="OC">
+                <div class="tab-pane" id="OC">
                     <div class="hero-unit">
                         <div class="row-fluid">
                             <div class="span1"></div>                
@@ -277,6 +279,8 @@ if(isset($_POST['action']))
                                                 echo "<tr>";
                                                     echo "<td>";
                                                     echo $Id = $value["Id"];
+                                                  ?>  <input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
+                                                  <?php
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["RefLycee"];
