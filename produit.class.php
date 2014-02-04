@@ -16,23 +16,54 @@ include('annee.class.php');
             Produit::$bdd->query("SET CHARACTER SET utf8");
 	}
         
-        public function GetValorisationStock()
+        public function GetValorisationStockMODE()
         {
             try 
            {
             $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id";
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 2";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
            } 
            catch (Exception $e) 
            {
                 echo 'Échec lors de la connexion : ' . $e->getMessage();
-           }
-			
+           }	
         }
         
-
+        public function GetValorisationStockEST()
+        {
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 1";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+        public function GetValorisationStockOC()
+        {
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 3";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
         public function MajValorisationStock($QuantiteTotal, $Id)
         {
             $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';";
