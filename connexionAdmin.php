@@ -41,6 +41,7 @@
                   <?php
                   
                 $cannee= new annee();
+                
                 $Lesannees= $cannee->ListeAnnee();
                  foreach ($Lesannees as $valeur)               
                      {
@@ -48,7 +49,7 @@
                      ?>
                         <option value="<?php echo $valeur[1]?>" <?php if($valeur[1]== date("Y")){?>selected<?php } ?>><?php echo $valeur[1]?></option>
                     <?php }    
-                  
+                  //blupppp
                   ?>          
                  </SELECT> 
                     <button type="submit" class="btn btn-primary">Envoyer</button>
