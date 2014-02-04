@@ -23,7 +23,7 @@ function verification($nom,$mdp)
     $result = $rs->fetchAll();
     if(count($result)==0)
     {
-        $reponce="<br>Il n'existe pas d'utilisateur avec ce pseudo";
+        $reponse="<br>Il n'existe pas d'utilisateur avec ce pseudo";
     }
     elseif (count($result)==1) 
         {  
@@ -31,19 +31,27 @@ function verification($nom,$mdp)
         {
             if ($value['Mdp']== (md5($mdp)))
             {
-            $reponce="Bienvenu ".$value['Login']."";
-            connecter($value['Id'], $value['Login'], $value['Type']);
+            if($value['Type']!=1)
+            {
+                $annee=new annee();
+                $nb=$annee->DerniereAnnee();
+                Users::$bdd=connexion_base($nb);
+                $reponse="<br>Bienvenue ".$value['Login']."";
+                connecter($value['Id'], $value['Login'], $value['Type']);
+            }else{
+            $reponse="<br>Bienvenue ".$value['Login']."";
+            connecter($value['Id'], $value['Login'], $value['Type']);}
             }else
             {
-            $reponce="<br>Mauvais mot de passe";}
+            $reponse="<br>Mauvais mot de passe";}
         }
 }
 else
 {
-    $reponce="<br>Erreur";
+    $reponse="<br>Erreur";
 }
    
-     return  $reponce ;                
+     return  $reponse ;                
                     
 
     
