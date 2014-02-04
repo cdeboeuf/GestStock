@@ -41,8 +41,7 @@ if(isset($_POST['action']))
     <body>
         <div class="container-fluid">
             <div class="page-header">
-                <h1>
-                <small>Produit</small></h1>
+                <h1><small>Produit</small></h1>
             </div>
             <div class="hero-unit">
                 <div class="row-fluid">

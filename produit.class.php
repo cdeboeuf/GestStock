@@ -8,7 +8,8 @@ include('annee.class.php');
  * Constructeur privé, crée l'instance de PDO qui sera sollicitée
  * pour toutes les méthodes de la classe
  */				
-	public function __construct(){
+	public function __construct()
+       {
             $annee= new annee();
             $nb=$annee->DerniereAnnee();
             Produit::$bdd=connexion_base($nb);
