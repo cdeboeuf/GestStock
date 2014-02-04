@@ -22,7 +22,6 @@ class annee
         {
         return $donnees[0];
         }
-        return $bdd;
     }
 }
 ?>

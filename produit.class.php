@@ -2,13 +2,8 @@
 include('annee.class.php');
     class Produit 
 {
-      //  private static $serveur='mysql:host=localhost';
-     // 	private static $bdd='dbname=2014';   		
-      //	private static $user='root' ;    		
-      //	private static $mdp='' ;	
-	//private static $monPdo;
         private  static $bdd;
-                
+        
 /**
  * Constructeur privé, crée l'instance de PDO qui sera sollicitée
  * pour toutes les méthodes de la classe
@@ -19,52 +14,35 @@ include('annee.class.php');
             Produit::$bdd=connexion_base($nb);
             Produit::$bdd->query("SET CHARACTER SET utf8");
 	}
-	public function _destruct(){
-		
-	}
-        
-    /*private $RefLycee;
-    private $Id;
-    private $RefFournisseur;
-    private $Designation;
-    private $IdUniteAchat;
-    private $IdFournisseur;
-    private $QuantiteTotal;
-    private $Obselete;
-    private $StockAlerte;
-    private $PATTCPondere;
-    private $Coloris;
-    private $IdSection;
-    private $StockInitial;
-    private $PondereInitial;*/
         
         public function GetValorisationStock()
         {
-            try {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
                         From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id";
             $rs = Produit::$bdd->query($requete);
-           while($laLigne = $rs->fetch())	
-            {
-                 echo $laLigne[0];
-            }
-           echo "bubulle;";
-           } catch (Exception $e) {
-    echo 'Échec lors de la connexion : ' . $e->getMessage();
-}
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }
 			
         }
         
-        /*public function MajValorisationStock($QuantiteTotal, $PATTCPondere, $Id)
-        {
-            $requete1 = "INSERT INTO Produit(QuantiteTotal) VALUES('$QuantiteTotal');";
-            $rs1 = Produit::$monPdo->query($requete1);
-            $requete2 = "Select (SUM(PATTC * Quantite) / QuantiteTotal) as $PATTCPondere from detailsligneproduit inner join produit on detailsligneproduit.Id = produit.Id ;";
-            $rs2 = Produit::$monPdo->query($requete2);
-            $requete3 = "INSERT INTO Produit(PATTCPondere) VALUES('$PATTCPondere);";
-            $rs3 = Produit::$monPdo->query($requete3);
-        }*/
-    
 
+        public function MajValorisationStock($QuantiteTotal, $Id)
+        {
+            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';";
+            
+            $this->retour = Produit::$bdd->prepare($requete1);
+            $this->retour->execute(); 
+
+            //$requete2 = "Select (SUM(PATTC * Quantite) / QuantiteTotal) as $PATTCPondere from detailsligneproduit inner join produit on detailsligneproduit.Id = produit.Id ;";
+            //$rs2 = Produit::$monPdo->query($requete2);
+            //$requete3 = "UPDATE Produit SET PATTCPondere = '$PATTCPondere where Produit.Id = $Id;";
+            //$rs3 = Produit::$monPdo->query($requete3);
+        }
 }
 ?>
