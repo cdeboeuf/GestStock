@@ -12,7 +12,7 @@ function __construct($nb = null)
     $nb=$annee->DerniereAnnee();
     }
     Users::$bdd=connexion_base($nb);
-    Users::$bdd->query("SET CHARACTER SET utf8");
+    Users::$bdd->query("SET CHARACTER SET utf8"); 
 }    
 
 

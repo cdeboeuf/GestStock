@@ -66,7 +66,7 @@ include('annee.class.php');
         
         public function MajValorisationStock($QuantiteTotal, $Id)
         {
-            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';";
+            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';"; 
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 
