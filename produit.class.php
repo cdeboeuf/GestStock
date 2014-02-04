@@ -2,56 +2,26 @@
 include('annee.class.php');
     class Produit 
 {
-      //  private static $serveur='mysql:host=localhost';
-     // 	private static $bdd='dbname=2014';   		
-      //	private static $user='root' ;    		
-      //	private static $mdp='' ;	
-	//private static $monPdo;
         private  static $bdd;
-                
-/**
- * Constructeur privé, crée l'instance de PDO qui sera sollicitée
- * pour toutes les méthodes de la classe
- */				
-	public function __construct(){
+
+//Connexion a la base de donnée de la dernière année.
+        // Si l'année est choisie par l'administrateur faire if ($_SESSION['type']= admin){ }
+	public function __construct($nb = null){
             $annee= new annee();
             $nb=$annee->DerniereAnnee();
             Produit::$bdd=connexion_base($nb);
             Produit::$bdd->query("SET CHARACTER SET utf8");
 	}
-	public function _destruct(){
-		
-	}
         
-    /*private $RefLycee;
-    private $Id;
-    private $RefFournisseur;
-    private $Designation;
-    private $IdUniteAchat;
-    private $IdFournisseur;
-    private $QuantiteTotal;
-    private $Obselete;
-    private $StockAlerte;
-    private $PATTCPondere;
-    private $Coloris;
-    private $IdSection;
-    private $StockInitial;
-    private $PondereInitial;*/
-        
+        //Affichage des produits en stocke
         public function GetValorisationStock()
         {
-            try {
+            
             $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere
                         From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id";
             $rs = Produit::$bdd->query($requete);
-           while($laLigne = $rs->fetch())	
-            {
-                 echo $laLigne[0];
-            }
-           echo "bubulle;";
-           } catch (Exception $e) {
-    echo 'Échec lors de la connexion : ' . $e->getMessage();
-}
+           return $laLigne = $rs->fetchAll();
+            
 			
         }
         

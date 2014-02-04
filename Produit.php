@@ -48,15 +48,6 @@
                         echo "<br>";
                         echo $value[6];
                     }
-
-                $produit =new PdoParde();
-                $produit->GetValorisationStock(); 
-//               try{ foreach ($produit as $unFrais)
-//                                {
-//               echo $unFrais[0];}}
-//               catch (PDOException $e) {
-//    echo 'Échec lors de la connexion : ' . $e->getMessage();
-//}
 		
                 ?>
                 
