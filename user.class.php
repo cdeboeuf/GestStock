@@ -31,7 +31,7 @@ function verification($nom,$mdp)
         {
             if ($value['Mdp']== (md5($mdp)))
             {
-            $reponce="Bienvenu ".$value['Login']."";
+            $reponce="<br>Bienvenu ".$value['Login']."";
             connecter($value['Id'], $value['Login'], $value['Type']);
             }else
             {
