@@ -22,6 +22,7 @@ function connexion_base($annee)
     try
     {
         $bdd = new PDO('mysql:host=localhost;dbname='.$annee.'','root','') or die(print_r($bdd->errorInfo()));
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $bdd->exec('SET NAMES utf8');
         $_SESSION['annee']=$annee;
         return $bdd;     

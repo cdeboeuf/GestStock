@@ -3,38 +3,78 @@ include('annee.class.php');
     class Produit 
 {
         private  static $bdd;
-
-//Connexion a la base de donnée de la dernière année.
-        // Si l'année est choisie par l'administrateur faire if ($_SESSION['type']= admin){ }
-	public function __construct($nb = null){
+        
+/**
+ * Constructeur privé, crée l'instance de PDO qui sera sollicitée
+ * pour toutes les méthodes de la classe
+ */				
+	public function __construct()
+       {
             $annee= new annee();
             $nb=$annee->DerniereAnnee();
             Produit::$bdd=connexion_base($nb);
             Produit::$bdd->query("SET CHARACTER SET utf8");
 	}
         
-        //Affichage des produits en stocke
-        public function GetValorisationStock()
+        public function GetValorisationStockMODE()
         {
-            
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id";
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 2";
             $rs = Produit::$bdd->query($requete);
-           return $laLigne = $rs->fetchAll();
-            
-			
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
         }
         
-        /*public function MajValorisationStock($QuantiteTotal, $PATTCPondere, $Id)
+        public function GetValorisationStockEST()
         {
-            $requete1 = "INSERT INTO Produit(QuantiteTotal) VALUES('$QuantiteTotal');";
-            $rs1 = Produit::$monPdo->query($requete1);
-            $requete2 = "Select (SUM(PATTC * Quantite) / QuantiteTotal) as $PATTCPondere from detailsligneproduit inner join produit on detailsligneproduit.Id = produit.Id ;";
-            $rs2 = Produit::$monPdo->query($requete2);
-            $requete3 = "INSERT INTO Produit(PATTCPondere) VALUES('$PATTCPondere);";
-            $rs3 = Produit::$monPdo->query($requete3);
-        }*/
-    
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 1";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+        public function GetValorisationStockOC()
+        {
+            try 
+           {
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 3";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+        public function MajValorisationStock($QuantiteTotal, $Id)
+        {
+            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';";
+            
+            $this->retour = Produit::$bdd->prepare($requete1);
+            $this->retour->execute(); 
 
+            //$requete2 = "Select (SUM(PATTC * Quantite) / QuantiteTotal) as $PATTCPondere from detailsligneproduit inner join produit on detailsligneproduit.Id = produit.Id ;";
+            //$rs2 = Produit::$monPdo->query($requete2);
+            //$requete3 = "UPDATE Produit SET PATTCPondere = '$PATTCPondere where Produit.Id = $Id;";
+            //$rs3 = Produit::$monPdo->query($requete3);
+        }
 }
 ?>

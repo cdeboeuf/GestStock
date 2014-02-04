@@ -19,10 +19,9 @@
                 <div class="span4">
                      <ul class="unstyleds">
                     <li style='list-style-type: none;'><a href="#" class="btn btn-primary btn-block" >Sortir un produit</a></li>
-                  <br>
+                    <br>
                     <li style='list-style-type: none;'><a href="#" class="btn btn-info btn-block" >Ajouter un produit</a></li>
-                   <br>
-                   
+                    <br>
                     
                     <li style='list-style-type: none;'><a href="#" class="btn btn-primary btn-block" >Inventaire</a></li>
                     <br>
