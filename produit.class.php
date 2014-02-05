@@ -18,8 +18,8 @@ include('connexion.php');
         {
             try 
            {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial,
+                       (QuantiteTotal*PATTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 2";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
@@ -35,7 +35,7 @@ include('connexion.php');
             try 
            {
             $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        , (QuantiteTotal*PATTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
@@ -51,7 +51,7 @@ include('connexion.php');
             try 
            {
             $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PATTCPondere, Coloris, PondereInitial
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        , (QuantiteTotal*PATTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 3";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      

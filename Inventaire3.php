@@ -34,12 +34,13 @@ if(isset($_POST['action']))
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     </head>
-    <body OnLoad="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">>
+    <body>
         <div class="container-fluid">
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>
-            
+            <?php include('Menu.php');?>
+            <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./Inventaire.php">Mode</a></li>
                     <li><a href="./Inventaire2.php">Esthétique</a></li>
@@ -49,56 +50,57 @@ if(isset($_POST['action']))
                     <div class="tab-pane active">
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Inventaire3.php">
+                                             
+                                <form  method="POST" action="Inventaire3.php">
                     <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                     <thead>  
-                                        <tr>
-                                            <th>
-                                                ID
-                                            </th>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
 
-                                            <th>
-                                                Référence Lycée
-                                            </th>
+                                        <th>
+                                            Référence Lycée
+                                        </th>
 
-                                            <th>
-                                                Référence Fournisseur
-                                            </th>
+                                        <th>
+                                            Référence Fournisseur
+                                        </th>
 
-                                            <th>
-                                                Fournisseur
-                                            </th>
+                                        <th>
+                                            Fournisseur
+                                        </th>
 
-                                            <th>
-                                                Désignation
-                                            </th>
+                                        <th>
+                                            Désignation
+                                        </th>
 
-                                            <th>
-                                                Quantité Totale
-                                            </th>
+                                        <th>
+                                            Quantité Totale
+                                        </th>
+                                        
+                                        <th>
+                                            Coloris
+                                        </th>
 
-                                            <th>
-                                                Coloris
-                                            </th>
-
-                                            <th>
-                                                Prix Pondéré
-                                            </th>
-                                            
-                                            <th>
-                                                Total
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $Resultat = $produit->GetValorisationStockOC();
-                                            foreach ($Resultat as $value) 
-                                            {
-                                                    echo "<tr>";
-                                                    echo "<td>";
+                                        <th>
+                                            Prix Pondéré
+                                        </th>
+                                        
+                                        <th>
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $Resultat = $produit->GetValorisationStockOC();
+                                        $nb=0;
+                                        foreach ($Resultat as $value) 
+                                        {?>
+                                                <tr>
+                                                    <td><?php
                                                     echo $value["Id"];
                                                     ?><input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
                                                    <?php 
@@ -119,8 +121,8 @@ if(isset($_POST['action']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" id="QuantiteTotal" value="<?php echo $value["QuantiteTotal"] ?>"
-                                                             OnKeyUp="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                             OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                         </div>
                                                     <?php
                                                     echo "</td>";
@@ -129,23 +131,26 @@ if(isset($_POST['action']))
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["PATTCPondere"];
-                                                    ?><input type="hidden" name="PATTCPondere[]" id="PATTCPondere" value="<?php echo $value["PATTCPondere"] ?>">
+                                                    ?><input type="hidden" name="PATTCPondere[]" id="PATTCPondere<?php echo $nb ?>" value="<?php echo $value["PATTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="Total" id="Total"
-                                                            OnKeyUp="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">
+                                                            <input type="text" name="Total" class="input-small" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
                                                         </div>
+                                  
                                                     <?php
+                                                    
                                                     echo "</td>";
                                                 echo "</tr>";
-                                            }
+                                
+                                                $nb=$nb+1;
+                                        }
 
 
-                                        ?>
-                                    <tbody>
+                                    ?>
+                                </tbody>
                                     <br>
                                 </table>
                         <br>
@@ -156,7 +161,7 @@ if(isset($_POST['action']))
                         </div>
                     </div>
                 </div>
-            
+        </div>          
         </div>
         <!--Js -->
         <script type="text/javascript">
