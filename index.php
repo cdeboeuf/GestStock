@@ -34,7 +34,7 @@
             <div class="hero-unit"> 
                 <div class="row-fluid"> 
                 <div class="span4"></div>
-                <form class="span3" name="connexion" action="connexionAdmin.php" method="post">
+                <form class="span3" name="connexion" action="index.php" method="post">
                     <label class="badge" for="nom">Pseudo de connexion :</label>  <input type="text" name="nom" id="nom"/>
                     <label class="badge" for="nom">Mot de passe :</label> <input type="password" name="mdp" id="mdp"/>      
                     <span class="badge">Pour les administrateurs :</span>
