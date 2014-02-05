@@ -39,7 +39,8 @@ if(isset($_POST['action']))
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>
-            
+            <?php include('Menu.php');?>
+            <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./Inventaire.php">Mode</a></li>
                     <li class="active"><a href="./Inventaire2.php">Esthétique</a></li>
@@ -48,9 +49,8 @@ if(isset($_POST['action']))
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Inventaire2.php">
+                            <div class="row-fluid">                                         
+                                <form  method="POST" action="Inventaire2.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -159,6 +159,7 @@ if(isset($_POST['action']))
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             
         </div>
