@@ -135,7 +135,7 @@ if(isset($_POST['action']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="Total" id="Total"  size="10"
+                                                            <input type="text" name="Total" id="Total"
                                                             OnKeyUp="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">
                                                         </div>
                                                     <?php
