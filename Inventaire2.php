@@ -42,7 +42,7 @@ if(isset($_POST['action']))
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./Inventaire.php">Mode</a></li>
+                    <li><a href="./Inventaire1.php">Mode</a></li>
                     <li class="active"><a href="./Inventaire2.php">Esthétique</a></li>
                     <li><a href="./Inventaire3.php">Objet Confectionné</a></li>
                 </ul>

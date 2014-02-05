@@ -35,28 +35,25 @@ if(isset($_POST['action']))
 
     </head>
     <body>
-        
         <div class="container-fluid">
-            
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>
             <?php include('Menu.php');?>
             <div class="span12">
-                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./Inventaire.php">Mode</a></li>
+                <ul class="nav nav-tabs" id="profileTabs">
+                    <li  class="active"><a href="./Inventaire1.php">Mode</a></li>
                     <li><a href="./Inventaire2.php">Esthétique</a></li>
                     <li><a href="./Inventaire3.php">Objet Confectionné</a></li>
                 </ul>
-            <div class="tab-content">
-                <div class="tab-pane active">
-                    <div class="hero-unit" style="background-color: #FFECFF">
-                        <div class="row-fluid">
-                                       
-                            <form method="POST" action="Inventaire.php">
-                            <table class="table table-bordered table-striped table-condensed">
-                                <caption> Tableau des produits </caption>
-                                <thead>  
+                <div class="tab-content">
+                    <div class="tab-pane active">   
+                        <div class="hero-unit" style="background-color: #FFECFF">
+                            <div class="row-fluid">                                         
+                                <form  method="POST" action="Inventaire2.php">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <caption> Tableau des produits </caption>
+                        <thead>  
                                     <tr>
                                         <th>
                                             ID
@@ -153,21 +150,21 @@ if(isset($_POST['action']))
 
                                     ?>
                                 </tbody>
+                                    <br>
+                                </table>
                                 <br>
-                            </table>
-                            <br>
-                            <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
-                            <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
-                            </form>
+                                <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
+                                <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
+                </div>
+            
         </div>
         <!--Js -->
-        <script type="text/javascript">
+               <script type="text/javascript">
         function calcul(nb)
         {
         result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PATTCPondere'+nb).value);
