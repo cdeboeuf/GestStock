@@ -10,7 +10,7 @@ class annee
         $ligne= $bdd1->query($req);
        return $ligne->fetchAll();
          
-    }
+    } 
     
     //Connexion a une année passé en parametre /!\A revoire
         Public function AnneePrecedente($annee)

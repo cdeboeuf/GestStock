@@ -11,7 +11,7 @@ function connexion_annee()
     }
     catch(Exception $e)
     {
-        die('erreur: ' . $e->getMessage());
+        die('erreur: ' . $e->getMessage()); 
     }
 }
 
