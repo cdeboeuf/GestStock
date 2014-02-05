@@ -1,5 +1,5 @@
 <?php
-include('annee.class.php');
+include('connexion.php');
     class Produit 
 {
         private  static $bdd;
@@ -10,9 +10,7 @@ include('annee.class.php');
  */				
 	public function __construct()
        {
-            $annee= new annee();
-            $nb=$annee->DerniereAnnee();
-            Produit::$bdd=connexion_base($nb);
+            Produit::$bdd=connexion_base($_SESSION['annee']);
             Produit::$bdd->query("SET CHARACTER SET utf8");
 	}
         

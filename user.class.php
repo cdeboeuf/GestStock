@@ -38,9 +38,12 @@ function verification($nom,$mdp)
                 Users::$bdd=connexion_base($nb);
                 $reponse="<br>Bienvenue ".$value['Login']."";
                 connecter($value['Id'], $value['Login'], $value['Type']);
+                
             }else{
             $reponse="<br>Bienvenue ".$value['Login']."";
-            connecter($value['Id'], $value['Login'], $value['Type']);}
+            connecter($value['Id'], $value['Login'], $value['Type']);
+            
+            }header("location: Inventaire.php");
             }else
             {
             $reponse="<br>Mauvais mot de passe";}
