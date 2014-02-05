@@ -34,7 +34,7 @@ if(isset($_POST['action']))
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     </head>
-    <body>
+    <body OnLoad="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">>
         <div class="container-fluid">
             <div class="page-header">
                 <h1><small>Produit</small></h1>
@@ -50,7 +50,7 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Produit3.php">
+                                <form class="span3" method="POST" action="Inventaire3.php">
                     <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                     <thead>  
@@ -86,6 +86,10 @@ if(isset($_POST['action']))
                                             <th>
                                                 Prix Pondéré
                                             </th>
+                                            
+                                            <th>
+                                                Total
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -94,38 +98,49 @@ if(isset($_POST['action']))
                                             foreach ($Resultat as $value) 
                                             {
                                                     echo "<tr>";
-                                                        echo "<td>";
-                                                        echo $Id = $value["Id"];
-                                                    ?>  <input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
+                                                    echo "<td>";
+                                                    echo $value["Id"];
+                                                    ?><input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
+                                                   <?php 
+                                                    echo "</td>";
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["RefLycee"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["RefFournisseur"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Nom"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Designation"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    ?>  
+                                                        <div class="controls">
+                                                            <input type="text" name="QuantiteTotal[]" id="QuantiteTotal" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                             OnKeyUp="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">
+                                                        </div>
                                                     <?php
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo $value["RefLycee"];
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo $value["RefFournisseur"];
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo $value["Nom"];
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo $value["Designation"];
-                                                        echo "</td>";
-                                                        echo "<td>";
-
-                                                        ?>  
-                                                            <div class="controls">
-                                                                <input type="text" name="QuantiteTotal[]" id="QuantiteTotal" value="<?php echo $value["QuantiteTotal"] ?>"/>
-                                                            </div>
-                                                        <?php
-                                                        echo "</td>";                                
-                                                        echo "<td>";
-                                                        echo $value["Coloris"];
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo $value["PATTCPondere"];
-                                                        echo "</td>";
-                                                    echo "</tr>";
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Coloris"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["PATTCPondere"];
+                                                    ?><input type="hidden" name="PATTCPondere[]" id="PATTCPondere" value="<?php echo $value["PATTCPondere"] ?>">
+                                                   <?php 
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    ?>  
+                                                        <div class="controls">
+                                                            <input type="text" name="Total" id="Total"  size="10"
+                                                            OnKeyUp="javascript:calcul(document.getElementById('QuantiteTotal').value, document.getElementById('PATTCPondere').value);">
+                                                        </div>
+                                                    <?php
+                                                    echo "</td>";
+                                                echo "</tr>";
                                             }
 
 
@@ -144,6 +159,13 @@ if(isset($_POST['action']))
             
         </div>
         <!--Js -->
+        <script type="text/javascript">
+        function calcul(QuantiteTotal, PATTCPondere)
+        {
+        result = (parseFloat(QuantiteTotal)*parseFloat(PATTCPondere));
+        document.getElementById('Total').value = result;
+        }
+        </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>

@@ -50,7 +50,7 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Produit2.php">
+                                <form class="span3" method="POST" action="Inventaire2.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                     <thead>  
