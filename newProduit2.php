@@ -2,7 +2,7 @@
 
 <?php
 include('Achat.class.php');
-$Achat = new Achat();
+$Achat = new Achat();     
 ?>
 
 
@@ -23,19 +23,19 @@ $Achat = new Achat();
             <div class="page-header">
                 <h1><small>Achat</small></h1>
             </div>
-            
+            <?php include('Menu.php');?>
+            <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./Achat.php">Mode</a></li>
-                    <li><a href="./Achat2.php">Esthétique</a></li>
+                    <li><a href="./newProduit.php">Mode</a></li>
+                    <li  class="active"><a href="./newProduit2.php">Esthétique</a></li>
                 </ul>
             
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Achat.php">
-                                    <table class="table table-bordered table-striped table-condensed" style="border:none;">
+                            <div class="row-fluid">              
+                                <form method="POST" action="Achat.php">
+                                    <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
@@ -50,11 +50,6 @@ $Achat = new Achat();
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur :</b></label>
                                                     <input type="text" name="RefFournisseur" id="RefFournisseur">
-                                                </td>
-
-                                                <td>
-                                                    <label for="Coloris"><b>Coloris :</b></label>
-                                                    <input type="text" name="Coloris" id="Coloris">
                                                 </td>
 
                                                 <td>
@@ -89,7 +84,7 @@ $Achat = new Achat();
 
                                             <td>
                                                 <label for="StockAlerte"><b>Stock d'alerte :</b></label>
-                                                <input type="text" name="StockAlerte" id="StockAlerte">
+                                                <input type="text" name="StockAlerte" id="StockAlerte" class="input-small">
                                             </td>
                                             <tr>
                                                 <td>
@@ -118,10 +113,9 @@ $Achat = new Achat();
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                <div class="span1"></div>                
-                                <form class="span3" method="POST" action="Achat.php" name="form">
-                                    <table class="table table-bordered table-striped table-condensed" style="border:none;">
+                            <div class="row-fluid">             
+                                <form method="POST" action="Achat.php" name="form">
+                                    <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
@@ -175,7 +169,7 @@ $Achat = new Achat();
                     </div>
                 </div>
             
-            
+            </div>
         </div>
         <!--Js -->
         
@@ -203,7 +197,6 @@ var objControle3 = document.getElementById(Controle3);
                 return true;
 }
 </script>
-
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
