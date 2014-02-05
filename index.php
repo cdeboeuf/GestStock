@@ -36,7 +36,9 @@
                 <div class="span4"></div>
                 <form class="span3" name="connexion" action="index.php" method="post">
                     <label class="badge" for="nom">Pseudo de connexion :</label> <input type="text" name="nom" id="nom"/>
-                    <label class="badge" for="mdp">Mot de passe :</label><br> <input type="password" name="mdp" id="mdp"/><br>      
+                    <br>
+                    <label class="badge" for="mdp">Mot de passe :</label> <br> <input type="password" name="mdp" id="mdp"/>   
+                    <br>
                     <span class="badge">Pour les administrateurs :</span>
                     <SELECT name="ans" id="ans">
                   <?php
@@ -52,7 +54,8 @@
                     <?php }    
                   //blupppp
                   ?>          
-                 </SELECT> 
+                 </SELECT>
+                    <br>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                 </div>
