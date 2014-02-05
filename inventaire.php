@@ -40,7 +40,7 @@ if(isset($_POST['action']))
                 <h1><small>Produit</small></h1>
             </div>
             
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" id="myTab">
                 <li class="active"><a href="#Mode" data-toggle="tab">Mode</a></li>
                 <li><a href="#Esthetique" data-toggle="tab">Esthétique</a></li>
                 <li><a href="#OC" data-toggle="tab">Objet Confectionné</a></li>
@@ -326,6 +326,15 @@ if(isset($_POST['action']))
             </div>
         </div>
         <!--Js -->
+        <script>
+            $('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+  $(function () {
+    $('#myTab a:last').tab('show')
+  })
+</script>
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
