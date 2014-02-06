@@ -1,5 +1,9 @@
 <?php include('connexion.php');
 include('tva.class.php');
+
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
+
 $tvaP= new Tva();                
 
 if(isset($_POST['tva']))
@@ -13,6 +17,7 @@ if(isset($_POST['tvaSup']))
 
 }
 $LesTva= $tvaP->affiche_Tva();
+
 ?> 
 
 <html>
@@ -36,8 +41,9 @@ $LesTva= $tvaP->affiche_Tva();
                     <li  class="active"><a href="./parametre.php">Modifier le taux de TVA</a></li>
                     <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
+                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
-                    <li><a href="./coefCorrection.php">Modifier le coeficient de correction</a></li>               
+                                
                 </ul>
                       <div class="hero-unit"> 
                       <div class="row-fluid">
@@ -55,9 +61,10 @@ $LesTva= $tvaP->affiche_Tva();
                   <?php
                  foreach ($LesTva as $unetva)               
                      {
+                 
                      ?>
-                        <option value='<?php echo $unetva[1] ?>'><?php echo $unetva[1]?></option>
-                    <?php }    
+                        <option value='<?php echo $unetva['taux'] ?>'><?php echo $unetva['taux']." (Utilisation:".$unetva['utiliser'].")"?></option>
+                     <?php }
                   ?>          
                  </SELECT>
                      <button type="submit" class="btn btn-primary">Supprimer</button>
@@ -71,7 +78,7 @@ $LesTva= $tvaP->affiche_Tva();
                 </div>
                          
                          <br><br><br><br>
-            </div>
+            </div><div class="alert alert-info">Vous ne pouvez pas suprimer un taux de Tva utilisé</div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

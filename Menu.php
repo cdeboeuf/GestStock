@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php 
 include('menu.class.php');
+//include ('connexion.php');
 ?>
            <script type="text/javascript">
             $(document).ready(function(){
@@ -24,8 +25,9 @@ include('menu.class.php');
                         ?><li <?php if($page['basename']==$UnMenu['Adresse']) {echo "class='active'";}?>><a href="<?php echo $UnMenu['Adresse']?>"><?php echo $UnMenu['Details']?></a></li>
                     
                         <?php    
-                     }
-                    ?>
+                     }?>
+                        <li><a href="deconnexion.php">Déconnexion</a></li>
+                    
                         
     </ul>
 </div>

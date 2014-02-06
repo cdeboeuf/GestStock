@@ -12,16 +12,25 @@ class Tva
  
     function affiche_Tva()
     {
-        $req="SELECT * From tva Order by taux;" ;  
+        $req="SELECT taux, tva.Id, count( detailsligneproduit.Id ) as utiliser
+From Tva left join detailsligneproduit on  tva.Id=detailsligneproduit.Idtva
+group by taux";  
         $rs = Tva::$bdd->query($req);
         return $result = $rs->fetchAll();
     }
     
     function supprimer_Tva($tva)
-    {
+    { 
+        if($this->Verif_TvaSup($tva)==0)
+        {
         $req="Delete FROM tva Where Taux=$tva" ;  
         $rs = Tva::$bdd->query($req);
-        return $reponce=" Le taux  de $tva % a été supprimé";
+     $reponce=" Le taux  de $tva % a été supprimé";
+    }else
+    {
+        $reponce=" Le taux  de $tva % est utilisé par plusieurs produit il ne peut donc pas etre suprimé";
+    }
+    return$reponce;
     }
     
     function Ajout_Tva($tva)
@@ -46,10 +55,22 @@ class Tva
     }
     
     function Verif_Tva($tva)
-    {
+    { 
        $req="SELECT Taux From tva WHERE Taux=$tva;" ;  
         $rs = Tva::$bdd->query($req);
         return $result = count($rs->fetchAll());
     }
-}
+    
+     function Verif_TvaSup($tva)
+    {
+   $req="SELECT count(*) as utiliser
+From Tva Inner join detailsligneproduit on  tva.Id=detailsligneproduit.Idtva  Where tva.taux='$tva'
+group by taux";
+     $rs = Tva::$bdd->query($req);
+     echo $result = count($rs->fetchAll());
+     return $result;
+     
+    }
+
+    }
 ?>

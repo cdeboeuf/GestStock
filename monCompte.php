@@ -1,3 +1,5 @@
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 Changer le mot de passe de l'utilisateur courent<?php
 
 /*

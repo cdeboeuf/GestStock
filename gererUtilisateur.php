@@ -1,3 +1,5 @@
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 Ajouter suprimer un utilisateur
   Mots de pass a 0 
     <?php

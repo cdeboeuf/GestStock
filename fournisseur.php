@@ -1,3 +1,5 @@
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 ajouter suprimer un fournisseur
 <?php
 

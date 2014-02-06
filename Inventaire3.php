@@ -3,7 +3,8 @@
 <?php
 include('produit.class.php');
 $produit = new produit();
-
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 if(isset($_POST['action']))
  if (isset($_POST['action'])=='envoyer')
  {

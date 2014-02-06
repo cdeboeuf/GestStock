@@ -1,7 +1,9 @@
-<?php include('connexion.php');
+<?php 
+include('connexion.php');
 include('unite.class.php');
-$uniteP= new Unite();                
-
+$uniteP= new Unite();         
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 if(isset($_POST['unite']))
 {
    $rep= $uniteP->ajout_Unite($_POST['unite']);
@@ -56,7 +58,7 @@ $LesUnite= $uniteP->affiche_Unite();
                  foreach ($LesUnite as $uneUnite)               
                      {
                      ?>
-                        <option value='<?php echo $uneUnite[1] ?>'><?php echo $uneUnite[1]?></option>
+                        <option value='<?php echo $uneUnite['Details'] ?>'><?php echo $uneUnite['Details']." (Utilisation:".$uneUnite['utiliser'].")"?></option>
                     <?php }    
                   ?>          
                  </SELECT>
@@ -72,6 +74,7 @@ $LesUnite= $uniteP->affiche_Unite();
                          
                          <br><br><br><br>
             </div>
+                          <div class="alert alert-info">Vous ne pouvez pas suprimer une unitée utilisé</div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

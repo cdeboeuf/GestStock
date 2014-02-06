@@ -3,7 +3,8 @@
 <?php
 include('produit.class.php');
 $produit = new produit();
-
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 if(isset($_POST['action']))
  if (isset($_POST['action'])=='envoyer')
  {
@@ -50,7 +51,7 @@ if(isset($_POST['action']))
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">                                         
-                                <form  method="POST" action="Inventaire2.php">
+                                <form  method="POST" action="Inventaire1.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  

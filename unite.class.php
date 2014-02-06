@@ -12,16 +12,20 @@ class Unite
  
     function affiche_Unite()
     {
-        $req="SELECT * From unite Order by Details;" ;  
+        $req="SELECT unite.Id,Details, count(Produit.Id ) as utiliser
+From unite left join produit on unite.Id=produit.IdUniteAchat
+group by unite.Id;" ;  
         $rs = Unite::$bdd->query($req);
         return $result = $rs->fetchAll();
     }
     
     function supprimer_Unite($Unite)
             {
+        if($this->Verif_UniteSup($Unite)==0)
+        {
         $req="Delete FROM unite Where Details='$Unite'" ;  
         $rs = Unite::$bdd->query($req);
-        return $reponce=" Le $Unite % a été supprimé";
+        return $reponce=" Le $Unite % a été supprimé";}
     }
     
     function Ajout_Unite($Unite)
@@ -44,6 +48,16 @@ class Unite
        $req="SELECT Details From unite WHERE Details='$Unite';" ;  
         $rs = Unite::$bdd->query($req);
         return $result = count($rs->fetchAll());
+    }
+     function Verif_UniteSup($tva)
+    {
+   $req="SELECT count(*) as utiliser
+From unite Inner join produit on  unite.Id=produit.IdUniteAchat  Where unite.Details='$tva'
+group by details";
+     $rs = Unite::$bdd->query($req);
+     echo $result = count($rs->fetchAll());
+     return $result;
+     
     }
 }
 ?>

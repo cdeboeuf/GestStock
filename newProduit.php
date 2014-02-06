@@ -3,6 +3,8 @@
 <?php
 include('Achat.class.php');
 $Achat = new Achat();
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 ?>
 
 

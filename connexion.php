@@ -39,5 +39,6 @@ function connecter($id,$nom,$type){
 }
 function deconnecter(){
 	session_destroy();
+        header('index.php');
 }
 ?>

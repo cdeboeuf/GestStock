@@ -1,4 +1,14 @@
-<?php include('connexion.php')?> 
+<?php include('connexion.php');
+include('parametre.class.php');
+$Parametre= new Parametre();
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
+if(isset($_POST['cout']))
+{
+   $rep= $Parametre->modif_CoutMachine($_POST['cout']);
+
+}
+    ?> 
 <html>
     <head>
         <title></title>
@@ -21,12 +31,30 @@
                     <li ><a href="./parametre.php">Modifier le taux de TVA</a></li>
                     <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
                     <li class="active"><a href="./coutMachine.php">Modifier le coût machine</a></li>
+                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
-                    <li><a href="./coefCorrection.php">Modifier le coeficient de correction</a></li>               
+                                 
                 </ul><div class="hero-unit"> 
-             
-                       
-           
+                    <?php if (isset($_POST['cout'])){
+                      
+                   ?>
+                    <div class='alert alert-success'>
+                      <?php echo $rep; ?>
+                    </div> <?php } ?>
+                    <div class='alert alert-info'>
+                       Coût Machine actuelle:
+                    <?php $LesCout=$Parametre->affiche_CoutMachine();
+                    foreach ($LesCout as $unCout)
+                    {
+                    echo $unCout['Details'];
+                    }                  ?>
+                </div>
+                    <form class="span3" name="ModifCout" action="coutMachine.php" method="post">
+                    <label class="badge" for="cout">Modifié le cout :</label> <input type="text" name="cout" id="cout"/>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+                    <br><br><br><br>
+                </div>
                 </div>
         </div>
         </div>
