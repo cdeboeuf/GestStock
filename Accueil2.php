@@ -42,9 +42,9 @@ if(isset($_POST['action']))
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./Inventaire1.php">Mode</a></li>
-                    <li class="active"><a href="./Inventaire2.php">Esthétique</a></li>
-                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>
+                    <li><a href="./Accueil1.php">Mode</a></li>
+                    <li class="active"><a href="./Accueil2.php">Esthétique</a></li>
+                    <li><a href="./Accueil3.php">Objet Confectionné</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
@@ -120,7 +120,7 @@ if(isset($_POST['action']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" disabled="disabled" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
                                                              OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                         </div>
                                                     <?php
@@ -153,7 +153,6 @@ if(isset($_POST['action']))
                                     <br>
                                 </table>
                                 <br>
-                                <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
                             </div>

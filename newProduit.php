@@ -35,13 +35,13 @@ $Achat = new Achat();
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                                 
-                                <form method="POST" action="Achat.php">
+                                <form name="MonForm" id="MonForm">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
                                                     <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
-                                                    <select name = "Nom"> 
+                                                    <select name = "Nom" id="Fournisseur"> 
                                                     <?php	
                                                         echo $Achat->ListeFournisseurs();
                                                     ?>
@@ -49,8 +49,13 @@ $Achat = new Achat();
                                                 </td>
 
                                                 <td>
-                                                    <label for="RefFournisseur"><b>Référence Fournisseur :</b></label>
-                                                    <input type="text" name="RefFournisseur" id="RefFournisseur">
+                                                    <label for="ChoixRefFournisseur"><b>Référence Fournisseur :</b></label>
+                                                    <select name = "RefFournisseur" id="RefFournisseur" 
+                                                            OnChange="javascript:envoyerRequete('getNbProduits.php?RefFournisseur='+escape(this.value))">
+                                                    <?php	
+                                                        echo $Achat->ListeRefFournisseur();
+                                                    ?>
+                                                    </select> 
                                                 </td>
 
                                                 <td>
@@ -72,7 +77,7 @@ $Achat = new Achat();
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite"> 
+                                                <select name = "unite" id="uniteAchat"> 
                                                 <?php	
                                                     echo $Achat->ListeUniteAchat();
                                                 ?>
@@ -81,7 +86,7 @@ $Achat = new Achat();
 
                                             <td>
                                                 <label for="CodeTVA""><b>Code TVA :</b></label>
-                                                <select name = "CodeTA" class="input-small"> 
+                                                <select name = "CodeTA" class="input-small" id="CodeTVA"> 
                                                 <?php	
                                                     echo $Achat->ListeTVA();
                                                 ?>
@@ -94,7 +99,7 @@ $Achat = new Achat();
                                             </td>
                                             <tr>
                                                 <td>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" value="1"> </label> 
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" id="Obsolete" value="1"> </label> 
                                                 </td>
                                             </tr>
                                             <tr>
@@ -178,32 +183,113 @@ $Achat = new Achat();
             </div>   
         </div>
         <!--Js -->
-        
-<script language="Javascript">
-function GereControle(Controleur, Controle1, Controle2, Controle3, Masquer) 
-{
-
-var objControleur = document.getElementById(Controleur);
-var objControle1 = document.getElementById(Controle1);
-var objControle2 = document.getElementById(Controle2);
-var objControle3 = document.getElementById(Controle3);
-	if (Masquer =='1')
+        <script language="Javascript">
+            function GereControle(Controleur, Controle1, Controle2, Controle3, Masquer) 
             {
-		objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-            }
-                
-	else
-            {
-		objControle1.disabled=(objControleur.checked==false)?false:true;
-                objControle2.disabled=(objControleur.checked==false)?false:true;
-                objControle3.disabled=(objControleur.checked==false)?false:true;
-            }
-                return true;
-}
-</script>
 
+            var objControleur = document.getElementById(Controleur);
+            var objControle1 = document.getElementById(Controle1);
+            var objControle2 = document.getElementById(Controle2);
+            var objControle3 = document.getElementById(Controle3);
+                    if (Masquer =='1')
+                        {
+                            objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                            objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                            objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                        }
+
+                    else
+                        {
+                            objControle1.disabled=(objControleur.checked==false)?false:true;
+                            objControle2.disabled=(objControleur.checked==false)?false:true;
+                            objControle3.disabled=(objControleur.checked==false)?false:true;
+                        }
+                            return true;
+            }
+        </script>
+        <script language="Javascript">
+            function getRequeteHttp()
+            { // idem
+                    var requeteHttp;
+                    if (window.XMLHttpRequest)
+                    {	// Mozilla
+                            requeteHttp=new XMLHttpRequest();
+                            if (requeteHttp.overrideMimeType)
+                            { // problème firefox
+                                    requeteHttp.overrideMimeType('text/xml');
+                            }
+                    }
+                    else
+                    {
+                            if (window.ActiveXObject)
+                            {	// C'est Internet explorer < IE7
+                                    try
+                                    {
+                                            requeteHttp=new ActiveXObject("Msxml2.XMLHTTP");
+                                    }
+                                    catch(e)
+                                    {
+                                            try
+                                            {
+                                                    requeteHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                                            }
+                                            catch(e)
+                                            {
+                                                    requeteHttp=null;
+                                            }
+                                    }
+                            }
+                    }
+                    return requeteHttp;
+            }
+        </script>
+        <script language="Javascript">
+            function envoyerRequete(url, idRefFournisseur)
+            {
+                    var requeteHttp=getRequeteHttp();
+                    if (requeteHttp==null)
+                    {
+                            alert("Impossible d'utiliser Ajax sur ce navigateur");
+                    }
+                    else
+                    {
+                            requeteHttp.open('GET',url + '?RefFournisseur=' + escape(idRefFournisseur),true);
+                            requeteHttp.open('GET',url ,true);
+                            requeteHttp.onreadystatechange=function() {recevoirReponse(requeteHttp);};
+                            requeteHttp.send(null);
+                    }
+                    return;
+            }
+        </script>
+        <script language="Javascript">
+            function recevoirReponse(requeteHttp)
+            { // idem
+                if (requeteHttp.readyState==4)
+                            {	// la requête est achevée, le résultat a été transmis
+                                    if (requeteHttp.status==200)
+                                    {	// la requête s'est correctement déroulée (pourrait être 404 pour non trouvé par exemple)
+                                            traiterReponse(requeteHttp.responseText);
+                                    }
+                                    else
+                                    {
+                                            alert("La requête ne s'est pas correctement exécutée");
+                                    }
+                            }
+            }
+        </script>
+        <script language="Javascript">
+            function traiterReponse(reponse1, reponse2, reponse3, reponse4, reponse5, reponse6, reponse7)
+            {
+                    document.getElementById("Fournisseur").innerHTML=reponse1;
+                    document.getElementById("Coloris").innerHTML=reponse2;
+                    document.getElementById("RefLycee").innerHTML=reponse3;
+                    document.getElementById("Designation").innerHTML=reponse4;
+                    document.getElementById("uniteAchat").innerHTML=reponse5;
+                    document.getElementById("CodeTVA").innerHTML=reponse6;
+                    document.getElementById("StockAlerte").innerHTML=reponse7;
+                    
+            }
+        </script>
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>

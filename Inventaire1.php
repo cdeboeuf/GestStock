@@ -136,7 +136,7 @@ if(isset($_POST['action']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="Total" class="input-small" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
+                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
                                                         </div>
                                   
                                                     <?php
@@ -167,11 +167,11 @@ if(isset($_POST['action']))
                <script type="text/javascript">
         function calcul(nb)
         {
-        result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PATTCPondere'+nb).value);
-  result1 = result*100;          
-result2 = Math.round(result1); 
-result3 = result2/100; 
-        document.getElementById('Total'+nb).value = result3;
+            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PATTCPondere'+nb).value);
+            result1 = result*100;          
+            result2 = Math.round(result1); 
+            result3 = result2/100; 
+            document.getElementById('Total'+nb).value = result3;
         }
         </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
