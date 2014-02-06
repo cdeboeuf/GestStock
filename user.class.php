@@ -43,7 +43,7 @@ function verification($nom,$mdp)
             $reponse="<br>Bienvenue ".$value['Login']."";
             connecter($value['Id'], $value['Login'], $value['Type']);
             
-            }header("location: Inventaire1.php");
+            }header("location: Accueil1.php");
             }else
             {
             $reponse="<br>Mauvais mot de passe";}

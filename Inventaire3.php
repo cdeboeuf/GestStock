@@ -47,14 +47,13 @@ if(isset($_POST['action']))
                     <li  class="active"><a href="./Inventaire3.php">Objet Confectionné</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active">
+                    <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                             
+                            <div class="row-fluid">                                         
                                 <form  method="POST" action="Inventaire3.php">
-                    <table class="table table-bordered table-striped table-condensed">
+                                <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
-                                    <thead>  
+                        <thead>  
                                     <tr>
                                         <th>
                                             ID
@@ -137,7 +136,7 @@ if(isset($_POST['action']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="Total" class="input-small" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
+                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
                                                         </div>
                                   
                                                     <?php
@@ -153,22 +152,26 @@ if(isset($_POST['action']))
                                 </tbody>
                                     <br>
                                 </table>
-                        <br>
-                        <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
-                        <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
-                        </form>
+                                <br>
+                                <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
+                                <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-        </div>          
+                </div>
+            
         </div>
         <!--Js -->
-        <script type="text/javascript">
-        function calcul(QuantiteTotal, PATTCPondere)
+               <script type="text/javascript">
+        function calcul(nb)
         {
-        result = (parseFloat(QuantiteTotal)*parseFloat(PATTCPondere));
-        document.getElementById('Total').value = result;
+            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PATTCPondere'+nb).value);
+            result1 = result*100;          
+            result2 = Math.round(result1); 
+            result3 = result2/100; 
+            document.getElementById('Total'+nb).value = result3;
         }
         </script> 
         <script src="http://code.jquery.com/jquery.js"></script>

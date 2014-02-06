@@ -54,7 +54,7 @@ include('connexion.php');
             }	
         }
         
-                public function ListeTVA()
+        public function ListeTVA()
         {
             try 
             {
@@ -73,5 +73,27 @@ include('connexion.php');
                  echo 'Échec lors de la connexion : ' . $e->getMessage();
             }	
         }
+        
+        public function ListeRefFournisseur()
+        {
+            try 
+            {
+                $requete = "SELECT RefFournisseur From produit where IdSection = 1;";
+                $this->retour = Achat::$bdd->prepare($requete);
+                $this->retour->execute();   
+                foreach ($this->retour as $ligne)
+                {
+                    echo "<option>";
+                    echo $ligne["RefFournisseur"];
+                    echo "</option>";
+                }
+            } 
+            catch (Exception $e) 
+            {
+                 echo 'Échec lors de la connexion : ' . $e->getMessage();
+            }	
+        }
+
+        
 }
 ?>

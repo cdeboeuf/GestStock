@@ -68,11 +68,6 @@ include('connexion.php');
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 
-
-            //$requete2 = "Select (SUM(PATTC * Quantite) / QuantiteTotal) as $PATTCPondere from detailsligneproduit inner join produit on detailsligneproduit.Id = produit.Id ;";
-            //$rs2 = Produit::$monPdo->query($requete2);
-            //$requete3 = "UPDATE Produit SET PATTCPondere = '$PATTCPondere where Produit.Id = $Id;";
-            //$rs3 = Produit::$monPdo->query($requete3);
         }
 }
 ?>
