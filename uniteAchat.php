@@ -1,18 +1,18 @@
 <?php include('connexion.php');
-include('tva.class.php');
-$tvaP= new Tva();                
+include('unite.class.php');
+$uniteP= new Unite();                
 
-if(isset($_POST['tva']))
+if(isset($_POST['unite']))
 {
-   $rep= $tvaP->ajout_Tva($_POST['tva']);
+   $rep= $uniteP->ajout_Unite($_POST['unite']);
 
 }
-if(isset($_POST['tvaSup']))
+if(isset($_POST['uniteSup']))
 {
-   $rep= $tvaP->supprimer_Tva($_POST['tvaSup']);
+   $rep= $uniteP->supprimer_Unite($_POST['uniteSup']);
 
 }
-$LesTva= $tvaP->affiche_Tva();
+$LesUnite= $uniteP->affiche_Unite();
 ?> 
 
 <html>
@@ -33,8 +33,8 @@ $LesTva= $tvaP->affiche_Tva();
             <?php include('Menu.php');?>
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
+                    <li><a href="./parametre.php">Modifier le taux de TVA</a></li>
+                    <li class="active"><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
                     <li><a href="./coefCorrection.php">Modifier le coeficient de correction</a></li>               
@@ -43,20 +43,20 @@ $LesTva= $tvaP->affiche_Tva();
                       <div class="row-fluid">
                       
                              <?php if(isset($rep)){ 
-                             if ($rep=="Le taux de tva a été ajouté"){?>
+                             if ($rep=="L'unitée d'achat a été ajouté"){?>
                              <div class="alert alert-success "><?php echo $rep;} else{?></div>
                          <div class="alert alert-danger"><?php echo $rep;}?></div>
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="tvaP">Les taux de tva déjà enregistré:</label>
-                 <form class="span3" name="tvaSup" action="parametre.php" method="post">
-                 <SELECT name="tvaSup" id="tvaP">
+                         <label class="badge" for="uniteP">Les unitées d'achat déjà enregistré:</label>
+                 <form class="span3" name="uniteSup" action="uniteAchat.php" method="post">
+                 <SELECT name="uniteSup" id="uniteP">
                   <?php
-                 foreach ($LesTva as $unetva)               
+                 foreach ($LesUnite as $uneUnite)               
                      {
                      ?>
-                        <option value='<?php echo $unetva[1] ?>'><?php echo $unetva[1]?></option>
+                        <option value='<?php echo $uneUnite[1] ?>'><?php echo $uneUnite[1]?></option>
                     <?php }    
                   ?>          
                  </SELECT>
@@ -64,8 +64,8 @@ $LesTva= $tvaP->affiche_Tva();
                      </form>
                      </div>
                       <div class='span4'>
-                <form class="span3" name="tvanew" action="parametre.php" method="post">
-                    <label class="badge" for="tva">Nouveau taux de tva :</label> <input type="text" name="tva" id="tva"/>
+                <form class="span3" name="unitenew" action="uniteAchat.php" method="post">
+                    <label class="badge" for="unite">Nouvelle unitée :</label> <input type="text" name="unite" id="unite"/>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                 </div>
