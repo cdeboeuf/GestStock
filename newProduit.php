@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 
 <?php
-include('Achat.class.php');
-$Achat = new Achat();
+include('Produit.class.php');
+$Produit = new Produit();
+
+if(isset($_POST['action']))
+ if (isset($_POST['action'])=='envoyer')
+ {
+     if(isset($_POST['RefFournisseur'])) 
+     {
+                extract($_POST);
+                    for ($i = 0; $i< count($_POST["RefFournisseur"])-1; $i++)
+                    {     
+                        $nb=$RefFournisseur[$i];                   
+                    }
+                
+      }     
+ }
+ 
+ 
 ?>
 
 
@@ -34,8 +50,7 @@ $Achat = new Achat();
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                                
-                                <form name="MonForm" id="MonForm">
+                                <form>
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
@@ -43,19 +58,15 @@ $Achat = new Achat();
                                                     <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
                                                     <select name = "Nom" id="Fournisseur"> 
                                                     <?php	
-                                                        echo $Achat->ListeFournisseurs();
+                                                        echo $Produit->ListeFournisseurs();
                                                     ?>
                                                     </select> 
                                                 </td>
 
                                                 <td>
-                                                    <label for="ChoixRefFournisseur"><b>Référence Fournisseur :</b></label>
-                                                    <select name = "RefFournisseur" id="RefFournisseur" 
-                                                            OnChange="javascript:envoyerRequete('getNbProduits.php?RefFournisseur='+escape(this.value))">
-                                                    <?php	
-                                                        echo $Achat->ListeRefFournisseur();
-                                                    ?>
-                                                    </select> 
+                                                    <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
+                                                    <input type="text" name="RefFournisseur[]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $nb;?>'>
+
                                                 </td>
 
                                                 <td>
@@ -79,7 +90,7 @@ $Achat = new Achat();
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
                                                 <select name = "unite" id="uniteAchat"> 
                                                 <?php	
-                                                    echo $Achat->ListeUniteAchat();
+                                                    echo $Produit->ListeUniteAchat();
                                                 ?>
                                                 </select>
                                             </td>
@@ -88,7 +99,7 @@ $Achat = new Achat();
                                                 <label for="CodeTVA""><b>Code TVA :</b></label>
                                                 <select name = "CodeTA" class="input-small" id="CodeTVA"> 
                                                 <?php	
-                                                    echo $Achat->ListeTVA();
+                                                    echo $Produit->ListeTVA();
                                                 ?>
                                                 </select>
                                             </td>
@@ -205,89 +216,6 @@ $Achat = new Achat();
                             objControle3.disabled=(objControleur.checked==false)?false:true;
                         }
                             return true;
-            }
-        </script>
-        <script language="Javascript">
-            function getRequeteHttp()
-            { // idem
-                    var requeteHttp;
-                    if (window.XMLHttpRequest)
-                    {	// Mozilla
-                            requeteHttp=new XMLHttpRequest();
-                            if (requeteHttp.overrideMimeType)
-                            { // problème firefox
-                                    requeteHttp.overrideMimeType('text/xml');
-                            }
-                    }
-                    else
-                    {
-                            if (window.ActiveXObject)
-                            {	// C'est Internet explorer < IE7
-                                    try
-                                    {
-                                            requeteHttp=new ActiveXObject("Msxml2.XMLHTTP");
-                                    }
-                                    catch(e)
-                                    {
-                                            try
-                                            {
-                                                    requeteHttp=new ActiveXObject("Microsoft.XMLHTTP");
-                                            }
-                                            catch(e)
-                                            {
-                                                    requeteHttp=null;
-                                            }
-                                    }
-                            }
-                    }
-                    return requeteHttp;
-            }
-        </script>
-        <script language="Javascript">
-            function envoyerRequete(url, idRefFournisseur)
-            {
-                    var requeteHttp=getRequeteHttp();
-                    if (requeteHttp==null)
-                    {
-                            alert("Impossible d'utiliser Ajax sur ce navigateur");
-                    }
-                    else
-                    {
-                            requeteHttp.open('GET',url + '?RefFournisseur=' + escape(idRefFournisseur),true);
-                            requeteHttp.open('GET',url ,true);
-                            requeteHttp.onreadystatechange=function() {recevoirReponse(requeteHttp);};
-                            requeteHttp.send(null);
-                    }
-                    return;
-            }
-        </script>
-        <script language="Javascript">
-            function recevoirReponse(requeteHttp)
-            { // idem
-                if (requeteHttp.readyState==4)
-                            {	// la requête est achevée, le résultat a été transmis
-                                    if (requeteHttp.status==200)
-                                    {	// la requête s'est correctement déroulée (pourrait être 404 pour non trouvé par exemple)
-                                            traiterReponse(requeteHttp.responseText);
-                                    }
-                                    else
-                                    {
-                                            alert("La requête ne s'est pas correctement exécutée");
-                                    }
-                            }
-            }
-        </script>
-        <script language="Javascript">
-            function traiterReponse(reponse1, reponse2, reponse3, reponse4, reponse5, reponse6, reponse7)
-            {
-                    document.getElementById("Fournisseur").innerHTML=reponse1;
-                    document.getElementById("Coloris").innerHTML=reponse2;
-                    document.getElementById("RefLycee").innerHTML=reponse3;
-                    document.getElementById("Designation").innerHTML=reponse4;
-                    document.getElementById("uniteAchat").innerHTML=reponse5;
-                    document.getElementById("CodeTVA").innerHTML=reponse6;
-                    document.getElementById("StockAlerte").innerHTML=reponse7;
-                    
             }
         </script>
         <script src="http://code.jquery.com/jquery.js"></script>
