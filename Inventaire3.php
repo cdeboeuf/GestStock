@@ -40,7 +40,9 @@ if(isset($_POST['action']))
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+           $menu->Verifdroit('Inventaire1.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./Inventaire1.php">Mode</a></li>

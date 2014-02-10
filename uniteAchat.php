@@ -32,7 +32,10 @@ $LesUnite= $uniteP->affiche_Unite();
             <div class="page-header"> 
                 <h1><small>Parametre</small></h1>
                 </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+           $menu->Verifdroit('parametre.php');?>
+            
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./parametre.php">Modifier le taux de TVA</a></li>

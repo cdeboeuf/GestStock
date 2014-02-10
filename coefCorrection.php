@@ -24,7 +24,9 @@ if(isset($_POST['coef']))
             <div class="page-header"> 
                 <h1><small>Parametre</small></h1>
                 </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+           $menu->Verifdroit('parametre.php');?>
            
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">

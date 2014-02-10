@@ -39,7 +39,10 @@ if(isset($_POST['action']))
             <div class="page-header">
                 <h1><small>Achat</small></h1>
             </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+              $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li class="active"><a href="./newProduit.php">Mode</a></li>

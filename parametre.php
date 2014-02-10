@@ -35,8 +35,11 @@ $LesTva= $tvaP->affiche_Tva();
             <div class="page-header"> 
                 <h1><small>Parametre</small></h1>
                 </div>
-            <?php include('Menu.php');?>
-                  <div class="span12"> 
+            <?php include('Menu.php');
+            $menu=new Menu();
+               $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);
+           ?><div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./parametre.php">Modifier le taux de TVA</a></li>
                     <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>

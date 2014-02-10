@@ -1,5 +1,8 @@
 if(!isset($_SESSION['idVisiteur'])) 
-{header('location: index.php');  }
+{header('location: index.php'); 
+$menu=new Menu();
+              $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);}
 Changer le mot de passe de l'utilisateur courent<?php
 
 /*

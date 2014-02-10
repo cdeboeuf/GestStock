@@ -40,7 +40,10 @@ if(isset($_POST['action']))
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+            $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./Inventaire1.php">Mode</a></li>
@@ -158,6 +161,7 @@ if(isset($_POST['action']))
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
                             </div>
+                             <button type="submit" class="btn btn-danger" value="nouvelle" name="annee" onClick="return confirm('Etes-vous sûr de vouloir créer une nouvelle année?');">Valider</button>
                         </div>
                     </div>
                 </div>
