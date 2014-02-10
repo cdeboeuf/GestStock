@@ -53,7 +53,7 @@ if(isset($_POST['coef']))
                 </div>
                     <form class="span3" name="ModifCout" action="coefCorrection.php" method="post">
                     <label class="badge" for="coef">Modifié le coefficient :</label> <input type="text" name="coef" id="coef"/>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-success">Envoyer</button>
                 </form>
                     <br><br><br><br>
                 </div>

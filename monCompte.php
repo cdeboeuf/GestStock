@@ -99,7 +99,7 @@ if (isset($_POST['action'])=='submit')
                                     
                                     <!-- Button -->
                                     <div class="controls">
-                                        <button type="submit" value="submit" name="action" class="btn btn-primary">Valider</button>
+                                        <button type="submit" value="submit" name="action" class="btn btn-success">Valider</button>
                                     </div>
                                 </fieldset>
                             </form>

@@ -117,10 +117,10 @@ if(isset($_POST['action']))
                                             </tr>
                                             <tr>
                                                 <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
+                                                    <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
                                                 </td>
                                                 <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
+                                                    <button type="reset" class="btn btn-danger" value="reset" name="reset">Annulation</button>
                                                 </td>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" value="modifier" name="modifier" onClick="return confirm('Etes-vous sûr?');">Modification</button>
@@ -180,10 +180,10 @@ if(isset($_POST['action']))
                                           
                                             <tr>
                                                 <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
+                                                    <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
                                                 </td>
                                                 <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
+                                                    <button type="reset" class="btn btn-danger" value="reset" name="reset">Annulation</button>
                                                 </td>
                                             </tr>
                                         </thead>

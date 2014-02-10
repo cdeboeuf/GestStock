@@ -53,7 +53,7 @@ if(isset($_POST['cout']))
                 </div>
                     <form class="span3" name="ModifCout" action="coutMachine.php" method="post">
                     <label class="badge" for="cout">Modifié le cout :</label> <input type="text" name="cout" id="cout"/>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-success">Envoyer</button>
                 </form>
                     <br><br><br><br>
                 </div>

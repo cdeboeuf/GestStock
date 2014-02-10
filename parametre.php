@@ -70,13 +70,13 @@ $LesTva= $tvaP->affiche_Tva();
                      <?php }
                   ?>          
                  </SELECT>
-                     <button type="submit" class="btn btn-primary">Supprimer</button>
+                     <button type="submit" class="btn btn-danger">Supprimer</button>
                      </form>
                      </div>
                       <div class='span4'>
                 <form class="span3" name="tvanew" action="parametre.php" method="post">
                     <label class="badge" for="tva">Nouveau taux de tva :</label> <input type="text" name="tva" id="tva"/>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-success">Envoyer</button>
                 </form>
                 </div>
                          
