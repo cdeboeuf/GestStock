@@ -27,37 +27,48 @@ function verification($nom,$mdp)
     }
     elseif (count($result)==1) 
         {  
-        foreach ($result as $value) 
-        {
-            if ($value['Mdp']== (md5($mdp)))
+            foreach ($result as $value) 
             {
-            if($value['Type']!=1)
-            {
-                $annee=new annee();
-                $nb=$annee->DerniereAnnee();
-                Users::$bdd=connexion_base($nb);
-                $reponse="<br>Bienvenue ".$value['Login']."";
-                connecter($value['Id'], $value['Login'], $value['Type']);
-                
-            }else{
-            $reponse="<br>Bienvenue ".$value['Login']."";
-            connecter($value['Id'], $value['Login'], $value['Type']);
-            
-            }header("location: Accueil1.php");
-            }else
-            {
-            $reponse="<br>Mauvais mot de passe";}
-        }
-}
-else
-{
-    $reponse="<br>Erreur";
-}
-   
-     return  $reponse ;                
-                    
+                if ($value['Mdp']== (md5($mdp)))
+                {
+                    if($value['Type']!=1)
+                {
+                    $annee=new annee();
+                    $nb=$annee->DerniereAnnee();
+                    Users::$bdd=connexion_base($nb);
+                    $reponse="<br>Bienvenue ".$value['Login']."";
+                    connecter($value['Id'], $value['Login'], $value['Type']);
 
-    
+                }
+                else
+                {
+                    $reponse="<br>Bienvenue ".$value['Login']."";
+                    connecter($value['Id'], $value['Login'], $value['Type']);
+                }
+                header("location: Accueil1.php");
+                }
+                else
+                {
+                    $reponse="<br>Mauvais mot de passe";
+                }
+            }
+        }
+        else
+        {
+            $reponse="<br>Erreur";
+        }
+            return  $reponse ;                 
 }
+
+function MajMdp($Mdp, $Login)
+{
+            $req = "UPDATE users SET Mdp = (md5('$Mdp')) where Login = '$Login';";
+            $this->retour = Users::$bdd->prepare($req);
+            $this->retour->execute(); 
+}
+        
+        
+        
+        
 }
 ?>

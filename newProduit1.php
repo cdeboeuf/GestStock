@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 
 <?php
-include('Achat.class.php');
-$Achat = new Achat();     
+include('Produit.class.php');
+$Produit = new Produit();
+
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
+
+if(isset($_POST['action']))
+ if (isset($_POST['action'])=='envoyer')
+ {
+     if(isset($_POST['RefFournisseur'])) 
+     {
+                extract($_POST);
+                    for ($i = 0; $i< count($_POST["RefFournisseur"])-1; $i++)
+                    {     
+                        $nb=$RefFournisseur[$i];                   
+                    }         
+      }     
+ }
+ 
+ 
 ?>
 
 
@@ -25,35 +41,39 @@ if(!isset($_SESSION['idVisiteur']))
             <div class="page-header">
                 <h1><small>Achat</small></h1>
             </div>
-            <?php include('Menu.php');
-            $menu=new Menu();
-           $menu->Verifdroit('newProduit.php');?>
+            <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./newProduit.php">Mode</a></li>
-                    <li  class="active"><a href="./newProduit2.php">Esthétique</a></li>
+                    <li class="active"><a href="./newProduit.php">Mode</a></li>
+                    <li><a href="./newProduit2.php">Esthétique</a></li>
                 </ul>
             
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">              
-                                <form method="POST" action="Achat.php">
+                            <div class="row-fluid">
+                                <form>
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
                                                     <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
-                                                    <select name = "Nom"> 
+                                                    <select name = "Nom" id="Fournisseur"> 
                                                     <?php	
-                                                        echo $Achat->ListeFournisseurs();
+                                                        echo $Produit->ListeFournisseurs();
                                                     ?>
                                                     </select> 
                                                 </td>
 
                                                 <td>
-                                                    <label for="RefFournisseur"><b>Référence Fournisseur :</b></label>
-                                                    <input type="text" name="RefFournisseur" id="RefFournisseur">
+                                                    <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
+                                                    <input type="text" name="RefFournisseur[]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $nb;?>'>
+
+                                                </td>
+
+                                                <td>
+                                                    <label for="Coloris"><b>Coloris :</b></label>
+                                                    <input type="text" name="Coloris" id="Coloris" class="input-small">
                                                 </td>
 
                                                 <td>
@@ -70,29 +90,29 @@ if(!isset($_SESSION['idVisiteur']))
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite"> 
+                                                <select name = "unite" id="uniteAchat"> 
                                                 <?php	
-                                                    echo $Achat->ListeUniteAchat();
+                                                    echo $Produit->ListeUniteAchat();
                                                 ?>
                                                 </select>
                                             </td>
 
                                             <td>
                                                 <label for="CodeTVA""><b>Code TVA :</b></label>
-                                                <select name = "CodeTA" class="input-small"> 
+                                                <select name = "CodeTA" class="input-small" id="CodeTVA"> 
                                                 <?php	
-                                                    echo $Achat->ListeTVA();
+                                                    echo $Produit->ListeTVA();
                                                 ?>
                                                 </select>
                                             </td>
 
                                             <td>
-                                                <label for="StockAlerte"><b>Stock d'alerte :</b></label>
+                                                <label for="StockAlerte"><b>Stock d'alerte:</b></label>
                                                 <input type="text" name="StockAlerte" id="StockAlerte" class="input-small">
                                             </td>
                                             <tr>
                                                 <td>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" value="1"> </label> 
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" id="Obsolete" value="1"> </label> 
                                                 </td>
                                             </tr>
                                             <tr>
@@ -117,7 +137,8 @@ if(!isset($_SESSION['idVisiteur']))
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">             
+                            <div class="row-fluid">
+                                               
                                 <form method="POST" action="Achat.php" name="form">
                                     <table style="border:none;">
                                         <thead>
@@ -172,35 +193,33 @@ if(!isset($_SESSION['idVisiteur']))
                         </div>
                     </div>
                 </div>
-            
-            </div>
+            </div>   
         </div>
         <!--Js -->
-        
-<script language="Javascript">
-function GereControle(Controleur, Controle1, Controle2, Controle3, Masquer) 
-{
+        <script language="Javascript">
+            function GereControle(Controleur, Controle1, Controle2, Controle3, Masquer) 
+            {
 
-var objControleur = document.getElementById(Controleur);
-var objControle1 = document.getElementById(Controle1);
-var objControle2 = document.getElementById(Controle2);
-var objControle3 = document.getElementById(Controle3);
-	if (Masquer =='1')
-            {
-		objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+            var objControleur = document.getElementById(Controleur);
+            var objControle1 = document.getElementById(Controle1);
+            var objControle2 = document.getElementById(Controle2);
+            var objControle3 = document.getElementById(Controle3);
+                    if (Masquer =='1')
+                        {
+                            objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                            objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                            objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
+                        }
+
+                    else
+                        {
+                            objControle1.disabled=(objControleur.checked==false)?false:true;
+                            objControle2.disabled=(objControleur.checked==false)?false:true;
+                            objControle3.disabled=(objControleur.checked==false)?false:true;
+                        }
+                            return true;
             }
-                
-	else
-            {
-		objControle1.disabled=(objControleur.checked==false)?false:true;
-                objControle2.disabled=(objControleur.checked==false)?false:true;
-                objControle3.disabled=(objControleur.checked==false)?false:true;
-            }
-                return true;
-}
-</script>
+        </script>
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
