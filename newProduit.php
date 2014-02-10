@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 
 <?php
-include('Produit.class.php');
-$Produit = new Produit();
 
-if(isset($_POST['action']))
- if (isset($_POST['action'])=='envoyer')
- {
-     if(isset($_POST['RefFournisseur'])) 
-     {
-                extract($_POST);
-                    for ($i = 0; $i< count($_POST["RefFournisseur"])-1; $i++)
-                    {     
-                        $nb=$RefFournisseur[$i];                   
-                    }
-                
-      }     
- }
- 
- 
+include('produit.class.php');
+$produit = new produit();
+
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
+
+
 ?>
 
 
@@ -34,190 +24,112 @@ if(isset($_POST['action']))
 
     </head>
     <body>
-        
         <div class="container-fluid">
             <div class="page-header">
-                <h1><small>Achat</small></h1>
+                <h1><small>Produit</small></h1>
             </div>
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
+                    <li  class="active"><a href="./stockeProduit1.php">Mode</a></li>
+                    <li><a href="./stockeProduit2.php">Esthétique</a></li>
+                    <li><a href="./stockeProduit3.php">Objet Confectionné</a></li>
                 </ul>
-            
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                <form>
-                                    <table style="border:none;">
-                                        <thead>
-                                            <tr>
-                                                <td>
-                                                    <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
-                                                    <select name = "Nom" id="Fournisseur"> 
-                                                    <?php	
-                                                        echo $Produit->ListeFournisseurs();
+                                
+                                <form  method="POST" action="newProduit1.php">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <caption> Tableau des produits </caption>
+                        <thead>  
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+
+                                        <th>
+                                            Référence Lycée
+                                        </th>
+
+                                        <th>
+                                            Référence Fournisseur
+                                        </th>
+
+                                        <th>
+                                            Fournisseur
+                                        </th>
+
+                                        <th>
+                                            Désignation
+                                        </th>
+
+                                        <th>
+                                            Quantité Totale
+                                        </th>
+                                        
+                                        <th>
+                                            Coloris
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $Resultat = $produit->GetValorisationStockMODE();
+                                        $nb=0;
+                                        foreach ($Resultat as $value) 
+                                        {?>
+                                                <tr>
+                                                    <td>
+                                                    <button type="submit" name="action" id="id<?php echo $nb ?>" value="envoyer"> <?php echo $value["Id"] ?> </button>
+                                                        <?php 
+                                                    echo "</td>";
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["RefLycee"];
                                                     ?>
-                                                    </select> 
-                                                </td>
+                                                    <input type="hidden" name="RefLycee[]" id="RefLycee<?php echo $nb ?>" value="<?php echo $value["RefLycee"] ?>">
+                                                    <?php
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["RefFournisseur"];
+                                                    ?>
+                                                    <input type="hidden" name="RefFournisseur[<?php $nb ?>]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $value["RefFournisseur"]; ?>'>
+                                                    <?php
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Nom"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Designation"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["QuantiteTotal"];
+                                                    echo "</td>";
+                                                    echo "<td>";
+                                                    echo $value["Coloris"];
+                                                    echo "</td>";
+                                                echo "</tr>";
+                                                $nb=$nb+1;
+                                        }
 
-                                                <td>
-                                                    <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
-                                                    <input type="text" name="RefFournisseur[]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $nb;?>'>
 
-                                                </td>
-
-                                                <td>
-                                                    <label for="Coloris"><b>Coloris :</b></label>
-                                                    <input type="text" name="Coloris" id="Coloris" class="input-small">
-                                                </td>
-
-                                                <td>
-                                                    <label for="RéfLycee"><b>Référence Lycée :</b></label>
-                                                    <input type="text" name="RefLycee" id="RefLycee">
-                                                </td>
-
-                                            <tr>
-                                                <th>
-                                                    <label for="Désignation"><b>Désignation :</b></label>
-                                                    <input type="text" name="Designation" id="Designation">
-                                                </th>
-                                            </tr>     
-                                            
-                                            <td>
-                                                <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite" id="uniteAchat"> 
-                                                <?php	
-                                                    echo $Produit->ListeUniteAchat();
-                                                ?>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <label for="CodeTVA""><b>Code TVA :</b></label>
-                                                <select name = "CodeTA" class="input-small" id="CodeTVA"> 
-                                                <?php	
-                                                    echo $Produit->ListeTVA();
-                                                ?>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <label for="StockAlerte"><b>Stock d'alerte:</b></label>
-                                                <input type="text" name="StockAlerte" id="StockAlerte" class="input-small">
-                                            </td>
-                                            <tr>
-                                                <td>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" id="Obsolete" value="1"> </label> 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
-                                                </td>
-                                                <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary" value="modifier" name="modifier" onClick="return confirm('Etes-vous sûr?');">Modification</button>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    ?>
+                                </tbody>
+                                    <br>
+                                </table>
+                                <br>
                                 </form>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             
-                <div class="tab-content">
-                    <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                               
-                                <form method="POST" action="Achat.php" name="form">
-                                    <table style="border:none;">
-                                        <thead>
-                                            <tr>
-                                                <td>
-                                                    <label for="DateEntree"><b>Date d'entrée :</b></label>
-                                                    <input type="text" name="DateEntree" id="DateEntree">
-                                                </td>
-
-                                                <td>
-                                                    <label for="Quantite"><b>Quantité :</b></label>
-                                                    <input type="text" name="Quantite" id="Quantite">
-                                                </td>
-                                                
-                                                <td>
-                                                    <label for="Gratuit"> <b>Gratuit</b> <input type="checkbox" name="Gratuit" id ="chkb_1" 
-                                                    onClick="GereControle('chkb_1', 'PAHT', 'PATTC', 'PATTCPondere', '0');">
-                                                    </label> 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="PAHT"><b>PAHT :</b></label>
-                                                    <input type="text" name="PATHT" id="PAHT">
-                                                </td>
-
-                                                <td>
-                                                    <label for="PATTC"><b>PATTC :</b></label>
-                                                    <input type="text" name="PATTC" id="PATTC">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label for="PATTCPondere"><b>PATTC Pondéré :</b></label>
-                                                    <input type="text" name="PATTCPondere" id="PATTCPondere"
-                                                    
-                                                </th>
-                                            </tr>     
-                                          
-                                            <tr>
-                                                <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
-                                                </td>
-                                                <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>   
         </div>
         <!--Js -->
-        <script language="Javascript">
-            function GereControle(Controleur, Controle1, Controle2, Controle3, Masquer) 
-            {
-
-            var objControleur = document.getElementById(Controleur);
-            var objControle1 = document.getElementById(Controle1);
-            var objControle2 = document.getElementById(Controle2);
-            var objControle3 = document.getElementById(Controle3);
-                    if (Masquer =='1')
-                        {
-                            objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                            objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                            objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                        }
-
-                    else
-                        {
-                            objControle1.disabled=(objControleur.checked==false)?false:true;
-                            objControle2.disabled=(objControleur.checked==false)?false:true;
-                            objControle3.disabled=(objControleur.checked==false)?false:true;
-                        }
-                            return true;
-            }
-        </script>
+        </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>

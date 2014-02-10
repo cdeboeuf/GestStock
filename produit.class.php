@@ -38,7 +38,7 @@ include('connexion.php');
                         , (QuantiteTotal*PATTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1";
             $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll();      
+            return $laLigne = $rs->fetchAll();
            } 
            catch (Exception $e) 
            {
