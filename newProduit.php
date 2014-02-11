@@ -43,10 +43,10 @@ if(!isset($_SESSION['idVisiteur']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 
-                                <form  method="POST" action="newProduit1.php">
+                                <form  method="GET" action="newProduit1.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
-                        <thead>  
+                                <thead>  
                                     <tr>
                                         <th>
                                             ID
@@ -85,20 +85,23 @@ if(!isset($_SESSION['idVisiteur']))
                                         {?>
                                                 <tr>
                                                     <td>
-                                                    <button type="submit" name="action" id="id<?php echo $nb ?>" value="envoyer"> <?php echo $value["Id"] ?> </button>
+                                                        <?php $id = "id$nb"; $nb++;?>
+                                                        <?php $idlien = $value["RefFournisseur"]; ?>
+                                                        <?php $lien = "newProduit1.php?num=$idlien"; ?> 
+                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["RefLycee"];
                                                     ?>
-                                                    <input type="hidden" name="RefLycee[]" id="RefLycee<?php echo $nb ?>" value="<?php echo $value["RefLycee"] ?>">
+                                                    <input type="hidden" name="RefLycee<?php echo $nb ?>" id="RefLycee<?php echo $nb ?>" value="<?php echo $value["RefLycee"] ?>">
                                                     <?php
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["RefFournisseur"];
                                                     ?>
-                                                    <input type="hidden" name="RefFournisseur[<?php $nb ?>]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $value["RefFournisseur"]; ?>'>
+                                                    <input type="hidden" name="RefFournisseur<?php echo $nb ?>" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $value["RefFournisseur"]; ?>'>
                                                     <?php
                                                     echo "</td>";
                                                     echo "<td>";
@@ -114,7 +117,6 @@ if(!isset($_SESSION['idVisiteur']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                 echo "</tr>";
-                                                $nb=$nb+1;
                                         }
 
 

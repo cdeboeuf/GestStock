@@ -7,20 +7,32 @@ $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
+if(isset($_GET))
+{ 
+    $num = $_GET['num'];
+    extract($_GET);
+    $RefFournisseur = $num;
+    $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
+    $nb=0;
+       
+    foreach ($Resultat as $value)
+    {
+        $value['Nom'];
+        $value['Coloris'];
+        $value['RefLycee'];
+        $value['Designation'];
+        $value['Details'];
+        $value['Taux'];
+        $value['StockAlerte'];
+        $value['Obselete'];
+    }
+}
+
 if(isset($_POST['action']))
  if (isset($_POST['action'])=='envoyer')
- {
-     if(isset($_POST['RefFournisseur'])) 
-     {
-                extract($_POST);
-                    for ($i = 0; $i< count($_POST["RefFournisseur"])-1; $i++)
-                    {     
-                        $nb=$RefFournisseur[$i];                   
-                    }         
-      }     
+ {    
+     $produit->MajProduit();
  }
- 
- 
 ?>
 
 
@@ -43,76 +55,103 @@ if(isset($_POST['action']))
             </div>
             <?php include('Menu.php');?>
             <div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
-                </ul>
             
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                <form>
+                                <form method="POST" action="newProduit1.php">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
-                                                    <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
-                                                    <select name = "Nom" id="Fournisseur"> 
+                                                    <label for="ChoixFournisseur"><b>Fournisseur :</b></label>                    
+                                                    <select name = "Fournisseur" class="input-small" id="Fournisseur"> 
                                                     <?php	
-                                                        echo $Produit->ListeFournisseurs();
+                                                        $tab1 = $Produit->ListeFournisseurs();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {
+                                                            echo "<option ";
+                                                            if($value["Nom"] == $valeur1["Nom"])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1["Nom"]."</option>";
+                                                        }
                                                     ?>
-                                                    </select> 
+                                                    </select>
                                                 </td>
 
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
-                                                    <input type="text" name="RefFournisseur[]" id="RefFournisseur<?php echo $nb ?>" value='<?php echo $nb;?>'>
+                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value='<?php echo $RefFournisseur;?>'>
 
                                                 </td>
 
                                                 <td>
                                                     <label for="Coloris"><b>Coloris :</b></label>
-                                                    <input type="text" name="Coloris" id="Coloris" class="input-small">
+                                                    <input type="text" name="Coloris" id="Coloris" class="input-small" value='<?php echo $value['Coloris'];?>'>
                                                 </td>
 
                                                 <td>
                                                     <label for="RéfLycee"><b>Référence Lycée :</b></label>
-                                                    <input type="text" name="RefLycee" id="RefLycee">
+                                                    <input type="text" name="RefLycee" id="RefLycee" value='<?php echo $value['RefLycee'];?>'>
                                                 </td>
 
                                             <tr>
                                                 <th>
                                                     <label for="Désignation"><b>Désignation :</b></label>
-                                                    <input type="text" name="Designation" id="Designation">
+                                                    <input type="text" name="Designation" id="Designation" value='<?php echo $value['Designation'];?>'>
                                                 </th>
                                             </tr>     
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite" id="uniteAchat"> 
-                                                <?php	
-                                                    echo $Produit->ListeUniteAchat();
-                                                ?>
+                                                <select name = "unite" id="uniteAchat" class="input-medium"> 
+                                                            <?php	
+                                                        $tab1 = $Produit->ListeUniteAchat();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {
+                                                            echo "<option ";
+                                                            if($value["Details"] == $valeur1["Details"])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1["Details"]."</option>";
+                                                        }
+                                                    ?>
                                                 </select>
                                             </td>
 
                                             <td>
-                                                <label for="CodeTVA""><b>Code TVA :</b></label>
-                                                <select name = "CodeTA" class="input-small" id="CodeTVA"> 
-                                                <?php	
-                                                    echo $Produit->ListeTVA();
-                                                ?>
+                                                <label for="CodeTVA"><b>Code TVA :</b></label>
+                                                <select name = "CodeTVA" class="input-small" id="CodeTVA"> 
+                                                   <?php	
+                                                        $tab1 = $Produit->ListeTVA();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {
+                                                            echo "<option ";
+                                                            if($value["Taux"] == $valeur1["Taux"])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1["Taux"]."</option>";
+                                                        }
+                                                    ?>
                                                 </select>
                                             </td>
 
                                             <td>
                                                 <label for="StockAlerte"><b>Stock d'alerte:</b></label>
-                                                <input type="text" name="StockAlerte" id="StockAlerte" class="input-small">
+                                                <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php echo $value['StockAlerte'];?>'>
                                             </td>
                                             <tr>
                                                 <td>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obsolete" id="Obsolete" value="1"> </label> 
+                                                    <?php if($value["Obselete"] == 0){?>
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obselete" id="Obselete"> </label>
+                                                    <?php }else{ ?>
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obselete" id="Obselete" checked> </label>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                             <tr>

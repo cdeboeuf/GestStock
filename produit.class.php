@@ -70,19 +70,13 @@ include('connexion.php');
             $this->retour->execute(); 
         }
         
-                public function ListeFournisseurs()
+        public function ListeFournisseurs()
         {
             try 
             {
-                $requete = "SELECT Nom From fournisseurs;";
-                $this->retour = Produit::$bdd->prepare($requete);
-                $this->retour->execute();   
-                foreach ($this->retour as $ligne)
-                {
-                    echo "<option>";
-                    echo $ligne["Nom"];
-                    echo "</option>";
-                }
+                $requete = "SELECT Nom From Fournisseurs;";
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
             } 
             catch (Exception $e) 
             {
@@ -95,14 +89,8 @@ include('connexion.php');
             try 
             {
                 $requete = "SELECT Details From unite;";
-                $this->retour = Produit::$bdd->prepare($requete);
-                $this->retour->execute();   
-                foreach ($this->retour as $ligne)
-                {
-                    echo "<option>";
-                    echo $ligne["Details"];
-                    echo "</option>";
-                }
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
             } 
             catch (Exception $e) 
             {
@@ -115,14 +103,8 @@ include('connexion.php');
             try 
             {
                 $requete = "SELECT Taux From tva;";
-                $this->retour = Produit::$bdd->prepare($requete);
-                $this->retour->execute();   
-                foreach ($this->retour as $ligne)
-                {
-                    echo "<option>";
-                    echo $ligne["Taux"];
-                    echo "</option>";
-                }
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
             } 
             catch (Exception $e) 
             {
@@ -130,24 +112,52 @@ include('connexion.php');
             }	
         }
         
-        public function ListeRefFournisseur()
+        
+        public function GetRemplissageTableau($RefFournisseur)
         {
             try 
-            {
-                $requete = "SELECT RefFournisseur From produit where IdSection = 1;";
-                $this->retour = Produit::$bdd->prepare($requete);
-                $this->retour->execute();   
-                foreach ($this->retour as $ligne)
-                {
-                    echo "<option>";
-                    echo $ligne["RefFournisseur"];
-                    echo "</option>";
-                }
-            } 
-            catch (Exception $e) 
-            {
-                 echo 'Échec lors de la connexion : ' . $e->getMessage();
-            }	
+           {
+            $requete = "SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, tva.Taux
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id inner join tva on detailsligneproduit.IdTVA = tva.Id
+                Where RefFournisseur = '$RefFournisseur';";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll();      
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $RefFournisseur, $Nom, $Designation, $Coloris, $Details, $Taux, $Id)
+        {
+            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee' where Produit.Id = '$Id';";
+            $requete2 = "UPDATE Produit SET StockAlerte = '$StockAlerte' where Produit.Id = '$Id';";
+            $requete3 = "UPDATE Produit SET Obselete = '$Obselete' where Produit.Id = '$Id';";
+            $requete4 = "UPDATE Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id SET RefFournisseur = '$RefFournisseur' where Produit.Id = '$Id';";
+            $requete5 = "UPDATE Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id SET Nom = '$Nom' where Produit.Id = '$Id';";
+            $requete6 = "UPDATE Produit SET Designation = '$Designation' where Produit.Id = '$Id';";
+            $requete7 = "UPDATE Produit SET Coloris = '$Coloris' where Produit.Id = '$Id';";
+            $requete8 = "UPDATE Produit inner join Unite on Produit.IdUniteAchat = unite.Id SET Details = '$Details' where Produit.Id = '$Id';";
+            $requete9 = "UPDATE Produit inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id inner join tva on detailsligneproduit.IdTVA = tva.Id SET tva = '$Taux' where Produit.Id ='$Id';";
+            $this->retour = Produit::$bdd->prepare($requete1);
+            $this->retour->execute();
+            $this->retour = Produit::$bdd->prepare($requete2);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete3);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete4);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete5);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete6);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete7);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete8);
+            $this->retour->execute(); 
+            $this->retour = Produit::$bdd->prepare($requete9);
+            $this->retour->execute(); 
         }
 }
 ?>

@@ -42,7 +42,7 @@ $Produit = new Produit();
                                                     <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
                                                     <select name = "Nom" id="Fournisseur"> 
                                                     <?php	
-                                                        echo $Produit->ListeFournisseurs();
+                                                        //echo $Produit->ListeFournisseurs();
                                                     ?>
                                                     </select> 
                                                 </td>
@@ -52,7 +52,7 @@ $Produit = new Produit();
                                                     <select name = "RefFournisseur" id="RefFournisseur" 
                                                             OnChange="javascript:envoyerRequete('getNbProduits.php?RefFournisseur='+escape(this.value))">
                                                     <?php	
-                                                        echo $Produit->ListeRefFournisseur();
+                                                        //echo $Produit->ListeRefFournisseur();
                                                     ?>
                                                     </select> 
                                                 </td>
@@ -78,7 +78,7 @@ $Produit = new Produit();
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
                                                 <select name = "unite" id="uniteAchat"> 
                                                 <?php	
-                                                    echo $Produit->ListeUniteAchat();
+                                                    //echo $Produit->ListeUniteAchat();
                                                 ?>
                                                 </select>
                                             </td>
@@ -87,7 +87,7 @@ $Produit = new Produit();
                                                 <label for="CodeTVA""><b>Code TVA :</b></label>
                                                 <select name = "CodeTA" class="input-small" id="CodeTVA"> 
                                                 <?php	
-                                                    echo $Produit->ListeTVA();
+                                                    //echo $Produit->ListeTVA();
                                                 ?>
                                                 </select>
                                             </td>
