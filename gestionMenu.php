@@ -63,7 +63,7 @@ $LesType= $Typeuser->affiche_Type();
                            <div class="span3">
                     <form  name="newtype" action="gestionMenu.php" method="post">
                     <label class="badge" for="type">Nouveau Type :</label> <input type="text" name="type" id="type"/>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-success">Envoyer</button>
                     </form>
                     </div>
                     <div class='span3'>
@@ -81,8 +81,8 @@ $LesType= $Typeuser->affiche_Type();
                      }
                   ?>          
                  </SELECT><br>
-                     <button type="submit" class="btn btn-primary" name="action" value="Modifier">Supprimer</button>
-                     <button type="submit" class="btn btn-primary" name="action" value="Valider">Valider</button>
+                     <button type="submit" class="btn btn-danger" name="action" value="Modifier">Supprimer</button>
+                     <button type="submit" class="btn btn-success" name="action" value="Valider">Valider</button>
                      </form>
                     </div>
                      <div class='span3 offset1'>
@@ -132,7 +132,7 @@ $LesType= $Typeuser->affiche_Type();
                    
                      }    ?>       
                     </SELECT>
-                         <button type="submit" class="btn btn-primary" name="action" value="Ajou">Ajouter</button>
+                         <button type="submit" class="btn btn-success" name="action" value="Ajou">Ajouter</button>
                     </form>
     
                     <form method='POST'action="gestionMenu.php">
@@ -147,7 +147,7 @@ $LesType= $Typeuser->affiche_Type();
                      }   
                      ?>
                     </SELECT>
-                         <button type="submit" class="btn btn-primary" name="action" value="Sup">Suprimer</button>
+                         <button type="submit" class="btn btn-danger" name="action" value="Sup">Suprimer</button>
                     </form>
                     <?php
                     } ?>          

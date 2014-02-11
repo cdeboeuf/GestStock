@@ -28,11 +28,6 @@ $Produit = new Produit();
             $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
-                </ul>
-            
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
@@ -47,7 +42,7 @@ $Produit = new Produit();
                                                     <label for="ChoixFournisseur"><b>Fournisseur :</b></label>
                                                     <select name = "Nom" id="Fournisseur"> 
                                                     <?php	
-                                                        echo $Produit->ListeFournisseurs();
+                                                        //echo $Produit->ListeFournisseurs();
                                                     ?>
                                                     </select> 
                                                 </td>
@@ -57,7 +52,7 @@ $Produit = new Produit();
                                                     <select name = "RefFournisseur" id="RefFournisseur" 
                                                             OnChange="javascript:envoyerRequete('getNbProduits.php?RefFournisseur='+escape(this.value))">
                                                     <?php	
-                                                        echo $Produit->ListeRefFournisseur();
+                                                        //echo $Produit->ListeRefFournisseur();
                                                     ?>
                                                     </select> 
                                                 </td>
@@ -83,7 +78,7 @@ $Produit = new Produit();
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
                                                 <select name = "unite" id="uniteAchat"> 
                                                 <?php	
-                                                    echo $Produit->ListeUniteAchat();
+                                                    //echo $Produit->ListeUniteAchat();
                                                 ?>
                                                 </select>
                                             </td>
@@ -92,7 +87,7 @@ $Produit = new Produit();
                                                 <label for="CodeTVA""><b>Code TVA :</b></label>
                                                 <select name = "CodeTA" class="input-small" id="CodeTVA"> 
                                                 <?php	
-                                                    echo $Produit->ListeTVA();
+                                                    //echo $Produit->ListeTVA();
                                                 ?>
                                                 </select>
                                             </td>
@@ -108,10 +103,10 @@ $Produit = new Produit();
                                             </tr>
                                             <tr>
                                                 <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
+                                                    <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
                                                 </td>
                                                 <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
+                                                    <button type="reset" class="btn btn-danger" value="reset" name="reset">Annulation</button>
                                                 </td>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" value="modifier" name="modifier" onClick="return confirm('Etes-vous sûr?');">Modification</button>
@@ -126,60 +121,48 @@ $Produit = new Produit();
                 </div>
             
                 <div class="tab-content">
+                    <ul class="nav nav-tabs" id="profileTabs">
+                        <li class="active"><a href="./newProduit.php">Mode - Pratique</a></li>
+                        <li><a href="./newProduit2.php">Mode - Object Confectionné</a></li>
+                        <li><a href="./newProduit3.php">Esthétique - Salon</a></li>
+
+                    </ul>
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">
-                                               
-                                <form method="POST" action="Achat.php" name="form">
+                            <div class="row-fluid">                   
+                                <form class="form-horizontal">
+                                    <fieldset>
+
+                                    <!-- Form Name -->
                                     <legend>Partie en mise à jour</legend>
-                                    <table style="border:none;">
-                                        <thead>
-                                            <tr>
-                                                <td>
-                                                    <label for="DateEntree"><b>Date d'entrée :</b></label>
-                                                    <input type="text" name="DateEntree" id="DateEntree">
-                                                </td>
 
-                                                <td>
-                                                    <label for="Quantite"><b>Quantité :</b></label>
-                                                    <input type="text" name="Quantite" id="Quantite">
-                                                </td>
-                                                
-                                                <td>
-                                                    <label for="Gratuit"> <b>Gratuit</b> <input type="checkbox" name="Gratuit" id ="chkb_1" 
-                                                    onClick="GereControle('chkb_1', 'PAHT', 'PATTC', 'PATTCPondere', '0');">
-                                                    </label> 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="PAHT"><b>PAHT :</b></label>
-                                                    <input type="text" name="PATHT" id="PAHT">
-                                                </td>
+                                    <!-- Text input-->
+                                    <div class="control-group">
+                                        <label class="control-label" for="DateSortie"><b>Date de sortie :</b></label>
+                                    <div class="controls">
+                                        <input id="DateSortie" name="DateSortie" placeholder="Date de sortie" class="input-xlarge" type="text">
 
-                                                <td>
-                                                    <label for="PATTC"><b>PATTC :</b></label>
-                                                    <input type="text" name="PATTC" id="PATTC">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label for="PATTCPondere"><b>PATTC Pondéré :</b></label>
-                                                    <input type="text" name="PATTCPondere" id="PATTCPondere"
-                                                    
-                                                </th>
-                                            </tr>     
-                                          
-                                            <tr>
-                                                <td>        
-                                                    <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Validation</button>
-                                                </td>
-                                                <td>
-                                                    <button type="reset" class="btn btn-primary" value="reset" name="reset">Annulation</button>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    </div>
+                                    </div>
+
+                                    <!-- Text input-->
+                                    <div class="control-group">
+                                    <label class="control-label" for="Quantite"><b>Quantité :</b></label>
+                                    <div class="controls">
+                                        <input id="Quantite" name="Quantite" placeholder="Quantité" class="input-xlarge" type="text">
+
+                                    </div>
+                                    </div>
+
+                                    <!-- Button (Double) -->
+                                    <div class="control-group">
+                                    <label class="control-label" for="Validation"></label>
+                                    <div class="controls">
+                                        <button id="Validation" name="Validation" class="btn btn-success">Validation</button>
+                                        <button id="Annulation" name="Annulation" class="btn btn-danger">Annulation</button>
+                                    </div>
+                                    </div>
+                                    </fieldset>
                                 </form>
                             </div>
                         </div>

@@ -81,7 +81,7 @@ if (isset($_POST['action'])=='submit')
                                         {
                                         ?>  <div class="alert alert-success">  
                                                 <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Merci</strong>, Votre mot de passe à été modifié.  
+                                                <strong>Merci</strong>, Votre mot de passe a été modifié.  
                                             </div>
                                         <?php 
                                         }
@@ -90,7 +90,7 @@ if (isset($_POST['action'])=='submit')
                                         ?>
                                             <div class="alert alert-error">  
                                                 <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Erreur</strong>, les mot de passe ne correspondent pas.  
+                                                <strong>Erreur</strong>, les mots de passe ne correspondent pas.  
                                             </div>
                                         <?php
                                         }
@@ -99,7 +99,7 @@ if (isset($_POST['action'])=='submit')
                                     
                                     <!-- Button -->
                                     <div class="controls">
-                                        <button type="submit" value="submit" name="action" class="btn btn-primary">Valider</button>
+                                        <button type="submit" value="submit" name="action" class="btn btn-success">Valider</button>
                                     </div>
                                 </fieldset>
                             </form>
