@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `objetconfectionne` (
+  `Ref` varchar(20) NOT NULL,
+  `Id` int(3) NOT NULL,
+  `Annee` int(4) NOT NULL,
+  `Designation` char(30) NOT NULL,
+  `NbPrevision` int(2) NOT NULL,
+  `Professeur` int(2) NOT NULL,
+  `Destination` char(30) NOT NULL,
+  `DateEmi` date NOT NULL,
+  `CoefCorrection` int(10) NOT NULL,
+  `NbRealise` int(2) NOT NULL,
+  `Temps` int(10) NOT NULL,
+  `TotalMatiere` decimal(10,2) NOT NULL,
+  `TotalFrais` decimal(10,2) NOT NULL,
+  `TotalCoutEleve` decimal(10,2) NOT NULL,
+  `CoutMachine` decimal(10,2) NOT NULL,
+  `TotalCoutPublic` decimal(10,2) NOT NULL,
+  `PrixUnitairePublic` decimal(10,2) NOT NULL,
+  `PrixEleveUnitaire` decimal(10,2) NOT NULL,
+  `CoutMachinePU` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`Ref`), 
+  FOREIGN KEY (`Professeur`) REFERENCES users(`Id`)
+);

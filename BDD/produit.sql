@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `produit` (
+  `RefLycee` char(30) NOT NULL,
+  `Id` int(3) NOT NULL,
+  `RefFournisseur` char(30) NOT NULL,
+  `Designation` char(30) NOT NULL,
+  `IdUniteAchat` int(3) NOT NULL,
+  `IdFournisseur` int(3) NOT NULL,
+  `QuantiteTotal` decimal(10,2) NOT NULL,
+  `Obselete` tinyint(1) NOT NULL,
+  `StockAlerte` int(2) NOT NULL,
+  `PATTCPondere` decimal(10,2) NOT NULL,
+  `Coloris` char(15) NOT NULL,
+  `IdSection` int(3) NOT NULL,
+  `StockInitial` int(2) NOT NULL,
+  `PondereInitial` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`RefLycee`),
+  FOREIGN KEY (`IdFournisseur`) REFERENCES fournisseurs(`Id`),
+  FOREIGN KEY (`IdSection`) REFERENCES section(`Id`),
+  FOREIGN KEY (`IdUniteAchat`) REFERENCES unite(`Id`)
+)ENGINE=InnoDB;

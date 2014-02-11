@@ -2,10 +2,12 @@
 
 <?php
 include('produit.class.php');
+include ('Valorisation.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 if(isset($_POST['action']))
+    {
  if (isset($_POST['action'])=='envoyer')
  {
      if(isset($_POST['QuantiteTotal'])) 
@@ -19,8 +21,14 @@ if(isset($_POST['action']))
                 }
                 
       }     
- }
-        
+}
+}
+      
+if(isset($_POST['annee']))
+    {
+    $valorisation= new Valorisation();
+    $valorisation->nouvelleBDD();
+    }
 ?>
 
 
@@ -161,7 +169,12 @@ if(isset($_POST['action']))
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
                             </div>
-                             <button type="submit" class="btn btn-danger" value="nouvelle" name="annee" onClick="return confirm('Etes-vous sûr de vouloir créer une nouvelle année?');">Valider</button>
+                            <form  method="POST" action="Inventaire1.php">
+                                <?php 
+                                $annee=date('Y');
+                               $annee1=(int)$annee+1;?>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir cloturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Cloturer</button>
+                            </form>
                         </div>
                     </div>
                 </div>

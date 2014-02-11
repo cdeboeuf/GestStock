@@ -39,22 +39,22 @@ $LesUnite= $uniteP->affiche_Unite();
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li class="active"><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
+                    <li class="active"><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
-                    <li><a href="./coefCorrection.php">Modifier le coeficient de correction</a></li>               
+                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>               
                 </ul>
                       <div class="hero-unit"> 
                       <div class="row-fluid">
                       
                              <?php if(isset($rep)){ 
-                             if ($rep=="L'unitée d'achat a été ajouté"){?>
+                             if ($rep=="L'unité d'achat a été ajoutée"){?>
                              <div class="alert alert-success "><?php echo $rep;} else{?></div>
                          <div class="alert alert-danger"><?php echo $rep;}?></div>
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="uniteP">Les unitées d'achat déjà enregistré:</label>
+                         <label class="badge" for="uniteP">Les unités d'achat déjà enregistrées:</label>
                  <form class="span3" name="uniteSup" action="uniteAchat.php" method="post">
                  <SELECT name="uniteSup" id="uniteP">
                   <?php
@@ -77,7 +77,7 @@ $LesUnite= $uniteP->affiche_Unite();
                          
                          <br><br><br><br>
             </div>
-                          <div class="alert alert-info">Vous ne pouvez pas suprimer une unitée utilisé</div>
+                          <div class="alert alert-info">Vous ne pouvez pas supprimer une unité utilisée</div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

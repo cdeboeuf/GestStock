@@ -42,7 +42,7 @@ $LesTva= $tvaP->affiche_Tva();
            ?><div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
+                    <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
@@ -58,7 +58,7 @@ $LesTva= $tvaP->affiche_Tva();
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="tvaP">Les taux de tva déjà enregistré:</label>
+                         <label class="badge" for="tvaP">Les taux de tva déjà enregistrés:</label>
                  <form class="span3" name="tvaSup" action="parametre.php" method="post">
                  <SELECT name="tvaSup" id="tvaP">
                   <?php

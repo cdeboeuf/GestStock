@@ -31,7 +31,7 @@ if(isset($_POST['cout']))
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li ><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
+                    <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li class="active"><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
@@ -44,7 +44,7 @@ if(isset($_POST['cout']))
                       <?php echo $rep; ?>
                     </div> <?php } ?>
                     <div class='alert alert-info'>
-                       Coût Machine actuelle:
+                       Coût Machine actuel:
                     <?php $LesCout=$Parametre->affiche_CoutMachine();
                     foreach ($LesCout as $unCout)
                     {
@@ -52,7 +52,7 @@ if(isset($_POST['cout']))
                     }                  ?>
                 </div>
                     <form class="span3" name="ModifCout" action="coutMachine.php" method="post">
-                    <label class="badge" for="cout">Modifié le cout :</label> <input type="text" name="cout" id="cout"/>
+                    <label class="badge" for="cout">Modifier le coût :</label> <input type="text" name="cout" id="cout"/>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                     <br><br><br><br>

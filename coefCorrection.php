@@ -31,7 +31,7 @@ if(isset($_POST['coef']))
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li ><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
+                    <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li class="active"><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
                     <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
@@ -44,7 +44,7 @@ if(isset($_POST['coef']))
                       <?php echo $rep; ?>
                     </div> <?php } ?>
                     <div class='alert alert-info'>
-                       Coefficient de correction actuelle:
+                       Coefficient de correction actuel:
                     <?php $LesCout=$Parametre->affiche_CoefCorrection();
                     foreach ($LesCout as $unCout)
                     {
@@ -52,7 +52,7 @@ if(isset($_POST['coef']))
                     }                  ?>
                 </div>
                     <form class="span3" name="ModifCout" action="coefCorrection.php" method="post">
-                    <label class="badge" for="coef">Modifié le coefficient :</label> <input type="text" name="coef" id="coef"/>
+                    <label class="badge" for="coef">Modifier le coefficient :</label> <input type="text" name="coef" id="coef"/>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                     <br><br><br><br>
