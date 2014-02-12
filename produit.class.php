@@ -131,7 +131,8 @@ include('connexion.php');
         
        public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $Id)
         {
-            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris'  where Produit.Id = '$Id';";
+            $requete1 = "UPDATE Produit
+                         SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris'  where Produit.Id = '$Id';";
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute();
         }

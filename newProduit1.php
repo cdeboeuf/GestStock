@@ -18,13 +18,13 @@ if(isset($_GET)&&  !empty($_GET))
     foreach ($Resultat as $value)
     {
         $value['Nom'];
-        $Coloris = $value['Coloris'];
-        $RefLycee= $value['RefLycee'];
-        $Designation = $value['Designation'];
+        $value['Coloris'];
+        $value['RefLycee'];
+        $value['Designation'];
         $value['Details'];
       //  $value['Taux'];
-        $StockAlerte = $value['StockAlerte'];
-        $Obselete = $value['Obselete'];
+        $value['StockAlerte'];
+        $value['Obselete'];
     }
 }
 
@@ -116,13 +116,13 @@ if(isset($_POST['action']))
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite" id="uniteAchat" class="input-medium"> 
+                                                <select name = "unite" id="unite" class="input-medium"> 
                                                             <?php	
                                                         $tab1 = $Produit->ListeUniteAchat();
                                                         foreach ($tab1 as $valeur1)
                                                         {
                                                             echo "<option ";
-                                                            if(!empty($_GET)){$val =$value["Details"];} else {$val= $_POST['RefFournisseurs'];}
+                                                            if(!empty($_GET)){$val =$value["Details"];} else {$val= $_POST['unite'];}
                                                             if($val == $valeur1["Details"])
                                                             {
                                                                 echo "selected";
@@ -190,7 +190,7 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                                
-                                <form method="POST" action="Achat.php" name="form">
+                                <form method="POST" action="newProduit1.php" name="form">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
