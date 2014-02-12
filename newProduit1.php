@@ -8,13 +8,13 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }
 
 if(isset($_GET))
-{ 
+{  echo"ici";
     $num = $_GET['num'];
     extract($_GET);
     $RefFournisseur = $num;
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
-       
+       echo $num;
     foreach ($Resultat as $value)
     {
         $value['Nom'];
@@ -72,11 +72,11 @@ if(isset($_POST['action']))
                                                         foreach ($tab1 as $valeur1)
                                                         {
                                                             echo "<option ";
-                                                            if($value["Nom"] == $valeur1["Nom"])
+                                                            if($value['Nom'] == $valeur1['Nom'])
                                                             {
                                                                 echo "selected";
                                                             }
-                                                            echo "> ".$valeur1["Nom"]."</option>";
+                                                            echo "> ".$valeur1['Nom']."</option>";
                                                         }
                                                     ?>
                                                     </select>

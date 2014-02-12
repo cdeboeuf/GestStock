@@ -30,8 +30,8 @@ if(!isset($_SESSION['idVisiteur']))
             </div>
             <?php include('Menu.php');
             $menu=new Menu();
-              $page=pathinfo($_SERVER['PHP_SELF']);
-           $menu->Verifdroit($page['basename']);?>
+            $page=pathinfo($_SERVER['PHP_SELF']);
+            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./stockeProduit1.php">Mode</a></li>
