@@ -107,6 +107,7 @@ if(isset($_POST['annee']))
                                 <tbody>
                                     <?php
                                         $Resultat = $produit->GetValorisationStockMODE();
+                                        
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -130,12 +131,12 @@ if(isset($_POST['annee']))
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    ?>  
-                                                        <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
-                                                             OnKeyUp="javascript:calcul(<?php echo $nb?>);">
-                                                        </div>
-                                                    <?php
+                                                    ?>
+                                                            <div class="controls">
+                                                                <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($value["RefLycee"] == $produit->QuantiteNonModifiable()) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                                OnKeyUp="javascript:calcul(<?php echo $nb?>);">
+                                                            </div>
+                                                        <?php
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];
