@@ -34,9 +34,10 @@ if(!isset($_SESSION['idVisiteur']))
             $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./stockeProduit1.php">Mode</a></li>
-                    <li><a href="./stockeProduit2.php">Esthétique</a></li>
-                    <li><a href="./stockeProduit3.php">Objet Confectionné</a></li>
+                    <li  class="active"><a href="./newProduit.php">Mode</a></li>
+                    <li><a href="./newProduit2.php">Esthétique</a></li>
+                    <li><a href="./newProduit4.php">Objet Confectionné</a></li>
+                    <li><a href="./newProduit6.php">Nouvelle ajout</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   

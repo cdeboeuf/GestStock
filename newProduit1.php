@@ -7,32 +7,36 @@ $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
+
 if(isset($_GET))
-{  echo"ici";
-    $num = $_GET['num'];
+{ 
     extract($_GET);
-    $RefFournisseur = $num;
+    $RefFournisseur= $_GET['num'];
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
        echo $num;
     foreach ($Resultat as $value)
     {
         $value['Nom'];
-        $value['Coloris'];
-        $value['RefLycee'];
-        $value['Designation'];
+        $Coloris = $value['Coloris'];
+        $RefLycee= $value['RefLycee'];
+        $Designation = $value['Designation'];
         $value['Details'];
         $value['Taux'];
-        $value['StockAlerte'];
-        $value['Obselete'];
+        $StockAlerte = $value['StockAlerte'];
+        $Obselete = $value['Obselete'];
     }
 }
 
 if(isset($_POST['action']))
- if (isset($_POST['action'])=='envoyer')
- {    
-     $produit->MajProduit();
- }
+{
+    if (isset($_POST['action'])=='envoyer')
+    {    
+        extract($_POST);
+        $Id = $RefFournisseur;
+        $produit->MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $Id);
+    }
+}
 ?>
 
 
