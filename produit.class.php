@@ -117,8 +117,8 @@ include('connexion.php');
         {
             try 
            {
-            $requete = "SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, tva.Taux
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id inner join tva on detailsligneproduit.IdTVA = tva.Id
+            $requete = "SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details 
+                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id
                 Where RefFournisseur = '$RefFournisseur';";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      

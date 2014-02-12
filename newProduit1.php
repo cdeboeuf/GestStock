@@ -8,13 +8,13 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }
 
 
-if(isset($_GET))
+if(isset($_GET)&&  !empty($_GET))
 { 
     extract($_GET);
     $RefFournisseur= $_GET['num'];
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
-       echo $num;
+    
     foreach ($Resultat as $value)
     {
         $value['Nom'];
@@ -22,7 +22,7 @@ if(isset($_GET))
         $RefLycee= $value['RefLycee'];
         $Designation = $value['Designation'];
         $value['Details'];
-        $value['Taux'];
+      //  $value['Taux'];
         $StockAlerte = $value['StockAlerte'];
         $Obselete = $value['Obselete'];
     }
@@ -33,8 +33,12 @@ if(isset($_POST['action']))
     if (isset($_POST['action'])=='envoyer')
     {    
         extract($_POST);
-        $Id = $RefFournisseur;
-        $produit->MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $Id);
+        if(isset($_POST['obselete']))
+        {$Obselete=1;}
+        else
+        {$Obselete=0;}
+       // $Id = $RefFournisseur;
+        $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $Obselete, $_POST['Designation'], $_POST['Coloris'], $_POST['RefFournisseurs']);
     }
 }
 ?>
@@ -69,14 +73,15 @@ if(isset($_POST['action']))
                                         <thead>
                                             <tr>
                                                 <td>
-                                                    <label for="ChoixFournisseur"><b>Fournisseur :</b></label>                    
-                                                    <select name = "Fournisseur" class="input-small" id="Fournisseur"> 
+                                                    <label for="Fournisseurs"><b>Fournisseur :</b></label>                    
+                                                    <select name = "Fournisseurs" class="input-small" id="Fournisseurs"> 
                                                     <?php	
                                                         $tab1 = $Produit->ListeFournisseurs();
                                                         foreach ($tab1 as $valeur1)
                                                         {
                                                             echo "<option ";
-                                                            if($value['Nom'] == $valeur1['Nom'])
+                                                            if(!empty($_GET)){$val=$value['Nom'];} else {$val= $_POST['Fournisseurs'];}
+                                                            if(  $val== $valeur1['Nom'])
                                                             {
                                                                 echo "selected";
                                                             }
@@ -88,24 +93,24 @@ if(isset($_POST['action']))
 
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
-                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value='<?php echo $RefFournisseur;?>'>
+                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value='<?php if(!empty($_GET)){ echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];}?>'>
 
                                                 </td>
 
                                                 <td>
                                                     <label for="Coloris"><b>Coloris :</b></label>
-                                                    <input type="text" name="Coloris" id="Coloris" class="input-small" value='<?php echo $value['Coloris'];?>'>
+                                                    <input type="text" name="Coloris" id="Coloris" class="input-small" value='<?php if(!empty($_GET)){echo $value['Coloris'];;} else {echo $_POST['Coloris'];}?>'>
                                                 </td>
 
                                                 <td>
                                                     <label for="RéfLycee"><b>Référence Lycée :</b></label>
-                                                    <input type="text" name="RefLycee" id="RefLycee" value='<?php echo $value['RefLycee'];?>'>
+                                                    <input type="text" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                 </td>
 
                                             <tr>
                                                 <th>
                                                     <label for="Désignation"><b>Désignation :</b></label>
-                                                    <input type="text" name="Designation" id="Designation" value='<?php echo $value['Designation'];?>'>
+                                                    <input type="text" name="Designation" id="Designation" value='<?php if(!empty($_GET)){echo $value['Designation'];} else {echo $_POST['Designation'];}?>'>
                                                 </th>
                                             </tr>     
                                             
@@ -117,7 +122,8 @@ if(isset($_POST['action']))
                                                         foreach ($tab1 as $valeur1)
                                                         {
                                                             echo "<option ";
-                                                            if($value["Details"] == $valeur1["Details"])
+                                                            if(!empty($_GET)){$val =$value["Details"];} else {$val= $_POST['RefFournisseurs'];}
+                                                            if($val == $valeur1["Details"])
                                                             {
                                                                 echo "selected";
                                                             }
@@ -127,34 +133,36 @@ if(isset($_POST['action']))
                                                 </select>
                                             </td>
 
-                                            <td>
-                                                <label for="CodeTVA"><b>Code TVA :</b></label>
-                                                <select name = "CodeTVA" class="input-small" id="CodeTVA"> 
-                                                   <?php	
-                                                        $tab1 = $Produit->ListeTVA();
-                                                        foreach ($tab1 as $valeur1)
-                                                        {
-                                                            echo "<option ";
-                                                            if($value["Taux"] == $valeur1["Taux"])
-                                                            {
-                                                                echo "selected";
-                                                            }
-                                                            echo "> ".$valeur1["Taux"]."</option>";
-                                                        }
-                                                    ?>
-                                                </select>
+                                            <td>  <?php
+                                               // <label for="CodeTVA"><b>Code TVA :</b></label>
+                                               // <select name = "CodeTVA" class="input-small" id="CodeTVA"> 
+                                                 	
+                                                       // $tab1 = $Produit->ListeTVA();
+                                                      //  foreach ($tab1 as $valeur1)
+                                                      //  {
+                                                         //   echo "<option ";
+                                                        //    if($value["Taux"] == $valeur1["Taux"])
+                                                         //   {
+                                                         //       echo "selected";
+                                                         //   }
+                                                         //   echo "> ".$valeur1["Taux"]."</option>";
+                                                      //  }
+                                                  
+                                                //</select>  ?>
                                             </td>
 
                                             <td>
                                                 <label for="StockAlerte"><b>Stock d'alerte:</b></label>
-                                                <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php echo $value['StockAlerte'];?>'>
+                                                <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];}?>'>
                                             </td>
                                             <tr>
                                                 <td>
-                                                    <?php if($value["Obselete"] == 0){?>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obselete" id="Obselete"> </label>
+                                                    <?php 
+                                                    if(!empty($_GET)){$val=$value["Obselete"];} else {$val= $Obselete;}
+                                                    if( $val== 0){?>
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" value="0" name="Obselete" id="Obselete"> </label>
                                                     <?php }else{ ?>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="Obselete" id="Obselete" checked> </label>
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" value="1" name="Obselete" id="Obselete" checked> </label>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
