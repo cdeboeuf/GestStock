@@ -129,35 +129,11 @@ include('connexion.php');
            }	
         }
         
-       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $RefFournisseur, $Nom, $Designation, $Coloris, $Details, $Taux, $Id)
+       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $Id)
         {
-            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee' where Produit.Id = '$Id';";
-            $requete2 = "UPDATE Produit SET StockAlerte = '$StockAlerte' where Produit.Id = '$Id';";
-            $requete3 = "UPDATE Produit SET Obselete = '$Obselete' where Produit.Id = '$Id';";
-            $requete4 = "UPDATE Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id SET RefFournisseur = '$RefFournisseur' where Produit.Id = '$Id';";
-            $requete5 = "UPDATE Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id SET Nom = '$Nom' where Produit.Id = '$Id';";
-            $requete6 = "UPDATE Produit SET Designation = '$Designation' where Produit.Id = '$Id';";
-            $requete7 = "UPDATE Produit SET Coloris = '$Coloris' where Produit.Id = '$Id';";
-            $requete8 = "UPDATE Produit inner join Unite on Produit.IdUniteAchat = unite.Id SET Details = '$Details' where Produit.Id = '$Id';";
-            $requete9 = "UPDATE Produit inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id inner join tva on detailsligneproduit.IdTVA = tva.Id SET tva = '$Taux' where Produit.Id ='$Id';";
+            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris'  where Produit.Id = '$Id';";
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute();
-            $this->retour = Produit::$bdd->prepare($requete2);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete3);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete4);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete5);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete6);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete7);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete8);
-            $this->retour->execute(); 
-            $this->retour = Produit::$bdd->prepare($requete9);
-            $this->retour->execute(); 
         }
 }
 ?>
