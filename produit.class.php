@@ -74,7 +74,7 @@ include('connexion.php');
         {
             try 
             {
-                $requete = "SELECT Nom From Fournisseurs;";
+                $requete = "SELECT * From Fournisseurs;";
                 $tab = Produit::$bdd->query($requete);
                 return $tab->fetchAll();
             } 
@@ -88,7 +88,7 @@ include('connexion.php');
         {
             try 
             {
-                $requete = "SELECT Details From unite;";
+                $requete = "SELECT * From unite;";
                 $tab = Produit::$bdd->query($requete);
                 return $tab->fetchAll();
             } 
@@ -117,8 +117,8 @@ include('connexion.php');
         {
             try 
            {
-            $requete = "SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details 
-                        From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id
+            $requete = "SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id as IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details 
+                       ,unite.Id as uniteId From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id
                 Where RefFournisseur = '$RefFournisseur';";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
@@ -129,9 +129,9 @@ include('connexion.php');
            }	
         }
         
-       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $Id)
-        {
-            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris'  where Produit.Id = '$Id';";
+       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Id)
+        { echo "reici;";
+            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', IdFournisseur='$four',Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris', idUniteAchat='$unite'  where Produit.RefFournisseur = '$Id';";
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute();
         }
