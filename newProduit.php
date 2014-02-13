@@ -88,7 +88,8 @@ if(!isset($_SESSION['idVisiteur']))
                                                     <td>
                                                         <?php $id = "id$nb"; $nb++;?>
                                                         <?php $idlien = $value["RefFournisseur"]; ?>
-                                                        <?php $lien = "newProduit1.php?num=$idlien"; ?> 
+                                                        <?php $idid = $value['Id']; ?>
+                                                        <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?> 
                                                         <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";
