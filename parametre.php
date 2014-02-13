@@ -59,7 +59,7 @@ $LesTva= $tvaP->affiche_Tva();
                         
                      <div class='span4'>
                          <label class="badge" for="tvaP">Les taux de tva déjà enregistrés:</label>
-                 <form class="span3" name="tvaSup" action="parametre.php" method="post">
+                 <form name="tvaSup" action="parametre.php" method="post">
                  <SELECT name="tvaSup" id="tvaP">
                   <?php
                  foreach ($LesTva as $unetva)               

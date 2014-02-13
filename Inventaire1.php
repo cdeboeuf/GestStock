@@ -165,16 +165,17 @@ if(isset($_POST['annee']))
                                     <br>
                                 </table>
                                 <br>
-                                <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
+                                 <div class="btn-group ">
+                                <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Enregistrer</button>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
-                                </form>
-                            </div>
-                            <form  method="POST" action="Inventaire1.php">
-                                <?php 
+                                  <?php 
                                 $annee=date('Y');
                                $annee1=(int)$annee+1;?>
-                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir cloturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Cloturer</button>
-                            </form>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir cloturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Cloturer l'année <?php echo $annee ?></button>
+                            </div>
+                                </form>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

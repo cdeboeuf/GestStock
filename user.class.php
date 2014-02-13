@@ -6,6 +6,8 @@ class Users
 
 function __construct($nb = null) 
 {
+    if(!isset($_SESSION['annee']))
+    {    
     if($nb==null)
     {
     $annee= new annee();
@@ -13,6 +15,12 @@ function __construct($nb = null)
     }
     Users::$bdd=connexion_base($nb);
     Users::$bdd->query("SET CHARACTER SET utf8"); 
+    }
+    else
+    {
+    Users::$bdd=connexion_base($_SESSION['annee']);
+    Users::$bdd->query("SET CHARACTER SET utf8");  
+    }
 }    
 
 
@@ -66,24 +74,30 @@ function MajMdp($Mdp, $Login)
             $this->retour = Users::$bdd->prepare($req);
             $this->retour->execute(); 
 }
-        
+      
+         function affiche_unuser($id)
+    {
+        $req="SELECT * From users where Id=$id";  
+        $rs = Users::$bdd->query($req);
+        return $result = $rs->fetchAll();
+    }
          function affiche_user()
     {
-        $req="SELECT Login, count( detailsligneproduit.Id ) as utiliser
-From users left join produit on users.Id=detailsligneproduit.IdUsers
-group by Login";  
+        $req="SELECT users.Id, Login, count( detailsligneproduit.Id ) as utiliser
+From users left join detailsligneproduit on users.Id=detailsligneproduit.IdUsers
+group by Login,Id";  
         $rs = Users::$bdd->query($req);
         return $result = $rs->fetchAll();
     }
     
-    function supprimer_user($user)
+    function supprimer_user($Iduser)
     { 
-        if($this->Verif_userSup($user)==0)
+        if($this->Verif_userSup($Iduser)==0)
         {
             
-      echo  $req="Delete FROM users WHERE Nom='$user'" ;  
+       $req="Delete FROM users WHERE Id='$Iduser'" ;  
         $rs = Users::$bdd->query($req);
-     $reponce=" L'utilisateur $user a été supprimé";
+     $reponce=" L'utilisateur a été supprimé.";
     }else
     {
         $reponce=" Le l'utilisateur $user est utilisé par plusieurs produit et/ou objet confectionné il ne peut donc pas etre suprimé";
@@ -96,32 +110,48 @@ group by Login";
 
              if( $this->Verif_user($user)==0)
              {
-                 $mdp=  $this->NewMDP();
-        $req="Insert Into user(Nom,Mdp,Type)values('$four','$mdp','$type')" ;  
-        $rs = Fournisseurs::$bdd->query($req);
-        $reponce = "Le Fournisseur a été ajouté";
+                 $mdp=$this->random();
+                 $mdpmd5=md5($mdp);
+            $req="Insert Into users(Login,Mdp,Type)values('$user','$mdpmd5','$type')" ;  
+            Users::$bdd->query($req);
+        $reponce = "L'utilisteur $user a été ajouté. Son Mot de pass est $mdp";
         } 
-        else{$reponce="Le Fournisseur existe déjà";}
+        else{$reponce="L'utilisateur existe déjà";}
     return $reponce;
     }
     
-    function Verif_Fournisseurs($four)
+    function Verif_user($user)
     { 
-       $req="SELECT Nom From Fournisseurs WHERE Nom='$four';" ;  
-        $rs = Fournisseurs::$bdd->query($req);
+       $req="SELECT Login From Users WHERE Login='$user';" ;  
+        $rs = Users::$bdd->query($req);
         return $result = count($rs->fetchAll());
     }
-    
-     function Verif_FournisseursSup($four)
-    {
-   $req="SELECT count(*) as utiliser
-From Fournisseurs Inner join produit on  fournisseurs.Id=produit.IdFournisseur  Where Fournisseurs.Nom='$four'
-group by Nom";
-     $rs = Fournisseurs::$bdd->query($req);
-     $result = count($rs->fetchAll());
-     return $result;
+       
+    function Modifier_user($Id,$user,$type)
+    { 
+       $req="UPDATE users SET Login='$user',type='$type' WHERE Id='$Id';" ;  
+       Users::$bdd->query($req);
      
     }
+    
+    function Remise_zero($Id,$login)
+    {
+         $mdp=$this->random();
+         $mdpmd5=md5($mdp);
+         $req="UPDATE users SET Mdp='$mdpmd5' WHERE Id='$Id';" ; 
+         Users::$bdd->query($req);
+         return $rep ="Le noouveau mot de passe de l'utilisateur $login est $mdp.";
+        
+    }
+    
+     function Verif_userSup($Iduser)
+    {
+   $req="SELECT count(*) as utiliser From users Inner join detailsligneproduit on  users.Id=detailsligneproduit.IdUsers  Where users.Id='$Iduser' group by Login";
+     $rs = Users::$bdd->query($req);
+     $result = count($rs->fetchAll());
+     return $result;   
+    }
+    
 function random() 
 {
 $string = "";
@@ -132,9 +162,6 @@ $string .= $chaine[rand()%strlen($chaine)];
 }
 return $string;
 }
-// APPEL
-// Génère une chaine de longueur 20
- 
         
 }
 ?>
