@@ -67,8 +67,74 @@ function MajMdp($Mdp, $Login)
             $this->retour->execute(); 
 }
         
-        
-        
+         function affiche_user()
+    {
+        $req="SELECT Login, count( detailsligneproduit.Id ) as utiliser
+From users left join produit on users.Id=detailsligneproduit.IdUsers
+group by Login";  
+        $rs = Users::$bdd->query($req);
+        return $result = $rs->fetchAll();
+    }
+    
+    function supprimer_user($user)
+    { 
+        if($this->Verif_userSup($user)==0)
+        {
+            
+      echo  $req="Delete FROM users WHERE Nom='$user'" ;  
+        $rs = Users::$bdd->query($req);
+     $reponce=" L'utilisateur $user a été supprimé";
+    }else
+    {
+        $reponce=" Le l'utilisateur $user est utilisé par plusieurs produit et/ou objet confectionné il ne peut donc pas etre suprimé";
+    }
+    return$reponce;
+    }
+    
+    function Ajout_user($user,$type)
+    { 
+
+             if( $this->Verif_user($user)==0)
+             {
+                 $mdp=  $this->NewMDP();
+        $req="Insert Into user(Nom,Mdp,Type)values('$four','$mdp','$type')" ;  
+        $rs = Fournisseurs::$bdd->query($req);
+        $reponce = "Le Fournisseur a été ajouté";
+        } 
+        else{$reponce="Le Fournisseur existe déjà";}
+    return $reponce;
+    }
+    
+    function Verif_Fournisseurs($four)
+    { 
+       $req="SELECT Nom From Fournisseurs WHERE Nom='$four';" ;  
+        $rs = Fournisseurs::$bdd->query($req);
+        return $result = count($rs->fetchAll());
+    }
+    
+     function Verif_FournisseursSup($four)
+    {
+   $req="SELECT count(*) as utiliser
+From Fournisseurs Inner join produit on  fournisseurs.Id=produit.IdFournisseur  Where Fournisseurs.Nom='$four'
+group by Nom";
+     $rs = Fournisseurs::$bdd->query($req);
+     $result = count($rs->fetchAll());
+     return $result;
+     
+    }
+function random() 
+{
+$string = "";
+$chaine = "abcdefghijklmnpqrstuvwxy0123456789";
+srand((double)microtime()*1000000);
+for($i=0; $i<6; $i++) {
+$string .= $chaine[rand()%strlen($chaine)];
+}
+return $string;
+}
+// APPEL
+// Génère une chaine de longueur 20
+ 
         
 }
 ?>

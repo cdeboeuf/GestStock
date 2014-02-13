@@ -22,23 +22,27 @@ if(isset($_GET)&&  !empty($_GET))
         $value['RefLycee'];
         $value['Designation'];
         $value['Details'];
+        $value['IdFour'];
+        $value['uniteId'];
       //  $value['Taux'];
-        $value['StockAlerte'];
-        $value['Obselete'];
+        $StockAlerte = $value['StockAlerte'];
+       
+       echo $Obselete = $value['Obselete'];
     }
 }
-
+ // $_POST['Nom']=$value['Nom'];
 if(isset($_POST['action']))
 {
     if (isset($_POST['action'])=='envoyer')
     {    
         extract($_POST);
         if(isset($_POST['obselete']))
-        {$Obselete=1;}
+        {echo $_POST['obselete'];
+            $_POST['obselete']=1;}
         else
-        {$Obselete=0;}
+        {$_POST['obselete']=0;}
        // $Id = $RefFournisseur;
-        $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $Obselete, $_POST['Designation'], $_POST['Coloris'], $_POST['RefFournisseurs']);
+        $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
 ?>
@@ -74,14 +78,17 @@ if(isset($_POST['action']))
                                             <tr>
                                                 <td>
                                                     <label for="Fournisseurs"><b>Fournisseur :</b></label>                    
+                                                    <input type="hidden" name="Nom" value="<?php if(!empty($_GET)){echo $value['Nom'];} else {echo $_POST['Nom'];}?>">
                                                     <select name = "Fournisseurs" class="input-small" id="Fournisseurs"> 
                                                     <?php	
                                                         $tab1 = $Produit->ListeFournisseurs();
                                                         foreach ($tab1 as $valeur1)
                                                         {
-                                                            echo "<option ";
-                                                            if(!empty($_GET)){$val=$value['Nom'];} else {$val= $_POST['Fournisseurs'];}
-                                                            if(  $val== $valeur1['Nom'])
+                                                            
+                                                            echo "<option value=".$valeur1['Id']." ";
+                                                            if(!empty($_GET)){$val=$value['IdFour'];} 
+                                                            else {$val= $_POST['Fournisseur'];}
+                                                            if(  $val== $valeur1['Id'])
                                                             {
                                                                 echo "selected";
                                                             }
@@ -116,14 +123,15 @@ if(isset($_POST['action']))
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
-                                                <select name = "unite" id="unite" class="input-medium"> 
+                                                <input type="hidden" name="unite" value="<?php if(!empty($_GET)){echo $value['Details'];} else {echo $_POST['unite'];}?>">
+                                                <select name = "UniteAchat" id="UniteAchat" class="input-medium"> 
                                                             <?php	
                                                         $tab1 = $Produit->ListeUniteAchat();
                                                         foreach ($tab1 as $valeur1)
-                                                        {
-                                                            echo "<option ";
-                                                            if(!empty($_GET)){$val =$value["Details"];} else {$val= $_POST['unite'];}
-                                                            if($val == $valeur1["Details"])
+                                                        {                                                      
+                                                            echo "<option value=".$valeur1['Id']." ";
+                                                            if(!empty($_GET)){$val =$value["uniteId"];} else {$val= $_POST['UniteAchat'];}
+                                                            if($val == $valeur1["Id"])
                                                             {
                                                                 echo "selected";
                                                             }
@@ -158,12 +166,11 @@ if(isset($_POST['action']))
                                             <tr>
                                                 <td>
                                                     <?php 
-                                                    if(!empty($_GET)){$val=$value["Obselete"];} else {$val= $Obselete;}
-                                                    if( $val== 0){?>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" value="0" name="Obselete" id="Obselete"> </label>
-                                                    <?php }else{ ?>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" value="1" name="Obselete" id="Obselete" checked> </label>
-                                                    <?php } ?>
+                                                    if(!empty($_GET)){$val=$value["Obselete"];} else {$val= $_POST['obselete'];}
+                                                   ?>
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" value="0" name="Obsolete" id="Obselete" <?php if( $val== 1){ echo "checked";} ?> </label>
+                                                   
+                                                   
                                                 </td>
                                             </tr>
                                             <tr>
