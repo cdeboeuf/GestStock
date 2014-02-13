@@ -51,14 +51,13 @@ if(isset($_POST['cout']))
                     echo $unCout['Details'];
                     }                  ?>
                 </div>
-                    <form class="span3" name="ModifCout" action="coutMachine.php" method="post">
+                    <form  name="ModifCout" action="coutMachine.php" method="post">
                     <label class="badge" for="cout">Modifier le coût :</label> <input type="text" name="cout" id="cout"/>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
                     <br><br><br><br>
                 </div>
                 </div>
-        </div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

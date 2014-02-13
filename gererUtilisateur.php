@@ -1,20 +1,63 @@
-<?php include('connexion.php');
-include('user.class.php');
+<?php 
 
+include('user.class.php');
+include('typeuser.class.php');
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
-$usersP= new Users();                
+$usersP= new Users();   
+$destype=new Typeuser();
+$LesTypes=$destype->affiche_Type();
 
 if(isset($_POST['user'])& isset($_POST['type']))
 {
    $rep= $usersP->ajout_user($_POST['user'],$_POST['type']);
 
 }
+ if(isset($_POST['action']))                    
+{
+                    if($_POST['action']=='Valider')
+                    { 
+                        if (isset($_POST['Mtype'])&& ($_POST['Muser']))
+                    {
+                        $rep =$usersP->Modifier_user($_POST['Mid'],$_POST['Muser'],$_POST['Mtype']);
+                    }
+                  
+                    }
+                    
+                    
+                          if(isset($_POST['Mid']))
+                        {
+                            $unuser=$usersP->affiche_unuser($_POST['Mid']);
+                        }
+                        else
+                        {
+                        $unuser=$usersP->affiche_unuser($_POST['userSup']);                    
+                        }
+                     
+                   
+                    if($_POST['action']=='Zero')
+                    {
+                      $reponse= $usersP->Remise_zero($_POST['Mid'],$_POST['Muser']);
+                     
+                    }
+                    }
 if(isset($_POST['userSup']))
 {
-   $rep= $usersP->supprimer_user($_POST['usersSup']);
+    if($_POST['userSup']=="")
+    {
+        $reponce="Il n'y a pas d'utilisateur a supprimer";
+    }
+    else{
+        if(isset($_POST['action1']))
+        {
+ if($_POST['action1']=="Supprimer")
+    {
 
+   $rep= $usersP->supprimer_user($_POST['userSup']);
+    }
+        }
+    }
 }
 $LesUsers= $usersP->affiche_user();
 
@@ -41,37 +84,89 @@ $LesUsers= $usersP->affiche_user();
            $menu->Verifdroit($page['basename']);
            ?><div class="span12">
                       <div class="hero-unit"> 
-                      <div class="row-fluid">
-                      
-                             <?php if(isset($rep)){ 
-                             if ($rep=="Le Fournisseur a été ajouté"){?>
+                          <div class="row-fluid">
+                             <?php
+                             if(isset($reponse))
+                             {
+                                 ?><div class="alert alert-warning"><?php echo $reponse?></div><?php
+                             }
+                             if(isset($rep)){ 
+                                 if ($rep=="L'utilisateur a été ajouté"){?>
+                                 
                              <div class="alert alert-success "><?php echo $rep;} else{?></div>
-                         <div class="alert alert-danger"><?php echo $rep;}?></div>
+                         <div class="alert alert-error"><?php echo $rep;}?></div>
                          <?php } ?>
                         
-                     <div class='span4'>
-                         <label class="badge" for="userSup">Les fournisseurs déjà enregistrés:</label>
-                 <form class="span3" name="userSup" action="fournisseur.php" method="post">
-                 <SELECT name="userSup" id="userSup">
+                      <div class='<?php if(isset($_POST['action'])){echo 'span3';}else{echo 'span3';}?>'>
+                <form name="usernew" action="gererUtilisateur.php" method="post">
+                    <label class="badge" for="user">Nouveau Utilisateur :</label> <input type="text" name="user" id="user">
+                       <SELECT name="type" id="userSup">
                   <?php
-                 foreach ($LesUsers as $unuser)               
+                 foreach ($LesTypes as $untype)               
                      {
                  
                      ?>
-                        <option value='<?php echo $unuser['Login'] ?>'><?php echo $unuser['Login']." (Utilisation:".$unuser['utiliser'].")"?></option>
+                        <option value='<?php echo $untype['Id'] ?>'><?php echo $untype['Details']?></option>
                      <?php }
                   ?>          
                  </SELECT>
-                     <button type="submit" class="btn btn-danger">Supprimer</button>
-                     </form>
-                     </div>
-                      <div class='span4'>
-                <form class="span3" name="usernew" action="fournisseur.php" method="post">
-                    <label class="badge" for="user">Nouveau fournisseur :</label> <input type="text" name="user" id="user"/>
-                    <button type="submit" class="btn btn-success">Envoyer</button>
+                    
+                     <button type="submit" class="btn btn-success" name="action2" value="Valider">Enregistrer</button>
                 </form>
                 </div>
+                         <div class='span4 offset1'>
+                         <label class="badge" for="userSup">Les utilisateurs déjà enregistrés:</label>
+                 <form class="span3" name="userSup" action="gererUtilisateur.php" method="post">
+                 <SELECT name="userSup" id="userSup">
+                  <?php
+                 foreach ($LesUsers as $uNuser)               
+                     {
+                 
+                     ?>
+                        <option value='<?php echo $uNuser['Id'] ?>'><?php echo $uNuser['Login']." (Utilisation:".$uNuser['utiliser'].")"?></option>
+                     <?php }
+                  ?>          
+                 </SELECT>
+                      <div class="btn-group ">
+                     <button type="submit" class="btn btn-info" name="action" value="Modifier">Modifier</button>
+                     <button type="submit" class="btn btn-danger" name="action1" value="Supprimer">Supprimer</button>
+                      </div> 
+                 </form>
+                     </div>
+                          <div class="span4">
+                         <?php  
                          
+                    if(isset($_POST['action']))
+                    {  
+                
+                    ?>
+                         
+                           
+                <form  name="usermodif" action="gererUtilisateur.php" method="post">
+                    <label class="badge" for="Muser">Utilisateur :</label> <input type="text" name="Muser" value="<?php foreach ($unuser as $UnUser)               
+                    {echo $UnUser['Login']; $letype=$UnUser['Type'] ; }?>" id="Muser"/>
+                    <input type="hidden" name="Mid" value="<?php foreach ($unuser as $UnUseR) {echo $UnUseR['Id']; }?>" id="Mid"/>                   
+                    <SELECT name="Mtype" id="MuserSup">
+                  <?php
+                 foreach ($LesTypes as $untype)               
+                     {
+                 
+                     ?>
+                        <option value='<?php echo $untype['Id'] ?>' <?php if($untype['Id']==$letype){echo "selected";} ?>><?php echo $untype['Details']. "."?></option>
+                     <?php }
+                  ?>          
+                 </SELECT>
+                    <div class="btn-group ">
+                     <button type="submit" class="btn btn-success" name="action" value="Valider">Enregister<br>la modification</button>
+                      <button type="submit" class="btn btn-info" name="action" value="Zero">Réinitialiser<br>le mot de passe</button>
+                      
+                    </div>
+                </form> 
+                    <?php
+                    }
+                    ?>          
+                          </div>
+                    
                          <br><br><br><br>
             </div><div class="alert alert-info">Vous ne pouvez pas suprimer un utilisateur qui a créé un objet confectionné non cloturé</div>
         </div>

@@ -68,7 +68,7 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                       <div class='span4'>
                 <form class="span3" name="tvanew" action="fournisseur.php" method="post">
                     <label class="badge" for="tva">Nouveau fournisseur :</label> <input type="text" name="fournisseur" id="fournisseur"/>
-                    <button type="submit" class="btn btn-success">Envoyer</button>
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
                 </form>
                 </div>
                          
