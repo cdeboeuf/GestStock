@@ -18,9 +18,9 @@ if(isset($_GET)&&  !empty($_GET))
     foreach ($Resultat as $value)
     {
         $value['Nom'];
-        $Coloris = $value['Coloris'];
-        $RefLycee= $value['RefLycee'];
-        $Designation = $value['Designation'];
+        $value['Coloris'];
+        $value['RefLycee'];
+        $value['Designation'];
         $value['Details'];
         $value['IdFour'];
         $value['uniteId'];
@@ -197,7 +197,7 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                                
-                                <form method="POST" action="Achat.php" name="form">
+                                <form method="POST" action="newProduit1.php" name="form">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>

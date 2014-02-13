@@ -135,5 +135,12 @@ include('connexion.php');
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute();
         }
+        
+        public function QuantiteNonModifiable()
+        {
+            $requete = "Select RefLycee from detailsligneproduit;";
+            $rs = Produit::$bdd->query($requete);
+            return $laLigne = $rs->fetchAll(); 
+        }
 }
 ?>
