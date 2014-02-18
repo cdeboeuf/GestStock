@@ -122,7 +122,7 @@ include('connexion.php');
                 detailsligneproduit.DateChangement as dDateChangement, detailsligneproduit.Quantite as dQuantite, detailsligneproduit.Gratuit as dGratuit, detailsligneproduit.PAHT as dPAHT, detailsligneproduit.PaTTC as dPaTTC, detailsligneproduit.IdTVA as dIdTVA
                 From Produit Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id 
                 inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id
-                Where RefFournisseur = '$RefFournisseur';";
+                Where RefFournisseur = '$RefFournisseur';"; 
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
            } 
@@ -134,18 +134,42 @@ include('connexion.php');
         
        public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Id)
         {
-            $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', IdFournisseur='$four',Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris', idUniteAchat='$unite'  where Produit.RefFournisseur = '$Id';";
-            $this->retour = Produit::$bdd->prepare($requete1);
-            $this->retour->execute();
+            $StockAlerte=str_replace ( ',', '.', $StockAlerte);
             
+            if (is_numeric($StockAlerte))
+            {
+                $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', IdFournisseur='$four',Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris', idUniteAchat='$unite'  where Produit.RefFournisseur = '$Id';";
+                $this->retour = Produit::$bdd->prepare($requete1);
+                $this->retour->execute();
+                $rep = "Le produit à été modifié.";
+            }
+            else
+            {
+                $rep = "Erreur, champs invalide.";
+            }
+            return $rep;
+
         }
         
         public function AddProduitMode($RefLycee, $DateEntree, $idTVA, $Gratuit, $PAHT, $PATTC, $Quantite, $Id, $Users)
         {
-            $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PAHT, PaTTC, Quantite, Id, SortieEntree, IdUsers)
-            VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PAHT', '$PATTC', '$Quantite', '$Id', 'S', '$Users');";
-            $this->retour = Produit::$bdd->prepare($requete1);
-            $this->retour->execute();
+            $Quantite=str_replace ( ',', '.', $Quantite);
+            $PAHT=str_replace ( ',', '.', $PAHT);
+            $PATTC=str_replace ( ',', '.', $PATTC);
+            
+            if (is_numeric($Quantite) && (is_numeric($PAHT) || empty($PAHT)) && (is_numeric($PATTC) || empty($PATTC)))
+            {
+                $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PAHT, PaTTC, Quantite, Id, SortieEntree, IdUsers)
+                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PAHT', '$PATTC', '$Quantite', '$Id', 'S', '$Users');";
+                $this->retour = Produit::$bdd->prepare($requete1);
+                $this->retour->execute();
+                $rep = "Le produit à été ajouté.";
+            }
+            else
+            {
+                $rep = "Erreur, champs non valide.";
+            }  
+            return $rep;
             
         }
         

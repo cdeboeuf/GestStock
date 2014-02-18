@@ -8,6 +8,29 @@ $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
+if(isset($_POST['action1']))
+{
+    if (isset($_POST['action1'])=='envoyer1')
+    {    
+        extract($_POST);
+        if(isset($_POST['chkb_1']))
+        {
+            $_POST['chkb_1']=1;
+        }
+        else
+        {
+            $_POST['chkb_1']=0;
+        }
+        if(!isset($_POST['PAHT']) && !isset($_POST['PATTC']))
+        {
+            $_POST['PAHT'] = 0;
+            $_POST['PATTC'] = 0;
+        }
+        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'],  $_POST['PAHT'], $_POST['PATTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
+        
+    }
+}
+
 
 ?>
 
@@ -36,8 +59,7 @@ if(!isset($_SESSION['idVisiteur']))
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./newProduit.php">Mode</a></li>
                     <li><a href="./newProduit2.php">Esthétique</a></li>
-                    <li><a href="./newProduit4.php">Objet Confectionné</a></li>
-                    <li><a href="./newProduit6.php">Nouvelle ajout</a></li>
+                    <li><a href="./newProduit4.php">Nouvelle ajout</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
@@ -120,9 +142,25 @@ if(!isset($_SESSION['idVisiteur']))
                                                     echo "</td>";
                                                 echo "</tr>";
                                         }
-
-
+                                        
                                     ?>
+                                        
+                                        <?php if(isset($rep))
+                                        {
+                                                if ($rep=="Le produit à été ajouté.")
+                                                    {?>
+                                                        <div class="alert alert-success "><?php echo $rep;
+                                                    } 
+                                                else
+                                                    {?>
+                                                        </div>
+                                                        <div class="alert alert-danger"><?php echo $rep;
+                                                    }?>
+                                                        </div>
+                                    <?php
+                                  
+                                        }?>
+                                                    
                                 </tbody>
                                     <br>
                                 </table>

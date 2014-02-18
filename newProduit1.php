@@ -10,11 +10,13 @@ if(!isset($_SESSION['idVisiteur']))
 if(isset($_GET)&&  !empty($_GET))
 { 
     extract($_GET);
+    $_SESSION['Get'] = $_GET;
+    $Id = trim($_SESSION['Get']['id']);
+                          
     $RefFournisseur= $_GET['num'];
-    $Id = $_GET['id'];
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
-    
+        
     foreach ($Resultat as $value)
     {
         $value['Nom'];
@@ -34,6 +36,10 @@ if(isset($_GET)&&  !empty($_GET))
         $value['dIdTVA'];
     }
 }
+else
+{
+        $Id = trim($_SESSION['Get']['id']);
+}
 if(isset($_POST['action']))
 {
     if (isset($_POST['action'])=='envoyer')
@@ -44,25 +50,11 @@ if(isset($_POST['action']))
             $_POST['obselete']=1;}
         else
         {$_POST['obselete']=0;}
-        $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
+        $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
 
-if(isset($_POST['action1']))
-{
-    if (isset($_POST['action1'])=='envoyer1')
-    {    
-        extract($_POST);
-        if(isset($_POST['chkb_1']))
-        {
-            $_POST['chkb_1']=1;    
-        }
-        else
-        {$_POST['chkb_1']=0;}
-        $Produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'], $_POST['PAHT'], $_POST['PATTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
-    }
-    {header('location: newProduit.php');  }
-}
+
 ?>
 
 
@@ -85,7 +77,6 @@ if(isset($_POST['action1']))
             </div>
             <?php include('Menu.php');?>
             <div class="span12">
-            
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
@@ -170,11 +161,26 @@ if(isset($_POST['action1']))
                                                     <?php 
                                                     if(!empty($_GET)){$val=$value["Obselete"];} else {$val= $_POST['obselete'];}
                                                    ?>
-                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="obselete" id="obselete" <?php if( $val == 1){ echo "checked";} ?> </label>
-                                                   
-                                                   
+                                                    <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="obselete" id="obselete" <?php if( $val != 1){ echo "checked";} ?> </label> 
                                                 </td>
                                             </tr>
+                                            
+                                             <?php if(isset($rep))
+                                        {
+                                                if ($rep=="Le produit à été modifié.")
+                                                    {?>
+                                                        <div class="alert alert-success "><?php echo $rep;
+                                                    } 
+                                                else
+                                                    {?>
+                                                        </div>
+                                                        <div class="alert alert-danger"><?php echo $rep;
+                                                    }?>
+                                                        </div>
+                                    <?php
+                                  
+                                        }?>
+                                            
                                             <tr>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr?');">Modification</button>
@@ -196,14 +202,14 @@ if(isset($_POST['action1']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <legend>Nouvelle Entrée</legend>                
-                                <form method="POST" action="newProduit1.php" name="form">
+                                <form method="POST" action="newProduit.php" name="form">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
                                                     <label for="DateEntree"><b>Date d'entrée :</b></label>
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
-                                                    <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $_POST['id'];}?>'>
+                                                    <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
                                                     
                                                     <input type="date" name="DateEntree" id="DateEntree" required="" >
                                                 </td>
@@ -213,10 +219,11 @@ if(isset($_POST['action1']))
                                                     <input type="text" name="Quantite" id="Quantite" required="">
                                                 </td>
                                                 
-                                                <td>
-                                                    <label for="Gratuit"> <b>Gratuit</b> <input type="checkbox" name="Gratuit" id ="chkb_1" value="<?php if(!empty($_GET)){echo $value['dGratuit'];;} else {echo $_POST['Gratuit'];}?>" 
+                                                <td> 
+                                                   <label for="Gratuit"> <b>Gratuit</b> 
+                                                    <input type="checkbox" name="chkb_1" id ="chkb_1"
                                                     onClick="GereControle('chkb_1', 'PAHT', 'PATTC', 'CodeTVA', '0');">
-                                                    </label> 
+                                                    </label>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -232,13 +239,16 @@ if(isset($_POST['action1']))
                                                 
                                                 <td>
                                                     <label for="CodeTVA"><b>Code TVA :</b></label>
-                                                    <select name = "CodeTVA" class="input-small" id="CodeTVA"> 
-                                                    <?php	
+                                                    <select name = "CodeTVA" class="input-small" id="CodeTVA" > 
+                                                    <?php
+                                                        
                                                         $tab1 = $Produit->ListeTVA();
                                                         foreach ($tab1 as $valeur1)
-                                                        {                                                      
+                                                        {
                                                           echo "<option value=".$valeur1['Id']." ";
-                                                          if(!empty($_GET)){$val =$value["dIdTVA"];} else {$val= $_POST['CodeTVA'];}
+                                                            
+                                                          if(!empty($_GET)){$val =$value["dIdTVA"];}
+                                                          
                                                           if($val == $valeur1["Id"])
                                                           {
                                                               echo "selected";
@@ -256,8 +266,9 @@ if(isset($_POST['action1']))
                                                     <input type="text" name="PATTCPondere" id="PATTCPondere" disabled>
                                                     
                                                 </th>
-                                            </tr>     
-                                          
+                                            </tr>
+                                            
+
                                             <tr>
                                                 <td>        
                                                     <button type="submit" class="btn btn-success" value="envoyer1" name="action1" onClick="return confirm('Etes-vous sûr?');">Validation</button>
@@ -287,33 +298,39 @@ if(isset($_POST['action1']))
                     if (Masquer =='1')
                         {
                             objControle1.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                            objControle1.value = "";
+                            objControle1.value = "0";
                             objControle2.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                            objControle2.value = "";
-                            objControle3.style.visibility=(objControleur.checked==true)?'visible':'hidden';
-                            objControle3.value = "";
+                            objControle2.value = "0";
+                            objControle3.style.visibility = "visible";
+                            objControle3.value = "3";
                         }
-
                     else
                         {
                             objControle1.disabled=(objControleur.checked==false)?false:true;
-                            objControle1.value = "";
+                            objControle1.value = "0";
                             objControle2.disabled=(objControleur.checked==false)?false:true;
-                            objControle2.value = "";
-                            objControle3.disabled=(objControleur.checked==false)?false:true;
-                            objControle3.value = "";
+                            objControle2.value = "0";
+                            objControle3.style.visibility=(objControleur.checked==false)?'visible':'hidden';
+                            objControle3.value = "3";
                         }
-                            return true;
+                    return true;
+            }
+            function calcul()
+            {
+                result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PATTCPondere').value) / document.getElementById('PATTCPondere').value );
+                result1 = result*100;          
+                result2 = Math.round(result1); 
+                result3 = result2/100; 
+                document.getElementById('Total').value = result3;
             }
             
-        function calcul(nb)
-        {
-            result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PATTCPondere').value) / document.getElementById('PATTCPondere').value );
-            result1 = result*100;          
-            result2 = Math.round(result1); 
-            result3 = result2/100; 
-            document.getElementById('Total').value = result3;
-        }
+            function AutomatiqueRemplissage()
+            {
+                var Champsgenerer;
+                
+                document.getElementById('RefLycee');
+                
+            }
         </script>
        
         <script src="http://code.jquery.com/jquery.js"></script>
