@@ -13,8 +13,9 @@ $OcC=$LesOc->affiche_objetC();
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
-        <link rel="stylesheet"  href="css/bootstrap-responsive.min.css">
-        <link rel="stylesheet"  href="css/bootstrap.min.css">
+               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet"   media="screen" href="css/bootstrap.min.css">
+        <link rel="stylesheet" media="print" href="css/print.css" type="text/css">
         <!--responsive -->
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
     </head>
@@ -68,6 +69,7 @@ $OcC=$LesOc->affiche_objetC();
                      </form>
                        </div>                    
                    </div>
+               <input type="button" value="Imprimer cette page" onClick="window.print()">
            </div>
         </div>
         <!--Js -->

@@ -12,6 +12,7 @@ include('menu.class.php');
  
             });
         </script>
+        <div class="menu">
 <div class="span2 tabbable tabs-left full-height">
     <ul class='nav nav-tabs full-height' id="TabModal">
  
@@ -31,3 +32,4 @@ include('menu.class.php');
                         
     </ul>
 </div>
+        </div>

@@ -1,4 +1,7 @@
-/*!
+/*!.menu{display: none;}
+.page-header{display: none;}
+
+ /*!
  * Bootstrap v2.3.1
  *
  * Copyright 2012 Twitter, Inc
@@ -170,13 +173,17 @@ textarea {
 }
 
 @media print {
-  * {
+  
+    * {
     color: #000 !important;
     text-shadow: none !important;
     background: transparent !important;
     box-shadow: none !important;
     
   }
+  input{display: none;}
+  .menu{display: none;}
+.page-header{display: none;}
   a,
   a:visited {
     text-decoration: underline;
