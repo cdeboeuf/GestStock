@@ -3,7 +3,7 @@ include('connexion.php');
 include('objetConfectionne.class.php');
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-
+//tadda
 $LesOc=new ObjectConfectionne();
 $OcNc=$LesOc->affiche_objetNC();
 $OcC=$LesOc->affiche_objetC();
