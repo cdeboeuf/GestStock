@@ -27,7 +27,7 @@ $Produit = new Produit();
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);
-           $menu->Verifdroit($page['basename']);?>
+            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <div class="tab-content">
                     <div class="tab-pane active">   
