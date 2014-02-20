@@ -54,11 +54,11 @@ if(isset($_POST['action']))
       {
           echo $ref="OC".$_POST['Id']."/".$_POST['Annee'];
           
-          $temp=$_POST['heure'].".".$_POST['minute'];
-      $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
+          $temp=(($_POST['heure']*60)+$_POST['minute'])/60;
+          $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
       }
       else{
-          $erreur="Vous n'avez pas coché la case.";
+          $erreur="Vous n'avez pas coché la case cloturer le bulletin.";
           
       }
     }
@@ -168,9 +168,14 @@ if(isset($_POST['action']))
                                         <br>
                                         <br>
                                         Coefficient de correction: <?php echo $Coef?> % de total matière.<br>
-                                        Coût machine:<input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/><input type="text" name="minute" id="minute" placeholder="mn" OnKeyUp="javascript:calcul()" class="input-small"/> X <?php echo $Cout?>€.
+                                        Coût machine:<input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/><select OnClick="javascript:calcul()" class="input-mini" id="minute">
+    <?php  for($i=00;$i<60;$i++){?>
+    <option>
+        <?php echo $i ;?>
+    </option> <?php } ?> </select>
+<small>(<small id="temps">0 X <?php echo $Cout?>€</small>)</small><br>
 <br>
-<br>
+                                        
   <?php
                                $jour=date("d");
                                $mois=date("m");
@@ -283,7 +288,30 @@ cout=<?php echo $Cout?>;
 prevision=<?php echo $oc['NbPrevision']?>;
 document.getElementById('totalfrais').innerHTML=Math.round((parseFloat(totalmatiere)*(parseFloat(coef)/100))*100)/100;
 document.getElementById('totalcouteleve').innerHTML=Math.round((parseFloat(document.getElementById('totalfrais').innerHTML)+parseFloat(totalmatiere))*100)/100;
-temps=document.getElementById('heure').value+"."+document.getElementById('minute').value;
+alert(document.getElementById('heure').value);
+alert(document.getElementById('minute').value);
+if(document.getElementById('heure').value==="")
+    {
+        heure=0;
+        alert(heure);
+    }
+    else
+        {
+            heure=document.getElementById('heure').value;
+            alert("non");
+        }
+if(document.getElementById('minute').value ==="")
+    {
+        minute=0;
+        alert(heure);
+    }
+    else
+        {
+            minute=document.getElementById('minute').value;
+            alert("else");
+        }
+temps=Math.round((((parseFloat(heure)*60)+parseFloat(minute))/60)*100)/100;
+document.getElementById('temps').innerHTML=temps+" X <?php echo $Cout?>€";
 document.getElementById('coutmachine').innerHTML=Math.round((parseFloat(temps)*parseFloat(cout))*100)/100;
 document.getElementById('totalcoutpublic').innerHTML=Math.round((parseFloat(document.getElementById('totalcouteleve').innerHTML)+parseFloat(document.getElementById('coutmachine').innerHTML))*100)/100;
 document.getElementById('prixunitairepublic').innerHTML=Math.round((parseFloat(document.getElementById('totalcoutpublic').innerHTML)/parseFloat(prevision))*100)/100;
