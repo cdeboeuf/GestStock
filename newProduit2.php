@@ -88,20 +88,40 @@ if(isset($_POST['action']))
                             <div class="row-fluid">
                                 <legend>Produit Mode</legend> 
                                 
-                                <form method="POST" action="">
+                                <?php $idlien = $value["RefFournisseur"]; ?>
+                                <?php $idid = $value["Id"]; ?>
+                                <?php $ididid = "2"; ?>
+                                <?php $lienN = "newProduit1.php?num=$idlien&id=$idid&$ididid"; ?> 
+                                
+                                <form method="POST" action="<?php echo $lienN ?>">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
                                                 <td>
                                                     <label for="Fournisseurs"><b>Fournisseur :</b></label>                    
-                                                    <?php if(!empty($_GET)){echo $value['Nom'];} else {echo $_POST['Nom'];}?>
-                                                    
+                                                    <input type="hidden" name="Nom" value="<?php if(!empty($_GET)){echo $value['Nom'];} else {echo $_POST['Nom'];}?>">
+                                                    <select name = "Fournisseurs" class="input-medium" disabled id="Fournisseurs"> 
+                                                    <?php	
+                                                        $tab1 = $Produit->ListeFournisseurs();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {
+                                                            
+                                                            echo "<option value=".$valeur1['Id']." ";
+                                                            if(!empty($_GET)){$val=$value['IdFour'];} 
+                                                            else {$val= $_POST['Fournisseurs'];}
+                                                            if(  $val== $valeur1['Id'])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1['Nom']."</option>";
+                                                        }
+                                                    ?>
                                                     </select>
                                                 </td>
 
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
-                                                    <?php if(!empty($_GET)){ echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];}?>
+                                                    <input type="text" name="RefFournisseurs" disabled id="RefFournisseurs" value='<?php if(!empty($_GET)){ echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];}?>'>
 
                                                 </td>
 

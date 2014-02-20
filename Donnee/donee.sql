@@ -1,12 +1,11 @@
-
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Jeu 20 Février 2014 à 08:24
--- Version du serveur: 5.5.24-log
--- Version de PHP: 5.3.13
+-- Host: localhost
+-- Generation Time: Feb 20, 2014 at 09:28 AM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -18,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `2014`
+-- Database: `2014`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `detailsligneproduit`
+-- Table structure for table `detailsligneproduit`
 --
 
 CREATE TABLE IF NOT EXISTS `detailsligneproduit` (
@@ -34,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `detailsligneproduit` (
   `IdTVA` int(10) NOT NULL,
   `Gratuit` tinyint(1) DEFAULT NULL,
   `PUHT` decimal(10,2) DEFAULT NULL,
-  `SortieEntree` tinyint(1) NOT NULL,
+  `SortieEntree` char(1) NOT NULL,
   `IdUsers` int(10) NOT NULL,
   `PUTTC` decimal(10,2) DEFAULT NULL,
   `Utilisation` int(10) NOT NULL,
@@ -47,29 +46,37 @@ CREATE TABLE IF NOT EXISTS `detailsligneproduit` (
   KEY `Utilisation` (`Utilisation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `detailsligneproduit`
+--
+
+INSERT INTO `detailsligneproduit` (`RefLycee`, `Id`, `DateChangement`, `IdTVA`, `Gratuit`, `PUHT`, `SortieEntree`, `IdUsers`, `PUTTC`, `Utilisation`, `OC`, `Quantite`) VALUES
+('BOUT007*', 1, '2014-02-01', 1, 0, '64.00', 'S', 1, '78.00', 1, 'OC1/2014', 16);
+
 -- --------------------------------------------------------
 
 --
--- Structure de la table `fournisseurs`
+-- Table structure for table `fournisseurs`
 --
 
 CREATE TABLE IF NOT EXISTS `fournisseurs` (
   `Id` int(3) NOT NULL AUTO_INCREMENT,
   `Nom` char(30) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `fournisseurs`
+-- Dumping data for table `fournisseurs`
 --
 
 INSERT INTO `fournisseurs` (`Id`, `Nom`) VALUES
-(1, 'braamme');
+(1, 'braamme'),
+(2, 'MONDIAL TISSUS');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `lien`
+-- Table structure for table `lien`
 --
 
 CREATE TABLE IF NOT EXISTS `lien` (
@@ -80,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `lien` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- Contenu de la table `lien`
+-- Dumping data for table `lien`
 --
 
 INSERT INTO `lien` (`Id`, `Adresse`, `Details`) VALUES
@@ -96,7 +103,7 @@ INSERT INTO `lien` (`Id`, `Adresse`, `Details`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ligneoc`
+-- Table structure for table `ligneoc`
 --
 
 CREATE TABLE IF NOT EXISTS `ligneoc` (
@@ -111,16 +118,16 @@ CREATE TABLE IF NOT EXISTS `ligneoc` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Contenu de la table `ligneoc`
+-- Dumping data for table `ligneoc`
 --
 
 INSERT INTO `ligneoc` (`Id`, `RefOc`, `RefLycee`, `Quantite`, `PuTTC`) VALUES
-(1, 'OC1/2014', 'dryy', '3.00', '15.20');
+(1, 'OC1/2014', 'BOUT007*', '3.00', '15.20');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `menu`
+-- Table structure for table `menu`
 --
 
 CREATE TABLE IF NOT EXISTS `menu` (
@@ -131,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `menu`
+-- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`Idtype`, `IdLien`) VALUES
@@ -147,7 +154,7 @@ INSERT INTO `menu` (`Idtype`, `IdLien`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `objetconfectionne`
+-- Table structure for table `objetconfectionne`
 --
 
 CREATE TABLE IF NOT EXISTS `objetconfectionne` (
@@ -176,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `objetconfectionne` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `objetconfectionne`
+-- Dumping data for table `objetconfectionne`
 --
 
 INSERT INTO `objetconfectionne` (`Ref`, `Id`, `Annee`, `Designation`, `NbPrevision`, `Professeur`, `Destination`, `DateEmi`, `DateFabri`, `CoefCorrection`, `NbRealise`, `Temps`, `TotalMatiere`, `TotalFrais`, `TotalCoutEleve`, `CoutMachine`, `TotalCoutPublic`, `PrixUnitairePublic`, `PrixEleveUnitaire`, `CoutMachinePU`) VALUES
@@ -192,7 +199,7 @@ INSERT INTO `objetconfectionne` (`Ref`, `Id`, `Annee`, `Designation`, `NbPrevisi
 -- --------------------------------------------------------
 
 --
--- Structure de la table `parametre`
+-- Table structure for table `parametre`
 --
 
 CREATE TABLE IF NOT EXISTS `parametre` (
@@ -202,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `parametre` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `parametre`
+-- Dumping data for table `parametre`
 --
 
 INSERT INTO `parametre` (`Id`, `Details`) VALUES
@@ -212,14 +219,14 @@ INSERT INTO `parametre` (`Id`, `Details`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `produit`
+-- Table structure for table `produit`
 --
 
 CREATE TABLE IF NOT EXISTS `produit` (
-  `RefLycee` char(30) NOT NULL,
+  `RefLycee` varchar(30) NOT NULL,
   `Id` int(3) NOT NULL,
-  `RefFournisseur` char(30) NOT NULL,
-  `Designation` char(30) NOT NULL,
+  `RefFournisseur` varchar(30) NOT NULL,
+  `Designation` varchar(100) NOT NULL,
   `IdUniteAchat` int(3) NOT NULL,
   `IdFournisseur` int(3) NOT NULL,
   `QuantiteTotal` decimal(10,2) NOT NULL,
@@ -237,16 +244,17 @@ CREATE TABLE IF NOT EXISTS `produit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `produit`
+-- Dumping data for table `produit`
 --
 
 INSERT INTO `produit` (`RefLycee`, `Id`, `RefFournisseur`, `Designation`, `IdUniteAchat`, `IdFournisseur`, `QuantiteTotal`, `Obselete`, `StockAlerte`, `PUTTCPondere`, `Coloris`, `IdSection`, `StockInitial`, `PondereInitial`) VALUES
-('dryy', 1, 'tcuvyib', 'esdrftgrghiorne', 2, 1, '2.00', 0, 45874, '845.21', 'xtrcy', 2, 2, '15.00');
+('BOUT007*', 1, 'BOU01260019B3PAT', 'BOUTON 2 TR 19MM BLANC - BLOUSE PERONNAS', 1, 1, '157.00', 0, 5, '456.00', 'Bleu', 2, 1, '15.00'),
+('COT012', 2, '00087731', 'COTON LIN GARANCE', 2, 2, '458.00', 0, 5, '845.21', 'Rouge', 2, 2, '15.00');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `section`
+-- Table structure for table `section`
 --
 
 CREATE TABLE IF NOT EXISTS `section` (
@@ -256,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `section` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Contenu de la table `section`
+-- Dumping data for table `section`
 --
 
 INSERT INTO `section` (`Id`, `Details`) VALUES
@@ -267,20 +275,21 @@ INSERT INTO `section` (`Id`, `Details`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `tva`
+-- Table structure for table `tva`
 --
 
 CREATE TABLE IF NOT EXISTS `tva` (
   `Id` int(3) NOT NULL AUTO_INCREMENT,
   `Taux` decimal(10,2) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Contenu de la table `tva`
+-- Dumping data for table `tva`
 --
 
 INSERT INTO `tva` (`Id`, `Taux`) VALUES
+(0, '0.00'),
 (1, '7.00'),
 (2, '20.00'),
 (3, '5.50');
@@ -288,7 +297,7 @@ INSERT INTO `tva` (`Id`, `Taux`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `typeuser`
+-- Table structure for table `typeuser`
 --
 
 CREATE TABLE IF NOT EXISTS `typeuser` (
@@ -298,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `typeuser` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Contenu de la table `typeuser`
+-- Dumping data for table `typeuser`
 --
 
 INSERT INTO `typeuser` (`Id`, `Details`) VALUES
@@ -309,7 +318,7 @@ INSERT INTO `typeuser` (`Id`, `Details`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `unite`
+-- Table structure for table `unite`
 --
 
 CREATE TABLE IF NOT EXISTS `unite` (
@@ -319,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `unite` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `unite`
+-- Dumping data for table `unite`
 --
 
 INSERT INTO `unite` (`Id`, `Details`) VALUES
@@ -329,7 +338,7 @@ INSERT INTO `unite` (`Id`, `Details`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -342,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Contenu de la table `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`Id`, `Login`, `Mdp`, `Type`) VALUES
@@ -353,21 +362,30 @@ INSERT INTO `users` (`Id`, `Login`, `Mdp`, `Type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `utilisation`
+-- Table structure for table `utilisation`
 --
 
 CREATE TABLE IF NOT EXISTS `utilisation` (
   `Id` int(2) NOT NULL AUTO_INCREMENT,
   `Details` char(30) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Contraintes pour les tables exportées
+-- Dumping data for table `utilisation`
+--
+
+INSERT INTO `utilisation` (`Id`, `Details`) VALUES
+(1, 'Salon'),
+(2, 'Pratique'),
+(3, 'Projet');
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `detailsligneproduit`
+-- Constraints for table `detailsligneproduit`
 --
 ALTER TABLE `detailsligneproduit`
   ADD CONSTRAINT `detailsligneproduit_ibfk_1` FOREIGN KEY (`RefLycee`) REFERENCES `produit` (`RefLycee`),
@@ -377,27 +395,27 @@ ALTER TABLE `detailsligneproduit`
   ADD CONSTRAINT `detailsligneproduit_ibfk_5` FOREIGN KEY (`Utilisation`) REFERENCES `utilisation` (`Id`);
 
 --
--- Contraintes pour la table `ligneoc`
+-- Constraints for table `ligneoc`
 --
 ALTER TABLE `ligneoc`
   ADD CONSTRAINT `ligneoc_ibfk_1` FOREIGN KEY (`RefOc`) REFERENCES `objetconfectionne` (`Ref`),
   ADD CONSTRAINT `ligneoc_ibfk_2` FOREIGN KEY (`RefLycee`) REFERENCES `produit` (`RefLycee`);
 
 --
--- Contraintes pour la table `menu`
+-- Constraints for table `menu`
 --
 ALTER TABLE `menu`
   ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`Idtype`) REFERENCES `typeuser` (`Id`),
   ADD CONSTRAINT `menu_ibfk_2` FOREIGN KEY (`IdLien`) REFERENCES `lien` (`Id`);
 
 --
--- Contraintes pour la table `objetconfectionne`
+-- Constraints for table `objetconfectionne`
 --
 ALTER TABLE `objetconfectionne`
   ADD CONSTRAINT `objetconfectionne_ibfk_1` FOREIGN KEY (`Professeur`) REFERENCES `users` (`Id`);
 
 --
--- Contraintes pour la table `produit`
+-- Constraints for table `produit`
 --
 ALTER TABLE `produit`
   ADD CONSTRAINT `produit_ibfk_1` FOREIGN KEY (`IdFournisseur`) REFERENCES `fournisseurs` (`Id`),
@@ -405,7 +423,7 @@ ALTER TABLE `produit`
   ADD CONSTRAINT `produit_ibfk_3` FOREIGN KEY (`IdUniteAchat`) REFERENCES `unite` (`Id`);
 
 --
--- Contraintes pour la table `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`Type`) REFERENCES `typeuser` (`Id`);
