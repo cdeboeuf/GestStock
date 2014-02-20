@@ -133,8 +133,8 @@ if(isset($_POST['action']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["PATTCPondere"];
-                                                    ?><input type="hidden" name="PATTCPondere[]" id="PATTCPondere<?php echo $nb ?>" value="<?php echo $value["PATTCPondere"] ?>">
+                                                    echo $value["PUTTCPondere"];
+                                                    ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
                                                     echo "<td>";
@@ -171,7 +171,7 @@ if(isset($_POST['action']))
                <script type="text/javascript">
         function calcul(nb)
         {
-            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PATTCPondere'+nb).value);
+            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PUTTCPondere'+nb).value);
             result1 = result*100;          
             result2 = Math.round(result1); 
             result3 = result2/100; 

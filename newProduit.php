@@ -21,12 +21,12 @@ if(isset($_POST['action1']))
         {
             $_POST['chkb_1']=0;
         }
-        if(!isset($_POST['PAHT']) && !isset($_POST['PATTC']))
+        if(!isset($_POST['PUHT']) && !isset($_POST['PUTTC']))
         {
-            $_POST['PAHT'] = 0;
-            $_POST['PATTC'] = 0;
+            $_POST['PUHT'] = 0;
+            $_POST['PUTTC'] = 0;
         }
-        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'],  $_POST['PAHT'], $_POST['PATTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
+        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
         
     }
 }

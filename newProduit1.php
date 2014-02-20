@@ -12,7 +12,7 @@ if(isset($_GET)&&  !empty($_GET))
     extract($_GET);
     $_SESSION['Get'] = $_GET;
     $Id = trim($_SESSION['Get']['id']);
-                          
+          
     $RefFournisseur= $_GET['num'];
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
@@ -31,10 +31,13 @@ if(isset($_GET)&&  !empty($_GET))
         $value['dQuantite'];
         $value['dDateChangement'];
         $value['dGratuit'];
-        $value['dPAHT'];
-        $value['dPaTTC'];
+        $value['dPUHT'];
+        $value['dPUTTC'];
         $value['dIdTVA'];
     }
+    $Noma = $value['Nom'];
+    $Colorisa = $value['Coloris'];
+    
 }
 else
 {
@@ -53,6 +56,7 @@ if(isset($_POST['action']))
         $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
+
 
 
 ?>
@@ -83,7 +87,13 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <legend>Produit Mode</legend> 
-                                <form method="POST" action="newProduit1.php">
+                                
+                                <?php $idlien = $value["RefFournisseur"]; ?>
+                                <?php $idid = $value["Id"]; ?>
+                                <?php $ididid = "2"; ?>
+                                <?php $lienN = "newProduit1.php?num=$idlien&id=$idid&$ididid"; ?> 
+                                
+                                <form method="POST" action="<?php echo $lienN ?>">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
@@ -119,18 +129,20 @@ if(isset($_POST['action']))
                                                     <label for="Coloris"><b>Coloris :</b></label>
                                                     <input type="text" name="Coloris" id="Coloris" class="input-small" value='<?php if(!empty($_GET)){echo $value['Coloris'];;} else {echo $_POST['Coloris'];}?>'>
                                                 </td>
-
-                                                <td>
-                                                    <label for="RéfLycee"><b>Référence Lycée :</b></label>
-                                                    <input type="text" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
-                                                </td>
+                                                
+                                                
 
                                             <tr>
-                                                <th>
+                                                <td>
                                                     <label for="Désignation"><b>Désignation :</b></label>
                                                     <input type="text" name="Designation" id="Designation" value='<?php if(!empty($_GET)){echo $value['Designation'];} else {echo $_POST['Designation'];}?>'>
-                                                </th>
-                                            </tr>     
+                                                </td>
+                                                
+                                                <td>
+                                                    <label for="RéfLycee" ><b>Référence Lycée :</b></label>
+                                                 
+                                                    <input type="text" name="RefLycee" id="RefLycee"  value='<?php $Produit->ChampsRefLycee($Noma, $RefFournisseur, $Colorisa); ?>'>
+                                                </td>   
                                             
                                             <td>
                                                 <label for="UniteAchat"><b>Unité d'achat :</b></label>
@@ -223,19 +235,19 @@ if(isset($_POST['action']))
                                                 <td> 
                                                    <label for="Gratuit"> <b>Gratuit</b> 
                                                     <input type="checkbox" name="chkb_1" id ="chkb_1"
-                                                    onClick="GereControle('chkb_1', 'PAHT', 'PATTC', 'CodeTVA', '0');">
+                                                    onClick="GereControle('chkb_1', 'PUHT', 'PUTTC', 'CodeTVA', '0');">
                                                     </label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label for="PAHT"><b>PAHT :</b></label>
-                                                    <input type="text" name="PAHT" id="PAHT">
+                                                    <label for="PUHT"><b>PUHT Unitaire:</b></label>
+                                                    <input type="text" name="PUHT" id="PUHT">
                                                 </td>
 
                                                 <td>
-                                                    <label for="PATTC"><b>PATTC :</b></label>
-                                                    <input type="text" name="PATTC" id="PATTC">
+                                                    <label for="PUTTC"><b>PUTTC Unitaire:</b></label>
+                                                    <input type="text" name="PUTTC" id="PUTTC">
                                                 </td>
                                                 
                                                 <td>
@@ -262,11 +274,11 @@ if(isset($_POST['action']))
                                             
                                             </tr>
                                             <tr>
-                                                <th>
-                                                    <label for="PATTCPondere"><b>PATTC Pondéré :</b></label>
-                                                    <input type="text" name="PATTCPondere" id="PATTCPondere" disabled>
+                                                <td>
+                                                    <label for="PUTTCPondere"><b>PUTTC Pondéré :</b></label>
+                                                    <input type="text" name="PUTTCPondere" id="PUTTCPondere" disabled>
                                                     
-                                                </th>
+                                                </td>
                                             </tr>
                                             
 
@@ -318,20 +330,13 @@ if(isset($_POST['action']))
             }
             function calcul()
             {
-                result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PATTCPondere').value) / document.getElementById('PATTCPondere').value );
+                result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PUTTCPondere').value) / document.getElementById('PUTTCPondere').value );
                 result1 = result*100;          
                 result2 = Math.round(result1); 
                 result3 = result2/100; 
                 document.getElementById('Total').value = result3;
             }
             
-            function AutomatiqueRemplissage()
-            {
-                var Champsgenerer;
-                
-                document.getElementById('RefLycee');
-                
-            }
         </script>
        
         <script src="http://code.jquery.com/jquery.js"></script>
