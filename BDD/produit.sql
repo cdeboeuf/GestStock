@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `QuantiteTotal` decimal(10,2) NOT NULL,
   `Obselete` tinyint(1) NOT NULL,
   `StockAlerte` int(2) NOT NULL,
-  `PATTCPondere` decimal(10,2) NOT NULL,
+  `PUTTCPondere` decimal(10,2) NOT NULL,
   `Coloris` char(15) NOT NULL,
   `IdSection` int(3) NOT NULL,
   `StockInitial` int(2) NOT NULL,
