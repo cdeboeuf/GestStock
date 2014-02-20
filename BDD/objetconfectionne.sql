@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `objetconfectionne` (
   `Ref` varchar(20) NOT NULL,
   `Id` int(3) NOT NULL,
   `Annee` int(4) NOT NULL,
-  `Designation` char(30) NOT NULL,
+  `Designation` char(100) NOT NULL,
   `NbPrevision` int(2) NOT NULL,
   `Professeur` int(2) NOT NULL,
   `Destination` char(30) NOT NULL,
