@@ -32,27 +32,11 @@ include('connexion.php');
         
         public function GetValorisationStockEST()
         {
-            try 
+             try 
            {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial
-                        , (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+                       (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1";
-            $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll();
-           } 
-           catch (Exception $e) 
-           {
-                echo 'Échec lors de la connexion : ' . $e->getMessage();
-           }	
-        }
-        
-        public function GetValorisationStockOC()
-        {
-            try 
-           {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial
-                        , (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
-                        Where IdSection = 3";
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
            } 
@@ -132,12 +116,32 @@ include('connexion.php');
            }	
         }
         
-       public function MajProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Id)
+       public function MajProduit($StockAlerte, $Obselete, $Id)
         {
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
             
             if (is_numeric($StockAlerte))
+            { 
+                
+                $requete1 = "UPDATE Produit SET StockAlerte = '$StockAlerte', Obselete = '$Obselete' where Produit.RefFournisseur = '$Id';";
+                $this->retour = Produit::$bdd->prepare($requete1);
+                $this->retour->execute();
+                $rep = "Le produit à été modifié.";
+            }
+            else
             {
+                $rep = "Erreur, champs invalide.";
+            }
+            return $rep;
+
+        }
+        
+        public function AddNewProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Id)
+        {
+            $StockAlerte=str_replace ( ',', '.', $StockAlerte);
+            
+            if (is_numeric($StockAlerte))
+            { 
                 $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', IdFournisseur='$four',Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris', idUniteAchat='$unite'  where Produit.RefFournisseur = '$Id';";
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();

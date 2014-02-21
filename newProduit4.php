@@ -4,25 +4,22 @@
 include('Produit.class.php');
 $Produit = new Produit();
 
-if(!isset($_SESSION['idVisiteur'])) 
-{header('location: index.php');  }
-
 if(isset($_POST['action']))
 {
     if (isset($_POST['action'])=='envoyer')
     {    
         extract($_POST);
-        if(!isset($_POST['obselete']))
+        if(isset($_POST['obselete']))
         {
-            $_POST['obselete']=1;
-        }
+            $_POST['obselete']=1;}
         else
-        {
-            $_POST['obselete']=0;   
-         }
-        $rep = $Produit->MajProduit( $_POST['StockAlerte'], $_POST['obselete'], $_POST['RefFournisseurs']);
+        {$_POST['obselete']=0;}
+        $rep = $Produit->AddNewProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
+
+if(!isset($_SESSION['idVisiteur'])) 
+{header('location: index.php');  }
 
 if(isset($_GET)&&  !empty($_GET))
 { 
@@ -33,8 +30,7 @@ if(isset($_GET)&&  !empty($_GET))
     $RefFournisseur= $_GET['num'];
     $Resultat = $Produit->GetRemplissageTableau($RefFournisseur);
     $nb=0;
-        
-    foreach ($Resultat as $value)
+           foreach ($Resultat as $value)
     {
         $value['Nom'];
         $value['Coloris'];
@@ -80,76 +76,111 @@ else
 
     </head>
     <body>
-        
         <div class="container-fluid">
             <div class="page-header">
-                <h1><small>Achat</small></h1>
+                <h1><small>Produit</small></h1>
             </div>
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $menu=new Menu();
+            $menu->Verifdroit('newProduit.php');?>
+            <div class="span12">
+                <ul class="nav nav-tabs" id="profileTabs">
+                    <li><a href="./newProduit.php">Mode</a></li>
+                    <li><a href="./newProduit2.php">Esthétique</a></li>
+                    <li class="active"><a href="./newProduit4.php">Nouvelle ajout</a></li>
+                </ul>
+                
             <div class="span12">
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <legend>Produit Mode</legend> 
-                                
-                                <?php $idlien = $value["RefFournisseur"]; ?>
-                                <?php $idid = $value['Id']; ?>
-                                <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?>
-                                <form method="POST" action="<?php $lien ?>">
-                                    <table class="table table-striped">
-
-                                        <input type="hidden" name="RefFournisseurs" id="RefFournisseurs" value='<?php if(!empty($_GET)){ echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];}?>'>
+                                <form method="POST" action="newProduit4.php">
+                                    <table style="border:none;">
                                         <thead>
                                             <tr>
-                                                <th>Fournisseur</th>
-                                                <th>Référence Fournisseur</th>
-                                                <th>Coloris</th>
-                                            </tr>
-                                            <td>                
-                                                    <?php if(!empty($_GET)){echo $value['Nom'];} else {echo $_POST['Nom'];}?>
-                                                    
-                                                </td>
                                                 <td>
-                                                    <?php if(!empty($_GET)){ echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];}?>
-                                                    
+                                                    <label for="Fournisseurs"><b>Fournisseur :</b></label>                    
+                                                    <input type="hidden" name="Nom" value="<?php $_POST['Nom'];?>">
+                                                    <select name = "Fournisseurs" class="input-medium" id="Fournisseurs"> 
+                                                    <?php	
+                                                        $tab1 = $Produit->ListeFournisseurs();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {
+                                                            
+                                                            echo "<option value=".$valeur1['Id']." ";
+                                                            if(!empty($_GET)){$val=$value['IdFour'];} 
+                                                            else {$val= $_POST['Fournisseurs'];}
+                                                            if(  $val== $valeur1['Id'])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1['Nom']."</option>";
+                                                        }
+                                                    ?>
+                                                    </select>
                                                 </td>
-                                                <td>
-                                                    <?php if(!empty($_GET)){echo $value['Coloris'];;} else {echo $_POST['Coloris'];}?>
-                                                </td>
-                                                
-                                            <tr>
-                                                <th>Désignation</th>
-                                            </tr>
-                                                <td>
-                                                    <?php if(!empty($_GET)){echo $value['Designation'];} else {echo $_POST['Designation'];}?>                                                   
-                                                </td>
-                                            <tr>
-                                                <th>Référence Lycée</th>
-                                                <th>Unité d'achat</th>
-                                            </tr>
-                                                <td>
-                                                    <?php $Produit->ChampsRefLycee($Noma, $RefFournisseur, $Colorisa); ?>
-                                                </td>
-                                                <td>
-                                                    <?php if(!empty($_GET)){echo $value['Details'];} else {echo $_POST['unite'];}?>
-                                                </td>
-                                            <tr>
 
-                                                <th>Stock d'alerte</th>
-                                                <th>Obsolète</th>
-                                                
-                                            </tr>
                                                 <td>
-                                                    <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];}?>'>
-                                                </td>  
+                                                    <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
+                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value='<?php $_POST['RefFournisseurs'];?>'>
+
+                                                </td>
+
+                                                <td>
+                                                    <label for="Coloris"><b>Coloris :</b></label>
+                                                    <input type="text" name="Coloris" id="Coloris" class="input-small" value='<?php $_POST['Coloris'];?>'>
+                                                </td>
+                                                
+                                                
+
+                                            <tr>
+                                                <td>
+                                                    <label for="Désignation"><b>Désignation :</b></label>
+                                                    <input type="text" name="Designation" class="input-xxlarge" id="Designation" value='<?php $_POST['Designation'];?>'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="RéfLycee" ><b>Référence Lycée :</b></label>
+                                                 
+                                                    <input type="text" name="RefLycee" id="RefLycee" value='<?php $Produit->ChampsRefLycee($Noma, $RefFournisseur, $Colorisa); ?>'>
+                                                </td>   
+                                            
+                                            <td>
+                                                <label for="UniteAchat"><b>Unité d'achat :</b></label>
+                                                <input type="hidden" name="unite" value="<?php $_POST['unite']; ?>">
+                                                <select name = "UniteAchat" id="UniteAchat" class="input-medium"> 
+                                                            <?php	
+                                                        $tab1 = $Produit->ListeUniteAchat();
+                                                        foreach ($tab1 as $valeur1)
+                                                        {                                                      
+                                                            echo "<option value=".$valeur1['Id']." ";
+                                                            if(!empty($_GET)){$val =$value["uniteId"];} else {$val= $_POST['UniteAchat'];}
+                                                            if($val == $valeur1["Id"])
+                                                            {
+                                                                echo "selected";
+                                                            }
+                                                            echo "> ".$valeur1["Details"]."</option>";
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </td>
+
+
+                                            <td>
+                                                <label for="StockAlerte"><b>Stock d'alerte:</b></label>
+                                                <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];}?>'>
+                                            </td>
+                                            <tr>
                                                 <td>
                                                     <?php 
                                                     if(!empty($_GET)){$val=$value["Obselete"];} else {$val= $_POST['obselete'];}
                                                    ?>
                                                     <label for="Obsolete"> <b>Obsolète </b> <input type="checkbox" name="obselete" id="obselete" <?php if( $val != 1){ echo "checked";} ?> </label> 
                                                 </td>
-                                            
+                                            </tr>
                                             
                                              <?php if(isset($rep))
                                         {
@@ -197,13 +228,7 @@ else
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                     <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
                                                     
-                                                     <?php
-                                                    $jour=date("d");
-                                                    $mois=date("m");
-                                                    $ans=date("Y");
-                                                    $date=$ans."-".$mois."-".$jour;
-                                                    ?>
-                                                    <input type="date" name="DateEntree" id="DateEntree" required="" value="<?php $date ?>" >
+                                                    <input type="date" name="DateEntree" id="DateEntree" required="" >
                                                 </td>
 
                                                 <td>

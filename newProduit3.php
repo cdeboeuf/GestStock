@@ -24,7 +24,7 @@ if(isset($_POST['action']))
     }
 }
 
-if(isset($_GET)&&  !empty($_GET))
+if(isset($_GET) && !empty($_GET))
 { 
     extract($_GET);
     $_SESSION['Get'] = $_GET;
@@ -95,7 +95,7 @@ else
                                 
                                 <?php $idlien = $value["RefFournisseur"]; ?>
                                 <?php $idid = $value['Id']; ?>
-                                <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?>
+                                <?php $lien = "newProduit2.php?num=$idlien&id=$idid"; ?>
                                 <form method="POST" action="<?php $lien ?>">
                                     <table class="table table-striped">
 
@@ -197,13 +197,7 @@ else
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                     <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
                                                     
-                                                     <?php
-                                                    $jour=date("d");
-                                                    $mois=date("m");
-                                                    $ans=date("Y");
-                                                    $date=$ans."-".$mois."-".$jour;
-                                                    ?>
-                                                    <input type="date" name="DateEntree" id="DateEntree" required="" value="<?php $date ?>" >
+                                                    <input type="date" name="DateEntree" id="DateEntree" required="" >
                                                 </td>
 
                                                 <td>
