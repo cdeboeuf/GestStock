@@ -6,7 +6,7 @@ if(!isset($_SESSION['idVisiteur']))
 
 $fournisseurP= new Fournisseurs();                
 
-if(isset($_POST['four']))
+if(isset($_POST['fournisseur']))
 {
    $rep= $fournisseurP->ajout_Fournisseurs($_POST['fournisseur']);
 
@@ -52,7 +52,7 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                         
                      <div class='span4'>
                          <label class="badge" for="fournisseurP">Les fournisseurs déjà enregistrés:</label>
-                 <form class="span3" name="fournisseurSup" action="fournisseur.php" method="post">
+                 <form name="fournisseurSup" action="fournisseur.php" method="post">
                  <SELECT name="fournisseurSup" id="fournisseurP">
                   <?php
                  foreach ($LesFournisseurs as $unfournisseur)               
@@ -67,8 +67,8 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                      </form>
                      </div>
                       <div class='span4'>
-                <form class="span3" name="tvanew" action="fournisseur.php" method="post">
-                    <label class="badge" for="tva">Nouveau fournisseur :</label> <input type="text" name="fournisseur" id="fournisseur"/>
+                <form name="fournisseurnew" action="fournisseur.php" method="post">
+                    <label class="badge" for="fournisseur">Nouveau fournisseur :</label> <input type="text" name="fournisseur" id="fournisseur"/><br>
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                 </form>
                 </div>

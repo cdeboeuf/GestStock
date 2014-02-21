@@ -117,7 +117,7 @@ $LesUsers= $usersP->affiche_user();
                 </div>
                          <div class='span4 offset1'>
                          <label class="badge" for="userSup">Les utilisateurs déjà enregistrés:</label>
-                 <form class="span3" name="userSup" action="gererUtilisateur.php" method="post">
+                 <form name="userSup" action="gererUtilisateur.php" method="post">
                  <SELECT name="userSup" id="userSup">
                   <?php
                  foreach ($LesUsers as $uNuser)               
@@ -144,7 +144,7 @@ $LesUsers= $usersP->affiche_user();
                          
                            
                 <form  name="usermodif" action="gererUtilisateur.php" method="post">
-                    <label class="badge" for="Muser">Utilisateur :</label> <input type="text" name="Muser" value="<?php foreach ($unuser as $UnUser)               
+                    <label class="badge" for="Muser">Utilisateur :</label><br> <input type="text" name="Muser" value="<?php foreach ($unuser as $UnUser)               
                     {echo $UnUser['Login']; $letype=$UnUser['Type'] ; }?>" id="Muser"/>
                     <input type="hidden" name="Mid" value="<?php foreach ($unuser as $UnUseR) {echo $UnUseR['Id']; }?>" id="Mid"/>                   
                     <SELECT name="Mtype" id="MuserSup">
