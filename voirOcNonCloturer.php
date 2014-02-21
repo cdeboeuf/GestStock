@@ -43,11 +43,6 @@ foreach($OC as $oc)
 
 if(isset($_POST['action']))
 {
-    if($_POST['action']=="Valider")
-    {
-        $ref="OC".$_POST['Id']."/".$_POST['Annee'];
-        $LesOc->majOc($_POST['designation'],$_POST['destination'],$_POST['NombrePrevu'],$_POST['DateOrdre'],$ref);
-    }
        if($_POST['action']=="Cloturer")
     {
       if(!empty($_POST['Cloture'])) 
@@ -106,11 +101,9 @@ if(isset($_POST['action']))
                               BULLETIN DE FABRICATION </strong>
                               </div>
                               <div class='span3 offset1'>
-                              Exercice:<?php echo $oc['Annee'];?>
-                              <input type="hidden" name="Annee" value="<?php echo $oc['Annee'];?>" id="Annee"/>
+                              Exercice:<?php echo $oc['Annee'];?>                         
                               <br>
-                              N°ordre:<?php echo $oc['Id'];?>
-                              <input type="hidden" name="Id" value="<?php echo $oc['Id'];?>" id="Id"/>
+                              N°ordre:<?php echo $oc['Id'];?>                         
                               </div>
                                    </td>
                                </tr>
@@ -119,23 +112,25 @@ if(isset($_POST['action']))
                                     
                                     <div class='span3'> ORDRE DE SERVICE </div>
                                     <div class='span8'>
-                               <label for='designation'><em>Désignation:</em></label>
-                               <input type="text" name="designation" class="input-xlarge" Value="<?php echo $oc['Designation'];?>" id="designation"/>
+                               <em>Désignation:</em>
+                               <small><?php echo $oc['Designation'];?></small>
                                </div>
                                 </div>
                                <div class='span4'>
                                <em>Professeur:</em>
-                               <?php echo $oc['Login'];?><br>
+                               <small><?php echo $oc['Login'];?></small><br>
                               
-                               <label for='destination'><em>Destination:</em></label>
-                               <input type="text" name="destination" value="<?php echo $oc['Destination']; ?>" id="destination"/><br>
+                               <em>Destination:</em>
+                               <small><?php echo $oc['Destination']; ?></small><br>
                                </div>
                                <div class='span4 offset3'>
-                               <label for='NombrePrevu'><em>Nombre prévu:</em></label>
-                               <input type="text" name="NombrePrevu" value="<?php echo $oc['NbPrevision'];?>" id="NombrePrevu"/><br>
+                               <em>Nombre prévu:</em>
+                              <small> <?php echo $oc['NbPrevision'];?></small><br>
 
-                               <label for='DateOrdre'><em>Date de l'ordre de serivce:</em></label>
-                               <input type="date" name="DateOrdre" value="<?php echo $oc['DateEmi'];?>" id="DateOrdre"/><br>
+                               <em>Date de l'ordre de serivce:</em>
+                              <small> <?php echo $oc['DateEmi'];?></small><br>
+                              <br>
+                              <br>
                                </div>   
                                 
                                 <div class="span12">
