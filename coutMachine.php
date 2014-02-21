@@ -35,7 +35,7 @@ if(isset($_POST['cout']))
                     <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li class="active"><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
+                    <li><a href="./gestionMenu.php">Gérer les menus</a></li>                   
                                  
                 </ul><div class="hero-unit"> 
                     <?php if (isset($_POST['cout'])){

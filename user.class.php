@@ -100,7 +100,7 @@ group by Login,Id";
      $reponce=" L'utilisateur a été supprimé.";
     }else
     {
-        $reponce=" Le l'utilisateur $user est utilisé par plusieurs produit et/ou objet confectionné il ne peut donc pas etre suprimé";
+        $reponce=" L'utilisateur $user est utilisé par plusieurs produit et/ou objet confectionné il ne peut donc pas être supprimé";
     }
     return$reponce;
     }
@@ -114,7 +114,7 @@ group by Login,Id";
                  $mdpmd5=md5($mdp);
             $req="Insert Into users(Login,Mdp,Type)values('$user','$mdpmd5','$type')" ;  
             Users::$bdd->query($req);
-        $reponce = "L'utilisteur $user a été ajouté. Son Mot de pass est $mdp";
+        $reponce = "L'utilisteur $user a été ajouté. Son Mot de passe est $mdp";
         } 
         else{$reponce="L'utilisateur existe déjà";}
     return $reponce;
@@ -140,7 +140,7 @@ group by Login,Id";
          $mdpmd5=md5($mdp);
          $req="UPDATE users SET Mdp='$mdpmd5' WHERE Id='$Id';" ; 
          Users::$bdd->query($req);
-         return $rep ="Le noouveau mot de passe de l'utilisateur $login est $mdp.";
+         return $rep ="Le nouveau mot de passe de l'utilisateur $login est $mdp.";
         
     }
     

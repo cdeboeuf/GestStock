@@ -82,7 +82,7 @@ $LesTva= $tvaP->affiche_Tva();
                 </div>
                          
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas suprimer un taux de Tva utilisé</div>
+            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un taux de Tva utilisé</div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

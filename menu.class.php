@@ -49,7 +49,7 @@ class Menu
         }
         else
         {
-            $reponce="Vous ne pouvz pas ajouter un menu qui n'existe pas.";
+            $reponce="Vous ne pouvez pas ajouter un menu qui n'existe pas.";
         }
     }
     

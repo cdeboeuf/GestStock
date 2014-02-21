@@ -17,7 +17,7 @@ if(isset($_POST['action']))
         $rep = $Produit->AddNewProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
-
+ 
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 

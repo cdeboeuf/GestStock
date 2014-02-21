@@ -37,7 +37,7 @@ if(isset($_POST['action']))
             }
             else
             {
-                $erreur="Choisisser une date.";
+                $erreur="Choisir une date.";
             }
         }
         else
@@ -130,7 +130,7 @@ foreach ($ordre as $unOrdre)
                                $ans=date("Y");
                                $date=$ans."-".$mois."-".$jour;
                                ?>
-                               <libel for='DateOrdre'><em>Date de l'ordre de serivce:</em></libel>
+                               <libel for='DateOrdre'><em>Date de l'ordre de service:</em></libel>
                                <input type="date" name="DateOrdre" value="<?php echo $date;?>" id="DateOrdre"/><br>
                                </div>   
                               <button type="submit" class="btn btn-success" name="action" value="Valider">Enregistrer</button>

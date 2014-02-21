@@ -60,7 +60,7 @@ if (isset($_POST['action'])=='submit')
 
                                     <!-- Text input-->
                                     <div class="control-group">
-                                    <label class="control-label" for="NewMDP">Nouveau votre mot de passe :</label>
+                                    <label class="control-label" for="NewMDP">Nouveau mot de passe :</label>
                                     <div class="controls">
                                         <input name="psd" placeholder="Nouveau mot de passe" class="input-medium" required="" type="password" id="psd">
                                     </div>
