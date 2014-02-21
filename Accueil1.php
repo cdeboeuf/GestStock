@@ -37,7 +37,7 @@ if(isset($_POST['action']))
 
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="hidden-xs container-fluid">
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>

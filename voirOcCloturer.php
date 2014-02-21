@@ -6,9 +6,15 @@ if(!isset($_SESSION['idVisiteur']))
 
 $LesOc=new ObjectConfectionne();
 
+if(isset($_POST['OcC']))
+{
 $OC=$LesOc->affiche_OC($_POST['OcC']);
 $ligne=$LesOc->affiche_ligne($_POST['OcC']);
-
+}else
+{
+$OC=$LesOc->affiche_OC($_GET['id']);
+$ligne=$LesOc->affiche_ligne($_GET['id']);
+}
 
 
 foreach($OC as $oc)

@@ -4,7 +4,6 @@
 
 include('produit.class.php');
 $produit = new produit();
-
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
@@ -26,7 +25,10 @@ if(isset($_POST['action1']))
             $_POST['PUHT'] = 0;
             $_POST['PUTTC'] = 0;
         }
-        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
+        $postData = explode( '|', $_POST['CodeTVA'] );
+        $Id_TVA = $postData[0];
+        $Taux_TVA = $postData[1];
+        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
         
     }
 }

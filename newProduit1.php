@@ -53,6 +53,7 @@ if(isset($_POST['action']))
             $_POST['obselete']=1;}
         else
         {$_POST['obselete']=0;}
+      
         $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
     }
 }
@@ -210,24 +211,24 @@ if(isset($_POST['action']))
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label for="PUHT"><b>PUHT Unitaire:</b></label>
+                                                    <label for="PUHT"><b>PUHT:</b></label>
                                                     <input type="text" name="PUHT" id="PUHT">
                                                 </td>
 
                                                 <td>
-                                                    <label for="PUTTC"><b>PUTTC Unitaire:</b></label>
-                                                    <input type="text" name="PUTTC" id="PUTTC">
+                                                    <label for="PUTTC"><b>PUTTC:</b></label>
+                                                    <input type="text" name="PUTTC" id="PUTTC" OnKeyUp="javascript:calculHT()">
                                                 </td>
                                                 
                                                 <td>
-                                                    <label for="CodeTVA"><b>Code TVA :</b></label>
+                                                    <label for="CodeTVA"><b>TVA :</b></label>
                                                     <select name = "CodeTVA" class="input-small" id="CodeTVA" > 
                                                     <?php
                                                         
                                                         $tab1 = $Produit->ListeTVA();
                                                         foreach ($tab1 as $valeur1)
                                                         {
-                                                          echo "<option value=".$valeur1['Id']." ";
+                                                          echo "<option value=".$valeur1['Id']."|".$valeur1['Taux']." ";
                                                             
                                                           if(!empty($_GET)){$val =$value["dIdTVA"];}
                                                           
@@ -297,6 +298,23 @@ if(isset($_POST['action']))
                         }
                     return true;
             }
+            
+            function calculHT()
+            {
+               
+                ttc=document.getElementById('PUTTC').value;
+                TVA=document.getElementById('CodeTVA').value;             
+                Taux=TVA.split('|');
+                document.getElementById('PUHT').value=parseFloat(ttc)/(1+parseFloat(Taux[1])/100);             
+            }
+            function calculTTC()
+            {
+                
+            }
+            
+            
+            
+            
             function calcul()
             {
                 result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PUTTCPondere').value) / document.getElementById('PUTTCPondere').value );

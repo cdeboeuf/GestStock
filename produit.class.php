@@ -157,13 +157,26 @@ include('connexion.php');
             $PUHT=str_replace ( ',', '.', $PUHT);
             $PUTTC=str_replace ( ',', '.', $PUTTC);
             
+            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee=$RefLycee";
+            $rs1 = Produit::$bdd->query($req1);
+            $result1 = $rs1->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $idp=$unid['id'];
+            }
+            $newId=$idp+1;
+            
             if (is_numeric($Quantite) && (is_numeric($PUHT) || empty($PUHT)) && (is_numeric($PUTTC) || empty($PUTTC)))
             {
                 $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PUHT, PUTTC, Quantite, Id, SortieEntree, IdUsers)
-                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PUHT', '$PUTTC', '$Quantite', '$Id', 'S', '$Users');";
+                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PUHT', '$PUTTC', '$Quantite', '$newId', 'S', '$Users');";
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";
+                if($Gratuit==0)
+                {
+                $this->calculPondere($RefLycee,$newId);               
+                }
             }
             else
             {
@@ -206,5 +219,33 @@ include('connexion.php');
             echo $Coloris;
             
         }
+        
+        function calculPondere($ref,$id)
+        {
+$req="SELECT quantite,PUTTC From detailsligneproduit WHERE Reflycee='$ref' And SortieEntree='E' and Gratuit=0 and Id=$id";
+$rs = Produit::$bdd->query($req);
+$result = $rs->fetchAll();
+foreach( $result as $ligne)
+{
+echo $ligne['quantite'];
+echo $ligne['PUTTC'];
+}
+
+$req1="SELECT quantitetotal,PUTTCPondere From produit WHERE RefLycee='$ref'";
+$rs1 = Produit::$bdd->query($req1);
+$result1 = $rs1->fetchAll();
+
+foreach( $result1 as $produit)
+{
+echo $produit['quantitetotal'];
+echo $produit['PUTTCPondere'];
+}
+
+echo $stock=$ligne['quantite']+$produit['quantitetotal'];
+echo $PUTTCPondere=(($ligne['quantite']*$ligne['PUTTC'])+($produit['quantitetotal']*$produit['PUTTCPondere']))/($stock);
+
+$req2="UPDATE produit set quantitetotal=$stock,PUTTCPondere=$PUTTCPondere Where RefLycee='$ref'";
+$rs2 = Produit::$bdd->query($req2);
+}
 }
 ?>

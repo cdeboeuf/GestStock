@@ -56,8 +56,7 @@ if(isset($_POST['action']))
           
           $temp=(($_POST['heure']*60)+$_POST['minute'])/60;
           $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
-          header("Location:oirOcCloturer.php");
-      }
+     header("Location:VoirOcCloturer.php?id=$ref"); }
       else{
           $erreur="Vous n'avez pas coché la case cloturer le bulletin.";
           
@@ -290,8 +289,6 @@ cout=<?php echo $Cout?>;
 prevision=<?php echo $oc['NbPrevision']?>;
 document.getElementById('totalfrais').innerHTML=Math.round((parseFloat(totalmatiere)*(parseFloat(coef)/100))*100)/100;
 document.getElementById('totalcouteleve').innerHTML=Math.round((parseFloat(document.getElementById('totalfrais').innerHTML)+parseFloat(totalmatiere))*100)/100;
-alert(document.getElementById('heure').value);
-alert(document.getElementById('minute').value);
 if(document.getElementById('heure').value==="")
     {
         heure=0;
