@@ -52,11 +52,11 @@ if(isset($_POST['action']))
     {
       if(!empty($_POST['Cloture'])) 
       {
-          echo $ref="OC".$_POST['Id']."/".$_POST['Annee'];
+           $ref="OC".$_POST['Id']."/".$_POST['Annee'];
           
           $temp=(($_POST['heure']*60)+$_POST['minute'])/60;
           $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
-      }
+     header("Location:VoirOcCloturer.php?id=$ref"); }
       else{
           $erreur="Vous n'avez pas coché la case cloturer le bulletin.";
           
@@ -119,7 +119,7 @@ if(isset($_POST['action']))
                                     
                                     <div class='span3'> ORDRE DE SERVICE </div>
                                     <div class='span8'>
-                               <libel for='designation'><em>Désignation:</em></libel>
+                               <label for='designation'><em>Désignation:</em></label>
                                <input type="text" name="designation" class="input-xlarge" Value="<?php echo $oc['Designation'];?>" id="designation"/>
                                </div>
                                 </div>
@@ -127,14 +127,14 @@ if(isset($_POST['action']))
                                <em>Professeur:</em>
                                <?php echo $oc['Login'];?><br>
                               
-                               <libel for='destination'><em>Destination:</em></libel>
+                               <label for='destination'><em>Destination:</em></label>
                                <input type="text" name="destination" value="<?php echo $oc['Destination']; ?>" id="destination"/><br>
                                </div>
                                <div class='span4 offset3'>
-                               <libel for='NombrePrevu'><em>Nombre prévu:</em></libel>
+                               <label for='NombrePrevu'><em>Nombre prévu:</em></label>
                                <input type="text" name="NombrePrevu" value="<?php echo $oc['NbPrevision'];?>" id="NombrePrevu"/><br>
 
-                               <libel for='DateOrdre'><em>Date de l'ordre de serivce:</em></libel>
+                               <label for='DateOrdre'><em>Date de l'ordre de serivce:</em></label>
                                <input type="date" name="DateOrdre" value="<?php echo $oc['DateEmi'];?>" id="DateOrdre"/><br>
                                </div>   
                                 
@@ -168,9 +168,10 @@ if(isset($_POST['action']))
                                         <br>
                                         <br>
                                         Coefficient de correction: <?php echo $Coef?> % de total matière.<br>
-                                        Coût machine:<input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/><select OnClick="javascript:calcul()" class="input-mini" id="minute">
+                                        Coût machine:<input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/>
+                                        <select id="minute" name="minute" OnClick="javascript:calcul()" class="input-mini" id="minute">
     <?php  for($i=00;$i<60;$i++){?>
-    <option>
+    <option value="<?php echo $i ?>">
         <?php echo $i ;?>
     </option> <?php } ?> </select>
 <small>(<small id="temps">0 X <?php echo $Cout?>€</small>)</small><br>
@@ -182,12 +183,12 @@ if(isset($_POST['action']))
                                $ans=date("Y");
                                $date=$ans."-".$mois."-".$jour;
                                ?>
-                               <libel for='DateFabriquation'><em>Date de fabriquation:</em></libel>
+                               <label for='DateFabriquation'><em>Date de fabriquation:</em></label>
                                <input type="date" name="DateFabriquation" value="<?php echo $date;?>" id="DateFabriquation"/>
-                               <libel for='ObjetRealise'><em>Nombre d'objets réalisés:</em></libel>
+                               <label for='ObjetRealise'><em>Nombre d'objets réalisés:</em></label>
                                <input type="text" name="ObjetRealise" value="" class='input-small' id="ObjetRéalisé"/>
                                <br>  <input type="checkbox" name="Cloture" value="Cloture">
-                                 <libel for='Cloture'><em>Cloturer le bulletin de fabriquation <?php echo $oc['Ref'];?></em></libel>
+                                 <label for='Cloture'><em>Cloturer le bulletin de fabriquation <?php echo $oc['Ref'];?></em></label>
                                     </div>
                                     <div class="span5">
                                        <table class="table table-striped">  
@@ -288,27 +289,21 @@ cout=<?php echo $Cout?>;
 prevision=<?php echo $oc['NbPrevision']?>;
 document.getElementById('totalfrais').innerHTML=Math.round((parseFloat(totalmatiere)*(parseFloat(coef)/100))*100)/100;
 document.getElementById('totalcouteleve').innerHTML=Math.round((parseFloat(document.getElementById('totalfrais').innerHTML)+parseFloat(totalmatiere))*100)/100;
-alert(document.getElementById('heure').value);
-alert(document.getElementById('minute').value);
 if(document.getElementById('heure').value==="")
     {
         heure=0;
-        alert(heure);
     }
     else
         {
             heure=document.getElementById('heure').value;
-            alert("non");
         }
 if(document.getElementById('minute').value ==="")
     {
         minute=0;
-        alert(heure);
     }
     else
         {
-            minute=document.getElementById('minute').value;
-            alert("else");
+            minute=document.getElementById('minute').value;          
         }
 temps=Math.round((((parseFloat(heure)*60)+parseFloat(minute))/60)*100)/100;
 document.getElementById('temps').innerHTML=temps+" X <?php echo $Cout?>€";

@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `RefLycee` char(30) NOT NULL,
   `Id` int(3) NOT NULL,
   `RefFournisseur` char(30) NOT NULL,
-  `Designation` char(30) NOT NULL,
+  `Designation` varchar(100) NOT NULL,
   `IdUniteAchat` int(3) NOT NULL,
   `IdFournisseur` int(3) NOT NULL,
   `QuantiteTotal` decimal(10,2) NOT NULL,

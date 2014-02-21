@@ -97,7 +97,7 @@ INSERT INTO `lien` (`Id`, `Adresse`, `Details`) VALUES
 (4, 'newProduit.php', 'Ajouter un nouveau produit'),
 (5, 'objetConfectionne.php', 'Gestion des objets confectionnés'),
 (6, 'parametre.php', 'Gestion des parametres'),
-(7, 'stockeProduit.php', 'Voir ou sortir des produits en stock'),
+(7, 'stockeProduit.php', 'Sortir des produits en stock'),
 (8, 'monCompte.php', 'Mon Profil');
 
 -- --------------------------------------------------------
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `objetconfectionne` (
   `Ref` varchar(20) NOT NULL,
   `Id` int(3) NOT NULL,
   `Annee` int(4) NOT NULL,
-  `Designation` char(30) NOT NULL,
+  `Designation` char(100) NOT NULL,
   `NbPrevision` int(2) NOT NULL,
   `Professeur` int(2) NOT NULL,
   `Destination` char(30) NOT NULL,

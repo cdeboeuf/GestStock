@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `detailsligneproduit` (
   `IdTVA` int(10) NOT NULL,
   `Gratuit` tinyint(1),
   `PUHT` decimal(10,2),
-  `SortieEntree` tinyint(1) NOT NULL,
+  `SortieEntree` char(1) NOT NULL,
   `IdUsers` int(10) NOT NULL,
   `PUTTC` decimal(10,2),
   `Utilisation` int(10) NOT NULL,
