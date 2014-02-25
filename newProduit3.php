@@ -196,8 +196,13 @@ else
                                                     <label for="DateEntree"><b>Date d'entrée :</b></label>
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                     <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
-                                                    
-                                                    <input type="date" name="DateEntree" id="DateEntree" required="" >
+                                                    <?php
+                                                    $jour=date("d");
+                                                    $mois=date("m");
+                                                    $ans=date("Y");
+                                                    $date=$ans."-".$mois."-".$jour;
+                                                    ?>
+                                                    <input type="date" name="DateEntree" id="DateEntree" required="" value="<?php echo $date; ?>" >
                                                 </td>
 
                                                 <td>
