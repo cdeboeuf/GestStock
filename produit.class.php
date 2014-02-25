@@ -133,7 +133,7 @@ include('connexion.php');
                 SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id as IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, unite.Id as uniteId, 
                 detailsligneproduit.DateChangement as dDateChangement, detailsligneproduit.Quantite as dQuantite, detailsligneproduit.Gratuit as dGratuit, detailsligneproduit.PUHT as dPUHT, detailsligneproduit.PUTTC as dPUTTC, detailsligneproduit.IdTVA as dIdTVA
                 From Produit Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id 
-                inner join detailsligneproduit on Produit.Id = detailsligneproduit.Id
+                Left join detailsligneproduit on Produit.Id = detailsligneproduit.Id
                 Where RefFournisseur = '$RefFournisseur';"; 
             $rs = Produit::$bdd->query($requete);
             return $laLigne = $rs->fetchAll();      
@@ -144,14 +144,13 @@ include('connexion.php');
            }	
         }
         
-       public function MajProduit($StockAlerte, $Obselete, $Id)
+       public function MajProduit($RefLycee, $StockAlerte, $Obselete)
         {
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
             
             if (is_numeric($StockAlerte))
-            { 
-                
-                $requete1 = "UPDATE Produit SET StockAlerte = '$StockAlerte', Obselete = '$Obselete' where Produit.RefFournisseur = '$Id';";
+            {
+                $requete1 = "UPDATE Produit SET StockAlerte = '$StockAlerte',Obselete = '$Obselete'  where Produit.RefLycee = '$RefLycee';";
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été modifié.";
@@ -189,19 +188,17 @@ include('connexion.php');
             $PUHT=str_replace ( ',', '.', $PUHT);
             $PUTTC=str_replace ( ',', '.', $PUTTC);
             
-            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee=$RefLycee";
+            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
             $rs1 = Produit::$bdd->query($req1);
             $result1 = $rs1->fetchAll(); 
             foreach ($result1 as $unid)
             {
                 $idp=$unid['id'];
             }
-            $newId=$idp+1;
-            
-            if (is_numeric($Quantite) && (is_numeric($PUHT) || empty($PUHT)) && (is_numeric($PUTTC) || empty($PUTTC)))
-            {
-                $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PUHT, PUTTC, Quantite, Id, SortieEntree, IdUsers)
-                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PUHT', '$PUTTC', '$Quantite', '$newId', 'S', '$Users');";
+         echo   $newId=$idp+1;
+ 
+                $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PUHT, PUTTC, Id,Quantite, SortieEntree, IdUsers)
+                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PUHT', '$PUTTC', '$newId','$Quantite',  'E', '$Users');";
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";
@@ -209,13 +206,7 @@ include('connexion.php');
                 {
                 $this->calculPondere($RefLycee,$newId);               
                 }
-            }
-            else
-            {
-                $rep = "Erreur, champs non valide.";
-            }  
-            return $rep;
-            
+            header('location:newProduit.php?rep=LeProduitEstAjoute');
         }
         
         public function QuantiteNonModifiable()
