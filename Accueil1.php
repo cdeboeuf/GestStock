@@ -16,8 +16,7 @@ if(isset($_POST['action']))
                     $QuantiteTotal1=$QuantiteTotal[$i];
                     $nb=$id[$i];            
                     $produit->MajValorisationStock($QuantiteTotal1, $nb);
-                }
-                
+                }               
       }     
  }
         
