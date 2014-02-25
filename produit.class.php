@@ -96,6 +96,34 @@ include('connexion.php');
             }	
         }
         
+        public function ListeSection()
+        {
+            try 
+            {
+                $requete = "SELECT * From section;";
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
+            } 
+            catch (Exception $e) 
+            {
+                 echo 'Échec lors de la connexion : ' . $e->getMessage();
+            }	
+        }
+        
+        public function MaxId()
+        {
+            try 
+            {
+                $requete = "SELECT Max(Id) From produit;";
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
+            } 
+            catch (Exception $e) 
+            {
+                 echo 'Échec lors de la connexion : ' . $e->getMessage();
+            }	
+        }
+        
         
         public function GetRemplissageTableau($RefFournisseur)
         {
@@ -136,16 +164,16 @@ include('connexion.php');
 
         }
         
-        public function AddNewProduit($RefLycee, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Id)
+        public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section, $Id)
         {
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
             
             if (is_numeric($StockAlerte))
             { 
-                $requete1 = "UPDATE Produit SET RefLycee = '$RefLycee', StockAlerte = '$StockAlerte', IdFournisseur='$four',Obselete = '$Obselete', Designation = '$Designation', Coloris = '$Coloris', idUniteAchat='$unite'  where Produit.RefFournisseur = '$Id';";
+                $requete1 = "INSERT INTO Produit (Id, RefLycee, RefFournisseur, StockAlerte, IdFournisseur,Obselete, Designation, Coloris, idUniteAchat, IdSection) VALUES ('$Id', '$RefLycee', '$RefFournisseur', '$StockAlerte', '$four', '$Obselete', '$Designation', '$Coloris', '$unite', '$Section')";
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
-                $rep = "Le produit à été modifié.";
+                $rep = "Le produit à été ajouté.";
             }
             else
             {

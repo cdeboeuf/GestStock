@@ -216,7 +216,7 @@ if(isset($_POST['action']))
                                                     $ans=date("Y");
                                                     $date=$ans."-".$mois."-".$jour;
                                                     ?>
-                                                    <input type="date" name="DateEntree" id="DateEntree" required="" value="<?php $date ?>" >
+                                                    <input type="date" name="DateEntree" id="DateEntree" required="" value="<?php echo $date; ?>" >
                                                 </td>
 
                                                 <td>
