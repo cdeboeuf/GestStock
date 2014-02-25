@@ -151,7 +151,7 @@ include('connexion.php');
 
         }
         
-        public function AddProduitMode($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Users)
+        public function AddProduit($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Users)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
             $PUHT=str_replace ( ',', '.', $PUHT);
@@ -171,10 +171,9 @@ include('connexion.php');
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";
-                if($Gratuit==0)
-                {
+              
                 $this->calculPondere($RefLycee,$newId);               
-                }
+                
             header('location:newProduit.php?rep=LeProduitEstAjoute');
         }
         
@@ -214,13 +213,13 @@ include('connexion.php');
         
         function calculPondere($ref,$id)
         {
-$req="SELECT quantite,PUTTC From detailsligneproduit WHERE Reflycee='$ref' And SortieEntree='E' and Gratuit=0 and Id=$id";
+$req="SELECT quantite,PUTTC From detailsligneproduit WHERE Reflycee='$ref' And SortieEntree='E' and Id=$id";
 $rs = Produit::$bdd->query($req);
 $result = $rs->fetchAll();
 foreach( $result as $ligne)
 {
-echo $ligne['quantite'];
-echo $ligne['PUTTC'];
+$ligne['quantite'];
+$ligne['PUTTC'];
 }
 
 $req1="SELECT quantitetotal,PUTTCPondere From produit WHERE RefLycee='$ref'";
@@ -229,15 +228,29 @@ $result1 = $rs1->fetchAll();
 
 foreach( $result1 as $produit)
 {
-echo $produit['quantitetotal'];
-echo $produit['PUTTCPondere'];
+$produit['quantitetotal'];
+$produit['PUTTCPondere'];
 }
-
-echo $stock=$ligne['quantite']+$produit['quantitetotal'];
-echo $PUTTCPondere=(($ligne['quantite']*$ligne['PUTTC'])+($produit['quantitetotal']*$produit['PUTTCPondere']))/($stock);
+$stock=$ligne['quantite']+$produit['quantitetotal'];
+$PUTTCPondere=(($ligne['quantite']*$ligne['PUTTC'])+($produit['quantitetotal']*$produit['PUTTCPondere']))/($stock);
 
 $req2="UPDATE produit set quantitetotal=$stock,PUTTCPondere=$PUTTCPondere Where RefLycee='$ref'";
-$rs2 = Produit::$bdd->query($req2);
+Produit::$bdd->query($req2);
+}
+
+function calculPondereEssai($ref,$PUTTC,$Qte)
+{
+$req1="SELECT quantitetotal,PUTTCPondere From produit WHERE RefLycee='$ref'";
+$rs1 = Produit::$bdd->query($req1);
+$result1 = $rs1->fetchAll();
+
+foreach( $result1 as $produit)
+{
+$produit['quantitetotal'];
+$produit['PUTTCPondere'];
+}
+$stock=$Qte+$produit['quantitetotal'];
+ return $PUTTCPondere=(($Qte*$PUTTC)+($produit['quantitetotal']*$produit['PUTTCPondere']))/($stock);
 }
 }
 ?>

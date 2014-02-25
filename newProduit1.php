@@ -106,7 +106,11 @@ if(isset($_POST['action']))
         {$Id_TVA=0;}else{
         $postData = explode( '|', $_POST['CodeTVA'] );
         $Id_TVA = $postData[0];}
-        $rep = $Produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);       
+        $rep = $Produit->AddProduit($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);       
+    }
+    if ($_POST['envoyer1']=='calculer')
+    { 
+        $Pondere=$Produit->calculPondereEssai($_POST['RefLycee'],$_POST['PUTTC'],$_POST['Quantite']);
     }
 }
 
@@ -269,7 +273,7 @@ if(isset($_POST['action']))
 
                                                 <td>
                                                     <label for="Quantite"><b>Quantité :</b></label>
-                                                    <input type="text" name="Quantite" id="Quantite" required="">
+                                                    <input type="text" name="Quantite" id="Quantite" value="<?php if(isset($_POST['Quantite'])){echo $_POST['Quantite'];}?>" required="">
                                                 </td>
                                                 
                                                 <td> 
@@ -282,12 +286,12 @@ if(isset($_POST['action']))
                                             <tr>
                                                 <td>
                                                     <label for="PUHT"><b>PUHT:</b></label>
-                                                    <input type="text" name="PUHT" id="PUHT" OnKeyUp="javascript:calculTTC()">
+                                                    <input type="text" name="PUHT" id="PUHT" value="<?php if(isset($_POST['PUHT'])){echo $_POST['PUHT'];}?>" OnKeyUp="javascript:calculTTC()">
                                                 </td>
 
                                                 <td>
                                                     <label for="PUTTC"><b>PUTTC:</b></label>
-                                                    <input type="text" name="PUTTC" id="PUTTC" OnKeyUp="javascript:calculHT()">
+                                                    <input type="text" name="PUTTC" id="PUTTC" value="<?php if(isset($_POST['PUTTC'])){echo $_POST['PUTTC'];}?>" OnKeyUp="javascript:calculHT()">
                                                 </td>
                                                 
                                                 <td>
@@ -316,8 +320,8 @@ if(isset($_POST['action']))
                                             <tr>
                                                 <td>
                                                     <label for="PUTTCPondere"><b>PUTTC Pondéré :</b></label>
-                                                    <input type="text" name="PUTTCPondere" id="PUTTCPondere" disabled>
-                                                    
+                                                    <input type="text" name="PUTTCPondere" id="PUTTCPondere" value="<?php if(isset($Pondere)){echo round($Pondere,4); } ?>" disabled>
+                                                    <button type="submit" class="btn btn-primary" value="calculer" name="envoyer1">calculer</button>
                                                 </td>
                                             </tr>
                                             
