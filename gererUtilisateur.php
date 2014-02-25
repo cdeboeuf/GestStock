@@ -169,7 +169,7 @@ $LesUsers= $usersP->affiche_user();
                           </div>
                     
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas suprimer un utilisateur qui a créé un objet confectionné non cloturé</div>
+            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un utilisateur qui a créé un objet confectionné non cloturé</div>
         </div>
            </div>
         </div>

@@ -37,7 +37,7 @@ if(isset($_POST['action']))
             }
             else
             {
-                $erreur="Choisisser une date.";
+                $erreur="Choisir une date.";
             }
         }
         else

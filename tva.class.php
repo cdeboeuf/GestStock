@@ -28,7 +28,7 @@ group by taux";
      $reponce=" Le taux  de $tva % a été supprimé";
     }else
     {
-        $reponce=" Le taux  de $tva % est utilisé par plusieurs produit il ne peut donc pas etre suprimé";
+        $reponce=" Le taux  de $tva % est utilisé par plusieurs produit il ne peut donc pas etre supprimé";
     }
     return$reponce;
     }

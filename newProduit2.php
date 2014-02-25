@@ -54,12 +54,11 @@ if(isset($_POST['action1']))
             </div>
             <?php include('Menu.php');
             $menu=new Menu();
-           
             $menu->Verifdroit('newProduit.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
+                    <li><a href="./newProduit.php">Mode</a></li>
+                    <li class="active"><a href="./newProduit2.php">Esthétique</a></li>
                     <li><a href="./newProduit4.php">Nouvelle ajout</a></li>
                 </ul>
                 <div class="tab-content">
@@ -67,7 +66,7 @@ if(isset($_POST['action1']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 
-                                <form  method="GET" action="newProduit1.php">
+                                <form  method="GET" action="newProduit3.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                 <thead>  
@@ -103,7 +102,7 @@ if(isset($_POST['action1']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat = $produit->GetValorisationStockEST();
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -112,7 +111,7 @@ if(isset($_POST['action1']))
                                                         <?php $id = "id$nb"; $nb++;?>
                                                         <?php $idlien = $value["RefFournisseur"]; ?>
                                                         <?php $idid = $value['Id']; ?>
-                                                        <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?> 
+                                                        <?php $lien = "newProduit3.php?num=$idlien&id=$idid"; ?> 
                                                         <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";

@@ -3,6 +3,7 @@
 <?php
 include('Produit.class.php');
 $Produit = new Produit();
+
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
@@ -23,7 +24,7 @@ if(isset($_POST['action']))
     }
 }
 
-if(isset($_GET)&&  !empty($_GET))
+if(isset($_GET) && !empty($_GET))
 { 
     extract($_GET);
     $_SESSION['Get'] = $_GET;
@@ -51,6 +52,8 @@ if(isset($_GET)&&  !empty($_GET))
         $value['dPUTTC'];
         $value['dIdTVA'];
     }
+    $Noma = $value['Nom'];
+    $Colorisa = $value['Coloris'];
     
 }
 else
@@ -58,78 +61,8 @@ else
         $Id = trim($_SESSION['Get']['id']);
 }
 
-if(isset($_POST['RefFournisseurs']))
-{ 
-     $RefFournisseur= $_POST['RefFournisseurs'];
-    $Resultat = $Produit->GetRemplissageTableau($_POST['RefFournisseurs']);
-    $nb=0;
-        
-    foreach ($Resultat as $value)
-    {
-        $value['Nom'];
-        $value['Coloris'];
-        $value['RefLycee'];
-        $value['Designation'];
-        $value['Details'];
-        $value['IdFour'];
-        $value['uniteId'];
-        $value['StockAlerte'];
-        $value['Obselete'];
-        $value['dQuantite'];
-        $value['dDateChangement'];
-        $value['dGratuit'];
-        $value['dPUHT'];
-        $value['dPUTTC'];
-        $value['dIdTVA'];
-    }
-}
-
-if(isset($_POST['action']))
-{
-    
-    if (isset($_POST['action'])=='envoyer')
-    {  
-        extract($_POST);
-        if(isset($_POST['obselete']))
-        {
-            $_POST['obselete']=1;}
-        else
-        {$_POST['obselete']=0;}
-      
-        $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
-    }
-}
 
 
- if(isset($_POST['envoyer1']))
-{
-    if ($_POST['envoyer1']=='valider')
-    {    
-        extract($_POST);
-        if(isset($_POST['chkb_1']))
-        {
-            $_POST['chkb_1']=1;
-        }
-        else
-        {
-            $_POST['chkb_1']=0;
-        }
-        if(!isset($_POST['PUHT']) && !isset($_POST['PUTTC']))
-        {
-            $_POST['PUHT'] = 0;
-            $_POST['PUTTC'] = 0;
-        }
-        if(!isset($_POST['CodeTVA']))
-        {$Id_TVA=0;}else{
-        $postData = explode( '|', $_POST['CodeTVA'] );
-        $Id_TVA = $postData[0];}
-        $rep = $Produit->AddProduit($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);       
-    }
-    if ($_POST['envoyer1']=='calculer')
-    { 
-        $Pondere=$Produit->calculPondereEssai($_POST['RefLycee'],$_POST['PUTTC'],$_POST['Quantite']);
-    }
-}
 
 ?>
 
@@ -162,7 +95,7 @@ if(isset($_POST['action']))
                                 
                                 <?php $idlien = $value["RefFournisseur"]; ?>
                                 <?php $idid = $value['Id']; ?>
-                                <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?>
+                                <?php $lien = "newProduit2.php?num=$idlien&id=$idid"; ?>
                                 <form method="POST" action="<?php $lien ?>">
                                     <table class="table table-striped">
 
@@ -196,15 +129,7 @@ if(isset($_POST['action']))
                                                 <th>Unité d'achat</th>
                                             </tr>
                                                 <td>
-                                                    <?php 
-                                                    if(isset($value['Nom']))
-                                                    {
-                                                    $Produit->ChampsRefLycee($value['Nom'], $RefFournisseur, $value['Coloris']); 
-                                                    }
-                                                    else
-                                                    {
-                                                    $Produit->ChampsRefLycee($_POST['Nom'], $_POST['RefFournisseurs'], $_POST['Coloris']);
-                                                    }?>
+                                                    <?php $Produit->ChampsRefLycee($Noma, $RefFournisseur, $Colorisa); ?>
                                                 </td>
                                                 <td>
                                                     <?php if(!empty($_GET)){echo $value['Details'];} else {echo $_POST['unite'];}?>
@@ -263,23 +188,15 @@ if(isset($_POST['action']))
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 <legend>Nouvelle Entrée</legend>                
-                                <form method="POST" action="newProduit1.php" name="form">
+                                <form method="POST" action="newProduit.php" name="form">
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
-                                                <td>        
-                                       <input type="hidden" name="Designation" id="Designation" value="<?php if(!empty($_GET)){echo $value['Designation'];} else {echo $_POST['Designation'];} ?>">
-                                        <input type="hidden" name="Coloris" id="Coloris" value="<?php if(!empty($_GET)){echo $value['Coloris'];} else {echo $_POST['Coloris'];} ?>">
-                                        <input type="hidden" name="unite" id="unite" value="<?php if(!empty($_GET)){echo $value['Details'];} else {echo $_POST['unite'];} ?>">
-                                        <input type="hidden" name="Nom" id="Nom" value="<?php if(!empty($_GET)){echo $value['Nom'];} else {echo $_POST['Nom'];} ?>">
-                                        <input type="hidden" name="RefFournisseurs" id="RefFournisseurs" value="<?php if(!empty($_GET)){echo $RefFournisseur;} else {echo $_POST['RefFournisseurs'];} ?>">
-                                        <input type="hidden" name="StockAlerte" id="StockAlerte" value="<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];} ?>">
-                                         <input type="hidden" name="obselete" id="obselete" value="<?php if(!empty($_GET)){echo $value['Obselete'];} else {echo $_POST['obselete'];} ?>">
-                                        <label for="DateEntree"><b>Date d'entrée :</b></label>
+                                                <td>
+                                                    <label for="DateEntree"><b>Date d'entrée :</b></label>
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                     <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
-                                                    
-                                                     <?php
+                                                    <?php
                                                     $jour=date("d");
                                                     $mois=date("m");
                                                     $ans=date("Y");
@@ -290,7 +207,7 @@ if(isset($_POST['action']))
 
                                                 <td>
                                                     <label for="Quantite"><b>Quantité :</b></label>
-                                                    <input type="text" name="Quantite" id="Quantite" value="<?php if(isset($_POST['Quantite'])){echo $_POST['Quantite'];}?>" required="">
+                                                    <input type="text" name="Quantite" id="Quantite" required="">
                                                 </td>
                                                 
                                                 <td> 
@@ -302,26 +219,26 @@ if(isset($_POST['action']))
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label for="PUHT"><b>PUHT:</b></label>
-                                                    <input type="text" name="PUHT" id="PUHT" value="<?php if(isset($_POST['PUHT'])){echo $_POST['PUHT'];}?>" OnKeyUp="javascript:calculTTC()">
+                                                    <label for="PUHT"><b>PUHT Unitaire:</b></label>
+                                                    <input type="text" name="PUHT" id="PUHT">
                                                 </td>
 
                                                 <td>
-                                                    <label for="PUTTC"><b>PUTTC:</b></label>
-                                                    <input type="text" name="PUTTC" id="PUTTC" value="<?php if(isset($_POST['PUTTC'])){echo $_POST['PUTTC'];}?>" OnKeyUp="javascript:calculHT()">
+                                                    <label for="PUTTC"><b>PUTTC Unitaire:</b></label>
+                                                    <input type="text" name="PUTTC" id="PUTTC">
                                                 </td>
                                                 
                                                 <td>
-                                                    <label for="CodeTVA"><b>TVA :</b></label>
-                                                    <select name = "CodeTVA" class="input-small" id="CodeTVA" OnChange="javascripte:efface()"> 
+                                                    <label for="CodeTVA"><b>Code TVA :</b></label>
+                                                    <select name = "CodeTVA" class="input-small" id="CodeTVA" > 
                                                     <?php
                                                         
                                                         $tab1 = $Produit->ListeTVA();
                                                         foreach ($tab1 as $valeur1)
                                                         {
-                                                          echo "<option value=".$valeur1['Id']."|".$valeur1['Taux']." ";
+                                                          echo "<option value=".$valeur1['Id']." ";
                                                             
-                                                          if(!empty($_GET)|| !empty($_POST)){$val =$value["dIdTVA"];}
+                                                          if(!empty($_GET)){$val =$value["dIdTVA"];}
                                                           
                                                           if($val == $valeur1["Id"])
                                                           {
@@ -337,15 +254,15 @@ if(isset($_POST['action']))
                                             <tr>
                                                 <td>
                                                     <label for="PUTTCPondere"><b>PUTTC Pondéré :</b></label>
-                                                    <input type="text" name="PUTTCPondere" id="PUTTCPondere" value="<?php if(isset($Pondere)){echo round($Pondere,4); } ?>" disabled>
-                                                    <button type="submit" class="btn btn-primary" value="calculer" name="envoyer1">calculer</button>
+                                                    <input type="text" name="PUTTCPondere" id="PUTTCPondere" disabled>
+                                                    
                                                 </td>
                                             </tr>
                                             
 
                                             <tr>
                                                 <td>        
-                                                    <button type="submit" class="btn btn-success" value="valider" name="envoyer1" onClick="return confirm('Etes-vous sûr?');">Validation</button>
+                                                    <button type="submit" class="btn btn-success" value="envoyer1" name="action1" onClick="return confirm('Etes-vous sûr?');">Validation</button>
                                                 </td>
                                                 <td>
                                                     <button type="reset" class="btn btn-danger" value="reset" name="reset">Annulation</button>
@@ -389,29 +306,13 @@ if(isset($_POST['action']))
                         }
                     return true;
             }
-            
-            function calculHT()
+            function calcul()
             {
-               
-                ttc=document.getElementById('PUTTC').value;
-                TVA=document.getElementById('CodeTVA').value;             
-                Taux=TVA.split('|');
-                PUHT=parseFloat(ttc)/(1+parseFloat(Taux[1])/100);  
-                document.getElementById('PUHT').value=Math.round(PUHT*10000)/10000;
-            }
-            function calculTTC()
-            {
-                ht=document.getElementById('PUHT').value;
-                TVA=document.getElementById('CodeTVA').value;             
-                Taux=TVA.split('|');
-                PUTTC=parseFloat(ht)*(1+parseFloat(Taux[1])/100);
-                document.getElementById('PUTTC').value=Math.round(PUTTC*10000)/10000;
-            }         
-            
-            function efface()
-            {
-                document.getElementById('PUTTC').value="";
-                document.getElementById('PUHT').value="";
+                result = parseFloat( (document.getElementById('QuantiteTotal').value + document.getElementById('PUTTCPondere').value) / document.getElementById('PUTTCPondere').value );
+                result1 = result*100;          
+                result2 = Math.round(result1); 
+                result3 = result2/100; 
+                document.getElementById('Total').value = result3;
             }
             
         </script>

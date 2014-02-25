@@ -74,7 +74,7 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                 </div>
                          
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas suprimer un fournisseur utilisé</div>
+            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un fournisseur utilisé</div>
         </div>
            </div>
         </div>
