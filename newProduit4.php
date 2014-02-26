@@ -81,8 +81,8 @@ if(!isset($_SESSION['idVisiteur']))
 
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
-                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value="">
-                                                    <input type="hidden" name="nb" id="nb" value="<?php $tab1 = $Produit->MaxId();foreach ($tab1 as $valeur1){$nbid = $valeur1['Max(Id)'];$nbid++;echo $nbid++;}?> " OnKeyUp="javascript:GenerationRefLycee()">
+                                                    <input type="text" name="RefFournisseurs" id="RefFournisseurs" value="" OnKeyUp="javascript:GenerationRefLycee()">
+                                                    <input type="hidden" name="nb" id="nb" value="<?php $tab1 = $Produit->MaxId();foreach ($tab1 as $valeur1){$nbid = $valeur1['Max(Id)'];$nbid++;echo $nbid++;}?> ">
 
 
                                                 </td>

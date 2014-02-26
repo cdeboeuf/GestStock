@@ -111,7 +111,7 @@ if(isset($_POST['action1']))
                                                         <?php $id = "id$nb"; $nb++;?>
                                                         <?php $idlien = $value["RefFournisseur"]; ?>
                                                         <?php $idid = $value['Id']; ?>
-                                                        <?php $lien = "newProduit3.php?num=$idlien&id=$idid"; ?> 
+                                                        <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?> 
                                                         <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";

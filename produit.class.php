@@ -182,7 +182,7 @@ include('connexion.php');
 
         }
         
-        public function AddProduitMode($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Id, $Users)
+ public function AddProduit($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Users)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
             $PUHT=str_replace ( ',', '.', $PUHT);
