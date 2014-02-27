@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-
+ include('bonjour.php');  
 include('produit.class.php');
 $produit = new produit();
 
@@ -30,7 +30,12 @@ if(isset($_POST['action1']))
         
     }
 }
-
+ include('pagination.php');
+$pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockEST();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
 
 ?>
 
@@ -49,9 +54,12 @@ if(isset($_POST['action1']))
     </head>
     <body>
         <div class="container-fluid">
+            
             <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Ajouter un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $menu->Verifdroit('newProduit.php');?>
@@ -102,7 +110,7 @@ if(isset($_POST['action1']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockEST();
+                                       
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -166,6 +174,7 @@ if(isset($_POST['action1']))
                                 </table>
                                 <br>
                                 </form>
+                              <?php  $pagination->affiche('newProduit2.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>

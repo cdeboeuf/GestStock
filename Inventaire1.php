@@ -3,6 +3,7 @@
 <?php
 include('produit.class.php');
 include ('Valorisation.class.php');
+include('bonjour.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
@@ -23,7 +24,13 @@ if(isset($_POST['action']))
       }     
 }
 }
-      
+include ('pagination.php');
+      $pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+
 if(isset($_POST['annee']))
     {
     $valorisation= new Valorisation();
@@ -46,9 +53,12 @@ if(isset($_POST['annee']))
     </head>
     <body>
         <div class="container-fluid">
+            
             <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Inventaire</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);
@@ -89,7 +99,7 @@ if(isset($_POST['annee']))
                                         </th>
 
                                         <th>
-                                            Quantité Totale
+                                            Quantité
                                         </th>
                                         
                                         <th>
@@ -107,7 +117,7 @@ if(isset($_POST['annee']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockMODE();
+                     
                                         
                                         $nb=0;
                                         foreach ($Resultat as $value) 
@@ -176,6 +186,7 @@ if(isset($_POST['annee']))
                                 <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir cloturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Cloturer l'année <?php echo $annee ?></button>
                             </div>
                                 </form>
+                                 <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                             
                         </div>

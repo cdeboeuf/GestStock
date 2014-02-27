@@ -15,14 +15,87 @@ include('connexion.php');
 	}
         
         public function GetValorisationStockMODE()
+        { 
+            try 
+           {
+                
+        //Récupère le nombre total d'items
+        $result = Produit::$bdd->query('SELECT COUNT(*) FROM Produit  Where IdSection = 2');
+        $result1 = $result->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+ 
+        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+                       (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 2 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
+ 
+        $resul = Produit::$bdd->query($requete);
+        $resul1 = $resul->fetchAll(); 
+        //Système de pagination
+        return array($resul1,$nbPages,$pageCourante);     
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+        public function GetValorisationStockOC()
         {
             try 
            {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
-                       (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
-                        Where IdSection = 2";
-            $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll();      
+  
+ 
+        //Récupère le nombre total d'items
+        $result = Produit::$bdd->query('SELECT COUNT(*) FROM objetconfectionne Where Quantite>0');
+        $result1 = $result->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+ 
+        $requete = 'SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where Quantite>0 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
+ 
+        $resul = Produit::$bdd->query($requete);
+        $resul1 = $resul->fetchAll(); 
+        //Système de pagination
+        return array($resul1,$nbPages,$pageCourante); 
            } 
            catch (Exception $e) 
            {
@@ -34,11 +107,40 @@ include('connexion.php');
         {
              try 
            {
-            $requete = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+                 //Récupère le nombre total d'items
+        $result = Produit::$bdd->query('SELECT COUNT(*) FROM Produit  Where IdSection = 1');
+        $result1 = $result->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+ 
+        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
-                        Where IdSection = 1";
-            $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll();      
+                        Where IdSection = 1 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
+ 
+        $resul = Produit::$bdd->query($requete);
+        $resul1 = $resul->fetchAll(); 
+        //Système de pagination
+        return array($resul1,$nbPages,$pageCourante);   
+              
            } 
            catch (Exception $e) 
            {

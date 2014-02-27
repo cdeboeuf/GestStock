@@ -1,5 +1,6 @@
 <!DOCTYPE html> 
     <?php 
+     include('bonjour.php');  
     include('user.class.php');
         if(!empty($_POST))
         {
@@ -28,10 +29,10 @@
     <body>
         <div class="container-fluid">
             <div class="page-header">
-                <h1><?php if(isset($resultatAnnee)) {echo $resultatAnnee;}?>
-                <small>Connexion</small></h1>
-                   
-            </div> <h5><?php If(isset($resultat)){echo $resultat;}?></h5>
+                <table>
+                    <th> <td><?php logo() ?></td><td><?php nomlogiciel()?><h1><small>Connexion</small></h1>
+                </td></th></table>
+            </div>  <h5><?php If(isset($resultat)){echo $resultat;}?></h5>
             <div class="hero-unit"> 
                 <div class="row-fluid"> 
                 <div class="span4"></div>

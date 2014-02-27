@@ -25,6 +25,7 @@ if(!isset($_SESSION['idVisiteur']))
     </head>
     <body>
         <div class="container-fluid">
+               
             <div class="page-header">
                 <h1><small>Produit</small></h1>
             </div>

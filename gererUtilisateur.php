@@ -1,5 +1,5 @@
 <?php 
-
+include('bonjour.php'); 
 include('user.class.php');
 include('typeuser.class.php');
 if(!isset($_SESSION['idVisiteur'])) 
@@ -76,9 +76,12 @@ $LesUsers= $usersP->affiche_user();
     </head>
     <body>
         <div class="container-fluid">
-            <div class="page-header"> 
-                <h1><small>Parametre</small></h1>
-                </div>
+             
+            <div class="page-header">
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Gestion des utilisateurs</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
                $page=pathinfo($_SERVER['PHP_SELF']);

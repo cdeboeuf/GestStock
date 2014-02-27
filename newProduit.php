@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 
 <?php
-
+include('bonjour.php');
 include('produit.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-
+include('pagination.php');
+$pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
 
 ?>
 
@@ -25,9 +30,12 @@ if(!isset($_SESSION['idVisiteur']))
     </head>
     <body>
         <div class="container-fluid">
+               
             <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Ajouter un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);
@@ -79,7 +87,7 @@ if(!isset($_SESSION['idVisiteur']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockMODE();
+                                        
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -131,7 +139,9 @@ if(!isset($_SESSION['idVisiteur']))
                                     <br>
                                 </table>
                                 <br>
+                                
                                 </form>
+                              <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>
