@@ -125,20 +125,7 @@ if(!isset($_SESSION['idVisiteur']))
                                         <?php if(isset($_GET['rep']))
                                         {?>
                                             <div class="alert alert-success ">Le produit a été ajouté</div>
-                                            <?php
-//                                                if ($rep=="Le produit à été ajouté.")
-//                                                    {?>
-                                                        <!--<div class="alert alert-success ">--><?php// echo $rep;
-//                                                    } 
-//                                                else
-//                                                    {?>
-                                                        <!--</div>
-                                                        <div class="alert alert-danger">--><?php //echo $rep;
-//                                                    }?>
-                                                    <!--    </div>-->
-                                    <?php
-                                  
-                                        }?>
+                                        <?php }?>
                                                     
                                 </tbody>
                                     <br>

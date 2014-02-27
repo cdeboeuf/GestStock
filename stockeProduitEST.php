@@ -30,13 +30,13 @@ if(!isset($_SESSION['idVisiteur']))
             </div>
             <?php include('Menu.php');
             $menu=new Menu();
-            $page=pathinfo($_SERVER['PHP_SELF']);
-            $menu->Verifdroit($page['basename']);?>
+            $menu->Verifdroit('stockeProduit.php');?>
+
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li class="active"><a href="./stockeProduit.php">Mode</a></li>
-                    <li><a href="./stockeProduitEST.php">Esthétique</a></li>
-                    <li><a href="./stockeProduitOC.php">Objet Confectionné</a></li>
+                    <li><a href="./stockeProduit.php">Mode</a></li>
+                    <li class="active"><a href="./stockeProduitEST.php">Esthétique</a></li>
+                        <li><a href="./stockeProduitOC.php">Objet Confectionné</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
