@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<?php
+<?php include('bonjour.php');  
 include('produit.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
@@ -20,7 +20,12 @@ if(isset($_POST['action']))
                 
       }     
  }
-        
+                include('pagination.php');
+$pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockEST();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
 ?>
 
 
@@ -38,9 +43,12 @@ if(isset($_POST['action']))
     </head>
     <body>
         <div class="container-fluid">
+            
             <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Inventaire</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
            $menu->Verifdroit('Inventaire1.php');?>
@@ -80,7 +88,7 @@ if(isset($_POST['action']))
                                         </th>
 
                                         <th>
-                                            Quantité Totale
+                                            Quantité
                                         </th>
                                         
                                         <th>
@@ -98,7 +106,7 @@ if(isset($_POST['action']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockEST();
+                                       
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -137,12 +145,11 @@ if(isset($_POST['action']))
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td >";
                                                     ?>  
-                                                        <div class="controls">
+                                                       
                                                             <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
-                                                        </div>
-                                  
+                                          
                                                     <?php
                                                     
                                                     echo "</td>";
@@ -160,6 +167,7 @@ if(isset($_POST['action']))
                                 <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
+                                 <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>

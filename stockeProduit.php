@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<?php
+<?phpinclude('bonjour.php');
 include('Produit.class.php');
 $Produit = new Produit();
 ?>
@@ -21,9 +21,12 @@ $Produit = new Produit();
     <body>
         
         <div class="container-fluid">
+               
             <div class="page-header">
-                <h1><small>Achat</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Sortir un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);

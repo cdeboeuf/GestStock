@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<?php
+<?php include('bonjour.php');  
 include('user.class.php');
 $user = new Users();
 if(!isset($_SESSION['idVisiteur'])) 
@@ -38,9 +38,12 @@ if (isset($_POST['action'])=='submit')
     </head>
     <body>
         <div class="container-fluid">
+             
             <div class="page-header">
-                <h1><small>Mon Profil</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Mon profil</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);

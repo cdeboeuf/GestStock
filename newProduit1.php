@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-include('Produit.class.php');
+include('Produit.class.php');include('bonjour.php'); 
 $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
@@ -149,9 +149,12 @@ if(isset($_POST['action']))
     <body>
         
         <div class="container-fluid">
+             
             <div class="page-header">
-                <h1><small>Achat</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Ajouter un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');?>
             <div class="span12">
                 <div class="tab-content">

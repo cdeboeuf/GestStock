@@ -1,26 +1,16 @@
 <!DOCTYPE html>
-
 <?php
+include('bonjour.php'); 
 include('produit.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-if(isset($_POST['action']))
- if (isset($_POST['action'])=='envoyer')
- {
-     if(isset($_POST['QuantiteTotal'])) 
-     {
-                extract($_POST);
-                for ($i = 0; $i<= count($_POST["QuantiteTotal"])-1; $i++)
-                {     
-                    $QuantiteTotal1=$QuantiteTotal[$i];
-                    $nb=$id[$i];            
-                    $produit->MajValorisationStock($QuantiteTotal1, $nb);
-                }
-                
-      }     
- }
-        
+        include('pagination.php');
+$pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockEST();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
 ?>
 
 
@@ -38,9 +28,12 @@ if(isset($_POST['action']))
     </head>
     <body>
         <div class="container-fluid">
+                     
             <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Accueil</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
@@ -51,8 +44,7 @@ if(isset($_POST['action']))
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">                                         
-                                <form  method="POST" action="Inventaire2.php">
+                            <div class="row-fluid">                                                                        
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -78,7 +70,7 @@ if(isset($_POST['action']))
                                         </th>
 
                                         <th>
-                                            Quantité Totale
+                                            Quantité
                                         </th>
                                         
                                         <th>
@@ -96,15 +88,13 @@ if(isset($_POST['action']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockEST();
-                                        $nb=0;
+                                       
                                         foreach ($Resultat as $value) 
                                         {?>
                                                 <tr>
                                                     <td><?php
                                                     echo $value["Id"];
-                                                    ?><input type="hidden" name="id[]" id="id" value="<?php echo $value["Id"] ?>">
-                                                   <?php 
+                                                   
                                                     echo "</td>";
                                                     echo "</td>";
                                                     echo "<td>";
@@ -120,43 +110,30 @@ if(isset($_POST['action']))
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    ?>  
-                                                        <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" disabled="disabled" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
-                                                             OnKeyUp="javascript:calcul(<?php echo $nb?>);">
-                                                        </div>
-                                                    <?php
+                                                    echo $value["QuantiteTotal"];
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["PUTTCPondere"];
-                                                    ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
-                                                   <?php 
+                                                 
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    ?>  
-                                                        <div class="controls">
-                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
-                                                        </div>
-                                  
-                                                    <?php
-                                                    
+                                                    echo number_format($value['Total'],2);                                                  
                                                     echo "</td>";
-                                                echo "</tr>";
-                                
-                                                $nb=$nb+1;
+                                                echo "</tr>";                   
+                                               
                                         }
-
-
                                     ?>
                                 </tbody>
                                     <br>
                                 </table>
                                 <br>
+                                <?php                 
+                                        $pagination->affiche('Accueil2.php','idPage',$nbPages,$pageCourante,2);?>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
-                                </form>
+                                
                             </div>
                         </div>
                     </div>

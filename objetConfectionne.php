@@ -1,4 +1,5 @@
 <?php
+include('bonjour.php'); 
 include('connexion.php');
 include('objetConfectionne.class.php');
 if(!isset($_SESSION['idVisiteur'])) 
@@ -21,9 +22,12 @@ $OcC=$LesOc->affiche_objetC();
     </head>
     <body>
         <div class="container-fluid">
-            <div class="page-header"> 
-                <h1><small>Objets Confectionnés</small></h1>
-                </div>
+             
+            <div class="page-header">
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Objets confectionnés</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
             $page=pathinfo($_SERVER['PHP_SELF']);

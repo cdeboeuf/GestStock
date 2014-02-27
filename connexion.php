@@ -32,10 +32,11 @@ function connexion_base($annee)
         die('erreur: ' . $e->getMessage());
     }
 }
-function connecter($id,$nom,$type){
+function connecter($id,$nom,$type,$nomtype){
 	$_SESSION['idVisiteur']= $id; 
 	$_SESSION['nom']= $nom;
         $_SESSION['type']=$type;
+        $_SESSION['nomtype']=$nomtype;
 }
 function deconnecter(){
 	session_destroy();

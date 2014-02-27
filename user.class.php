@@ -26,7 +26,7 @@ function __construct($nb = null)
 
 function verification($nom,$mdp) 
 {
-    $req="SELECT * FROM users Where Login='".$nom."';";
+    $req="SELECT * FROM users inner join typeuser on typeuser.Id=users.Type Where Login='".$nom."';";
     $rs = Users::$bdd->query($req);
     $result = $rs->fetchAll();
     if(count($result)==0)
@@ -45,13 +45,13 @@ function verification($nom,$mdp)
                     $nb=$annee->DerniereAnnee();
                     Users::$bdd=connexion_base($nb);
                     $reponse="<br>Bienvenue ".$value['Login']."";
-                    connecter($value['Id'], $value['Login'], $value['Type']);
+                    connecter($value['Id'], $value['Login'], $value['Type'],$value['Details']);
 
                 }
                 else
                 {
                     $reponse="<br>Bienvenue ".$value['Login']."";
-                    connecter($value['Id'], $value['Login'], $value['Type']);
+                    connecter($value['Id'], $value['Login'], $value['Type'],$value['Details']);
                 }
                 header("location: Accueil1.php");
                 }

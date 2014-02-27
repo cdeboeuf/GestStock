@@ -92,7 +92,7 @@ class ObjectConfectionne
     $totalCoutPublic=$totalCoutEleve+$coutmachine;
     $prixUnitairePublic=$totalCoutPublic/$nbprevu;
     $prixUnitaireEleve=$totalCoutEleve/$nbprevu;
-    $req="UPDATE objetconfectionne set CoefCorrection='$Coef'  ,NbRealise='$ObjetRealise'  , Temps='$temp' ,TotalMatiere='$totalmatiere' ,TotalFrais='$totalfrais'  ,TotalCoutEleve='$totalCoutEleve'  ,CoutMachine='$coutmachine'  ,TotalCoutPublic='$totalCoutPublic' ,DateFabri='$DateFabriquation'  ,PrixUnitairePublic='$prixUnitairePublic'  ,PrixEleveUnitaire='$prixUnitaireEleve'  ,CoutMachinePU='$Cout' where ref='$ref'";
+    $req="UPDATE objetconfectionne set CoefCorrection='$Coef'  ,NbRealise='$ObjetRealise',Quantite='$ObjetRealise'  , Temps='$temp' ,TotalMatiere='$totalmatiere' ,TotalFrais='$totalfrais'  ,TotalCoutEleve='$totalCoutEleve'  ,CoutMachine='$coutmachine'  ,TotalCoutPublic='$totalCoutPublic' ,DateFabri='$DateFabriquation'  ,PrixUnitairePublic='$prixUnitairePublic'  ,PrixEleveUnitaire='$prixUnitaireEleve'  ,CoutMachinePU='$Cout' where ref='$ref'";
     $rs=ObjectConfectionne::$bdd->query($req);
     }
 }

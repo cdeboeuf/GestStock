@@ -1,4 +1,4 @@
-<?php 
+<?php include('bonjour.php'); 
 include('connexion.php');
 include('unite.class.php');
 $uniteP= new Unite();         
@@ -30,9 +30,12 @@ $LesUnite= $uniteP->affiche_Unite();
     </head>
     <body>
         <div class="container-fluid">
-            <div class="page-header"> 
-                <h1><small>Parametre</small></h1>
-                </div>
+              
+            <div class="page-header">
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Parametre</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
             $menu=new Menu();
            $menu->Verifdroit('parametre.php');?>
