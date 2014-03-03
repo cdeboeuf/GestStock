@@ -11,7 +11,7 @@ if(isset($_POST['cout']))
     ?> 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -48,7 +48,7 @@ if(isset($_POST['cout']))
                       <?php echo $rep; ?>
                     </div> <?php } ?>
                     <div class='alert alert-info'>
-                       Coût Machine actuel:
+                       Coût Machine actuel :
                     <?php $LesCout=$Parametre->affiche_CoutMachine();
                     foreach ($LesCout as $unCout)
                     {

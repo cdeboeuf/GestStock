@@ -59,7 +59,7 @@ foreach ($ordre as $unOrdre)
 ?>
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -102,9 +102,9 @@ foreach ($ordre as $unOrdre)
                               BULLETIN DE FABRICATION </strong>
                               </div>
                               <div class='span3 offset1'>
-                              Exercice:<?php echo date('Y')?>
+                              Exercice : <?php echo date('Y')?>
                               <br>
-                              N°ordre:<?php echo "OC".$ordre;?>
+                              N°ordre : <?php echo "OC".$ordre;?>
                               </div>
                                    </td>
                                </tr>
@@ -113,19 +113,19 @@ foreach ($ordre as $unOrdre)
                                     
                                     <div class='span3'> ORDRE DE SERVICE </div>
                                     <div class='span8'>
-                               <label for='designation'><em>Désignation:</em></label>
+                               <label for='designation'><em>Désignation : </em></label>
                                <input type="text" name="designation" class="input-xlarge" id="designation"/>
                                </div>
                                 </div>
                                <div class='span4'>
-                               <em>Professeur:</em>
+                               <em>Professeur : </em>
                                <?php echo$_SESSION['nom']?><br>
                               
-                               <label for='destination'><em>Destination:</em></label>
+                               <label for='destination'><em>Destination : </em></label>
                                <input type="text" name="destination" id="destination"/><br>
                                </div>
                                <div class='span4 offset3'>
-                               <label for='NombrePrevu'><em>Nombre prévu:</em></label>
+                               <label for='NombrePrevu'><em>Nombre prévu : </em></label>
                                <input type="text" name="NombrePrevu" id="NombrePrevu"/><br>
                                <?php
                                $jour=date("d");
@@ -133,7 +133,7 @@ foreach ($ordre as $unOrdre)
                                $ans=date("Y");
                                $date=$ans."-".$mois."-".$jour;
                                ?>
-                               <label for='DateOrdre'><em>Date de l'ordre de serivce:</em></label>
+                               <label for='DateOrdre'><em>Date de l'ordre de service : </em></label>
                                <input type="date" name="DateOrdre" value="<?php echo $date;?>" id="DateOrdre"/><br>
                                </div>   
                               <button type="submit" class="btn btn-success" name="action" value="Valider">Enregistrer</button>

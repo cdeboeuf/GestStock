@@ -87,7 +87,7 @@ class ObjectConfectionne
     {
     $Cout=$unCout['Details'];}
     $totalfrais=$totalmatiere*$Coef/100;
-    $totalCoutEleve=$totalmatiere+$totalfrais;
+    $totalCoutEleve=$totalmatiere;
     $coutmachine=$temp*$Cout;
     $totalCoutPublic=$totalCoutEleve+$coutmachine;
     $prixUnitairePublic=$totalCoutPublic/$nbprevu;

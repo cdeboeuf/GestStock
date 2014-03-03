@@ -65,7 +65,7 @@ $LesUsers= $usersP->affiche_user();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
              <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -103,7 +103,7 @@ $LesUsers= $usersP->affiche_user();
                         
                       <div class='<?php if(isset($_POST['action'])){echo 'span3';}else{echo 'span3';}?>'>
                 <form name="usernew" action="gererUtilisateur.php" method="post">
-                    <label class="badge" for="user">Nouveau Utilisateur :</label> <input type="text" name="user" id="user">
+                    <label class="badge" for="user">Nouvel Utilisateur :</label> <input type="text" name="user" id="user">
                        <SELECT name="type" id="userSup">
                   <?php
                  foreach ($LesTypes as $untype)               
@@ -119,7 +119,7 @@ $LesUsers= $usersP->affiche_user();
                 </form>
                 </div>
                          <div class='span4 offset1'>
-                         <label class="badge" for="userSup">Les utilisateurs déjà enregistrés:</label>
+                         <label class="badge" for="userSup">Les utilisateurs déjà enregistrés :</label>
                  <form name="userSup" action="gererUtilisateur.php" method="post">
                  <SELECT name="userSup" id="userSup">
                   <?php
@@ -172,7 +172,7 @@ $LesUsers= $usersP->affiche_user();
                           </div>
                     
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un utilisateur qui a créé un objet confectionné non cloturé</div>
+            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un utilisateur qui a créé un objet confectionné non clôturé</div>
         </div>
            </div>
         </div>

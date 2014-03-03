@@ -18,7 +18,7 @@ $pagination=new Pagination();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -44,7 +44,7 @@ $pagination=new Pagination();
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li  class="active"><a href="./newProduit.php">Mode</a></li>
                     <li><a href="./newProduit2.php">Esthétique</a></li>
-                    <li><a href="./newProduit4.php">Nouvelle ajout</a></li>
+                    <li><a href="./newProduit4.php">Nouvel ajout</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   

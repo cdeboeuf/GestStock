@@ -22,7 +22,7 @@ $LesTva= $tvaP->affiche_Tva();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
              <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -62,7 +62,7 @@ $LesTva= $tvaP->affiche_Tva();
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="tvaP">Les taux de tva déjà enregistrés:</label>
+                         <label class="badge" for="tvaP">Les taux de TVA déjà enregistrés :</label>
                  <form name="tvaSup" action="parametre.php" method="post">
                  <SELECT name="tvaSup" id="tvaP">
                   <?php
@@ -79,13 +79,13 @@ $LesTva= $tvaP->affiche_Tva();
                      </div>
                       <div class='span4'>
                 <form class="span3" name="tvanew" action="parametre.php" method="post">
-                    <label class="badge" for="tva">Nouveau taux de tva :</label> <input type="text" name="tva" id="tva"/>
+                    <label class="badge" for="tva">Nouveau taux de TVA :</label> <input type="text" name="tva" id="tva"/>
                     <button type="submit" class="btn btn-success">Envoyer</button>
                 </form>
                 </div>
                          
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un taux de Tva utilisé</div>
+            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un taux de TVA utilisé</div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

@@ -11,7 +11,7 @@ $OcC=$LesOc->affiche_objetC();
 ?>
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -40,7 +40,7 @@ $OcC=$LesOc->affiche_objetC();
                            </form>
                   
                   <form name="OcNc" action="voirOcNonCloturer.php" method="post">
-                 <label for='OcNc'>Objets confectionnés non cloturés :</label>
+                 <label for='OcNc'>Objets confectionnés non clôturés :</label>
                  <SELECT name="OcNc" id="OcNc">
                   <?php
                  foreach ($OcNc as $unOcNc)               
@@ -58,7 +58,7 @@ $OcC=$LesOc->affiche_objetC();
                            
                     <form name="OcC" action="voirOcCloturer.php" method="post">
                          
-                        <label for='OcC'>Objets confectionnés cloturés :</label>
+                        <label for='OcC'>Objets confectionnés clôturés :</label>
                         <SELECT name="OcC" id="OcC">
                   <?php
                  foreach ($OcC as $unOcC)               

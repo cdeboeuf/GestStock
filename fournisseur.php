@@ -23,7 +23,7 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -55,7 +55,7 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="fournisseurP">Les fournisseurs déjà enregistrés:</label>
+                         <label class="badge" for="fournisseurP">Les fournisseurs déjà enregistrés :</label>
                  <form name="fournisseurSup" action="fournisseur.php" method="post">
                  <SELECT name="fournisseurSup" id="fournisseurP">
                   <?php

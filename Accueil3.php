@@ -17,7 +17,7 @@ $pagination=new Pagination();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -45,7 +45,8 @@ $pagination=new Pagination();
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
-                        <div class="row-fluid">                                                              
+                        <div class="row-fluid"> 
+                            <form  method="GET" action="historique.php">
                         <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -81,14 +82,18 @@ $pagination=new Pagination();
                                 </thead>
                                 <tbody>
                                     <?php
-                                      
+                                      $nb=0;
                                      
                                         foreach ($Resultat as $value) 
                                        {?>
                                                 <tr>
                                                     <td><?php
-                                                    echo $value["Id"];
-                                                   
+                                                   $id = "id$nb"; $nb++;?>
+                                                        <?php $idlien = $value["Id"]; ?>
+                                                       
+                                                        <?php $lien = "historiqueOC.php?num=$idlien"; ?> 
+                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
+                                                 <?php     
                                                   
                                                     echo "</td>";
                                                     echo "</td>";
@@ -121,6 +126,7 @@ $pagination=new Pagination();
                                 </tbody>
                                     <br>
                                 </table>
+                            </form>
                                 <br><?php                 
                                         $pagination->affiche('Accueil3.php','idPage',$nbPages,$pageCourante,2);?>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>

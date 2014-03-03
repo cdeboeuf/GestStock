@@ -11,7 +11,7 @@ if(isset($_POST['coef']))
     ?> 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -38,7 +38,7 @@ if(isset($_POST['coef']))
                     <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li class="active"><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
+                    <li><a href="./gestionMenu.php">Gérer les menus</a></li>                   
                              
                 </ul><div class="hero-unit"> 
                     <?php if (isset($_POST['coef'])){
@@ -48,11 +48,11 @@ if(isset($_POST['coef']))
                       <?php echo $rep; ?>
                     </div> <?php } ?>
                     <div class='alert alert-info'>
-                       Coefficient de correction actuel:
+                       Coefficient de correction actuel :
                     <?php $LesCout=$Parametre->affiche_CoefCorrection();
                     foreach ($LesCout as $unCout)
                     {
-                    echo $unCout['Details'];
+                    echo $unCout['Details']." %";
                     }                  ?>
                 </div>
                     <form class="span3" name="ModifCout" action="coefCorrection.php" method="post">
