@@ -45,7 +45,7 @@ foreach($OC as $oc)
 ?>
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
         <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -89,10 +89,10 @@ foreach($OC as $oc)
                               BULLETIN DE FABRICATION </strong>
                               </div>
                               <div class='span3 offset1'>
-                              Exercice:<?php echo $oc['Annee'];?>
+                              Exercice : <?php echo $oc['Annee'];?>
                              
                               <br>
-                              N°ordre:<?php echo $oc['Id'];?>
+                              N°ordre : <?php echo $oc['Id'];?>
                               
                               </div>
                                    </td>
@@ -102,27 +102,27 @@ foreach($OC as $oc)
                                     
                                     <div class='span3'> ORDRE DE SERVICE </div>
                                     <div class='span8'>
-                             <em>Désignation:</em><?php echo $oc['Designation'];?><br>
+                             <em>Désignation : </em><?php echo $oc['Designation'];?><br>
                                </div>
                                 </div>
                                <div class='span4'>
-                               <em>Professeur:</em>
+                               <em>Professeur : </em>
                                <?php echo $oc['Login'];?><br>
                               
-                               <em>Destination:</em>
+                               <em>Destination : </em>
                                <?php echo $oc['Destination']; ?><br>
                                </div>
                                <div class='span4 offset3'>
-                               <em>Nombre prévu:</em>
+                               <em>Nombre prévu : </em>
                                <?php echo $oc['NbPrevision'];?><br>
 
-                               <em>Date de l'ordre de serivce:</em><?php echo $oc['DateEmiF'];?><br>
+                               <em>Date de l'ordre de service : </em><?php echo $oc['DateEmiF'];?><br>
                                </div>   
                                 
                                 <div class="span12">
                                     
                                      <table class="table table-striped">
-                                         <caption style="text-align: left;"> <em>MATIERE UTILISEE:</em> </caption>
+                                         <caption style="text-align: left;"> <em>MATIERE UTILISEE : </em> </caption>
                                         <TR> 
                                     <TH> DESIGNATION </TH> 
                                     <TH> REFERENCE </TH> 
@@ -148,8 +148,8 @@ foreach($OC as $oc)
                                         <br>
                                         <br>
                                         <br>
-                                        Coefficient de correction: <?php echo $oc['CoefCorrection'];?> % de total matière.<br>
-                                        Coût machine:<?php echo $oc['Temps'] ?> X <?php echo $oc['CoutMachinePU'];?>€.
+                                        Coefficient de correction : <?php echo $oc['CoefCorrection'];?> % du total matières.<br>
+                                        Coût machine : <?php echo $oc['Temps'] ?> X <?php echo $oc['CoutMachinePU'];?>€.
                                <br>
                                <br>
                                <?php
@@ -158,11 +158,11 @@ foreach($OC as $oc)
                                $ans=date("Y");
                                $date=$ans."-".$mois."-".$jour;
                                ?>
-                               <em>Date de fabriquation:</em><?php echo $oc['DateFabriF'] ?> <br>
-                              <em>Nombre d'objets réalisés:</em><?php echo $oc['NbRealise'] ?> <br>
+                               <em>Date de fabrication : </em><?php echo $oc['DateFabriF'] ?> <br>
+                              <em>Nombre d'objets réalisés : </em><?php echo $oc['NbRealise'] ?> <br>
                               <br>
                               <br>
-                              <em>Référence:</em><?php echo $oc['Ref'] ?>
+                              <em>Référence : </em><?php echo $oc['Ref'] ?>
                                     </div>
                                     <div class="span5">
                                        <table class="table table-striped">  
@@ -183,7 +183,7 @@ foreach($OC as $oc)
                                            </tr>
                                             <tr>
                                                <td>
-                                                   Total Matière
+                                                   Total Matières
                                                </td>
                                                 <td ID="totalmatiere">   
                                                   <?php echo $oc['TotalMatiere'] ?>
@@ -199,7 +199,7 @@ foreach($OC as $oc)
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Total cout eleve  
+                                                 Total coût élève  
                                                </th>
                                                 <td id="totalcouteleve">
                                                   <?php echo $oc['TotalCoutEleve']; ?>
@@ -207,7 +207,7 @@ foreach($OC as $oc)
                                            </tr>
                                             <tr>
                                                <td>
-                                                   Cout machine
+                                                   Coût machine
                                                </td >
                                                 <td id=coutmachine>
                                                   <?php echo $oc['CoutMachine']; ?>
@@ -215,7 +215,7 @@ foreach($OC as $oc)
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Total cout public  
+                                                 Total coût public  
                                                </th>
                                                 <td id="totalcoutpublic">
                                                     <?php echo $oc['TotalCoutPublic']; ?>
@@ -232,7 +232,7 @@ foreach($OC as $oc)
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Prix unitaire eleve  
+                                                 Prix unitaire élève  
                                                </th>
                                                 <td id="prixunitaireeleve">
                                                    <?php echo
@@ -247,7 +247,7 @@ foreach($OC as $oc)
                            
                                <div class="span12">
                                    <div class="span4">Le responsable de fabrication</div>
-                                   <div class="span4">Le chef d'etablissement</div>
+                                   <div class="span4">Le chef d'établissement</div>
                                    <div class="span4">L'agent comptable</div>
                                </div>
                             </div>

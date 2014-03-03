@@ -31,7 +31,7 @@ $pagination=new Pagination();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -167,7 +167,7 @@ $pagination=new Pagination();
                                 <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
-                                 <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
+                                 <?php  $pagination->affiche('Inventaire2.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>

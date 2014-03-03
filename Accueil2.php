@@ -16,7 +16,7 @@ $pagination=new Pagination();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
             <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -45,7 +45,7 @@ $pagination=new Pagination();
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">                                                                        
-                                <table class="table table-bordered table-striped table-condensed">
+                                                <form  method="GET" action="historique.php"> <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
                                     <tr>
@@ -88,13 +88,16 @@ $pagination=new Pagination();
                                 </thead>
                                 <tbody>
                                     <?php
-                                       
+                                           $nb=0;                            
                                         foreach ($Resultat as $value) 
                                         {?>
                                                 <tr>
-                                                    <td><?php
-                                                    echo $value["Id"];
-                                                   
+                                                    <td> <?php $id = "id$nb"; $nb++;?>
+                                                        <?php $idlien = $value["RefLycee"]; ?>
+                                                       
+                                                        <?php $lien = "historique.php?num=$idlien"; ?> 
+                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
+                                                        <?php 
                                                     echo "</td>";
                                                     echo "</td>";
                                                     echo "<td>";
@@ -110,25 +113,30 @@ $pagination=new Pagination();
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["QuantiteTotal"];
+                                                   echo $value["QuantiteTotal"]; 
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["PUTTCPondere"];
-                                                 
+                                                  
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo number_format($value['Total'],2);                                                  
+                                                    echo number_format($value['Total'],2) ;
+                                                 
                                                     echo "</td>";
-                                                echo "</tr>";                   
-                                               
+                                                echo "</tr>";
+                                
+                                                
                                         }
+
+
                                     ?>
                                 </tbody>
                                     <br>
                                 </table>
+                                   </form>
                                 <br>
                                 <?php                 
                                         $pagination->affiche('Accueil2.php','idPage',$nbPages,$pageCourante,2);?>

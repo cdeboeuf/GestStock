@@ -19,7 +19,7 @@ $LesUnite= $uniteP->affiche_Unite();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -45,7 +45,7 @@ $LesUnite= $uniteP->affiche_Unite();
                     <li><a href="./parametre.php">Modifier le taux de TVA</a></li>
                     <li class="active"><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
-                    <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
+                    <li><a href="./gestionMenu.php">Gérer les menus</a></li>                   
                     <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>               
                 </ul>
                       <div class="hero-unit"> 
@@ -58,7 +58,7 @@ $LesUnite= $uniteP->affiche_Unite();
                          <?php } ?>
                         
                      <div class='span4'>
-                         <label class="badge" for="uniteP">Les unités d'achat déjà enregistrées:</label>
+                         <label class="badge" for="uniteP">Les unités d'achat déjà enregistrées :</label>
                  <form class="span3" name="uniteSup" action="uniteAchat.php" method="post">
                  <SELECT name="uniteSup" id="uniteP">
                   <?php
@@ -74,7 +74,7 @@ $LesUnite= $uniteP->affiche_Unite();
                      </div>
                       <div class='span4'>
                 <form class="span3" name="unitenew" action="uniteAchat.php" method="post">
-                    <label class="badge" for="unite">Nouvelle unitée :</label> <input type="text" name="unite" id="unite"/>
+                    <label class="badge" for="unite">Nouvelle unité :</label> <input type="text" name="unite" id="unite"/>
                     <button type="submit" class="btn btn-success">Envoyer</button>
                 </form>
                 </div>

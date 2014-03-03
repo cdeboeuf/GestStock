@@ -32,7 +32,7 @@ $pagination=new Pagination();
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -85,7 +85,7 @@ $pagination=new Pagination();
                                         </th>
                                         
                                         <th>
-                                            Prix unitaire éleve
+                                            Prix unitaire élève
                                         </th>
 
                                         <th>
@@ -153,7 +153,7 @@ $pagination=new Pagination();
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                 </form>
                                 <?php                 
-                                        $pagination->affiche('Accueil3.php','idPage',$nbPages,$pageCourante,2);?>
+                                        $pagination->affiche('Inventaire3.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>

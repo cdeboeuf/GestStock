@@ -17,7 +17,7 @@
         } ?>                    
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -53,8 +53,7 @@
                  
                      ?>
                         <option value="<?php echo $valeur[1]?>" <?php if($valeur[1]== date("Y")){?>selected<?php } ?>><?php echo $valeur[1]?></option>
-                    <?php }    
-                  //blupppp
+                    <?php }                   
                   ?>          
                  </SELECT>
                     <br>

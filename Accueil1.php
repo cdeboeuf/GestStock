@@ -6,25 +6,22 @@ $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
         include('pagination.php');
-$pagination=new Pagination();
+ $pagination=new Pagination();
  $resultat = $produit->GetValorisationStockMODE();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
 ?>
-
-
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
-               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
         <link rel="stylesheet"   media="screen" href="css/bootstrap.min.css">
         <link rel="stylesheet" media="print" href="css/print.css" type="text/css">
         <!--responsive -->
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
     </head>
     <body>
         <div class="container-fluid ">
@@ -45,7 +42,7 @@ $pagination=new Pagination();
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">                                                                     
-                                <table class="table table-bordered table-striped table-condensed">
+                               <form  method="GET" action="historique.php"> <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
                                     <tr>
@@ -88,13 +85,16 @@ $pagination=new Pagination();
                                 </thead>
                                 <tbody>
                                     <?php
-                                                                       
+                                           $nb=0;                            
                                         foreach ($Resultat as $value) 
                                         {?>
                                                 <tr>
-                                                    <td><?php
-                                                    echo $value["Id"];
-                                                    
+                                                    <td> <?php $id = "id$nb"; $nb++;?>
+                                                        <?php $idlien = $value["RefLycee"]; ?>
+                                                       
+                                                        <?php $lien = "historique.php?num=$idlien"; ?> 
+                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
+                                                        <?php 
                                                     echo "</td>";
                                                     echo "</td>";
                                                     echo "<td>";
@@ -133,6 +133,7 @@ $pagination=new Pagination();
                                 </tbody>
                                     <br>
                                 </table>
+                                   </form>
                                 <br>
                                 <?php                 
                                         $pagination->affiche('Accueil1.php','idPage',$nbPages,$pageCourante,2);?>

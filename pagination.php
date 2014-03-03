@@ -123,10 +123,18 @@
          */
         public static function lien($chemin,$texte,$parametre='',$valeur=''){
             $lien = '<li><a href="'.$chemin;
- 
+           
+            $mystring = $chemin;
+$findme   = '?num=';
+$pos = strpos($mystring, $findme);
+if($pos==true)
+{
             if(!empty($parametre))
+                $lien .= '&'.$parametre.'='.$valeur;
+}else{
+     if(!empty($parametre))
                 $lien .= '?'.$parametre.'='.$valeur;
- 
+}
             $lien .= '">'.$texte.'</a></li>';
             return $lien;
         }

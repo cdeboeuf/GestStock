@@ -30,7 +30,7 @@ $LesType= $Typeuser->affiche_Type();
 ?> 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -50,8 +50,7 @@ $LesType= $Typeuser->affiche_Type();
             <?php include('Menu.php');
             $menu=new Menu();
            $menu->Verifdroit('parametre.php');
-  
-//$menu->Verifdroit();
+ 
             if(isset($rep)){echo $rep;}?>
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
@@ -59,7 +58,7 @@ $LesType= $Typeuser->affiche_Type();
                     <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
                     <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
                     <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li class="active"><a href="./gestionMenu.php">Gerer les menus</a></li>                             
+                    <li class="active"><a href="./gestionMenu.php">Gérer les menus</a></li>                             
                 </ul>
                 <div class="hero-unit"> 
                     
@@ -71,14 +70,14 @@ $LesType= $Typeuser->affiche_Type();
                     </div>
                     <div class='span3'>
                  <form name="typeSup" action="gestionMenu.php" method="post">
-                     <label class="badge" for="typeSup">Les types d'utilisateur déjà enregistré:</label>
+                     <label class="badge" for="typeSup">Les types d'utilisateur déjà enregistrés : </label>
                  <SELECT name="typeSup" id="tvaP">
                   <?php
                  foreach ($LesType as $untype)               
                      {
                 $Details=stripslashes($untype['Details']);
                      ?>
-                        <option value='<?php echo $untype['Id']?>'><?php echo $untype['Details']." (Utilisation:".$untype['utiliser'].")"?></option>
+                        <option value='<?php echo $untype['Id']?>' <?php if(isset($_POST['typeSup'])&& ($untype['Id']==$_POST['typeSup'])){ echo "selected";} ?>><?php echo $untype['Details']." (Utilisation:".$untype['utiliser'].")"?></option>
                      <?php 
                    
                      }

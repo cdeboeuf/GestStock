@@ -53,7 +53,7 @@ if(isset($_POST['action']))
           $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
      header("Location:VoirOcCloturer.php?id=$ref"); }
       else{
-          $erreur="Vous n'avez pas coché la case cloturer le bulletin.";
+          $erreur="Vous n'avez pas coché la case clôturer le bulletin.";
           
       }
     }
@@ -61,7 +61,7 @@ if(isset($_POST['action']))
 ?>
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -104,9 +104,9 @@ if(isset($_POST['action']))
                               BULLETIN DE FABRICATION </strong>
                               </div>
                               <div class='span3 offset1'>
-                              Exercice:<?php echo $oc['Annee'];?>                         
+                              Exercice : <?php echo $oc['Annee'];?>                         
                               <br>
-                              N°ordre:<?php echo $oc['Id'];?>                         
+                              N°ordre : <?php echo $oc['Id'];?>                         
                               </div>
                                    </td>
                                </tr>
@@ -115,22 +115,22 @@ if(isset($_POST['action']))
                                     
                                     <div class='span3'> ORDRE DE SERVICE </div>
                                     <div class='span8'>
-                               <em>Désignation:</em>
+                               <em>Désignation : </em>
                                <small><?php echo $oc['Designation'];?></small>
                                </div>
                                 </div>
                                <div class='span4'>
-                               <em>Professeur:</em>
+                               <em>Professeur : </em>
                                <small><?php echo $oc['Login'];?></small><br>
                               
-                               <em>Destination:</em>
+                               <em>Destination : </em>
                                <small><?php echo $oc['Destination']; ?></small><br>
                                </div>
                                <div class='span4 offset3'>
-                               <em>Nombre prévu:</em>
+                               <em>Nombre prévu : </em>
                               <small> <?php echo $oc['NbPrevision'];?></small><br>
 
-                               <em>Date de l'ordre de serivce:</em>
+                               <em>Date de l'ordre de service : </em>
                               <small> <?php echo $oc['DateEmi'];?></small><br>
                               <br>
                               <br>
@@ -139,7 +139,7 @@ if(isset($_POST['action']))
                                 <div class="span12">
                                     
                                      <table class="table table-striped">
-                                         <caption style="text-align: left;"> <em>MATIERE UTILISEE:</em> </caption>
+                                         <caption style="text-align: left;"> <em>MATIERE UTILISEE : </em> </caption>
                                         <TR> 
                                     <TH> DESIGNATION </TH> 
                                     <TH> REFERENCE </TH> 
@@ -165,8 +165,8 @@ if(isset($_POST['action']))
                                         <br>
                                         <br>
                                         <br>
-                                        Coefficient de correction: <?php echo $Coef?> % de total matière.<br>
-                                        Coût machine:<input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/>
+                                        Coefficient de correction : <?php echo $Coef?> % du total matières.<br>
+                                        Coût machine : <input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/>
                                         <select id="minute" name="minute" OnClick="javascript:calcul()" class="input-mini" id="minute">
     <?php  for($i=00;$i<60;$i++){?>
     <option value="<?php echo $i ?>">
@@ -181,12 +181,12 @@ if(isset($_POST['action']))
                                $ans=date("Y");
                                $date=$ans."-".$mois."-".$jour;
                                ?>
-                               <label for='DateFabriquation'><em>Date de fabriquation:</em></label>
+                               <label for='DateFabriquation'><em>Date de fabrication : </em></label>
                                <input type="date" name="DateFabriquation" value="<?php echo $date;?>" id="DateFabriquation"/>
-                               <label for='ObjetRealise'><em>Nombre d'objets réalisés:</em></label>
+                               <label for='ObjetRealise'><em>Nombre d'objets réalisés : </em></label>
                                <input type="text" name="ObjetRealise" value="" class='input-small' id="ObjetRéalisé"/>
                                <br>  <input type="checkbox" name="Cloture" value="Cloture">
-                                 <label for='Cloture'><em>Cloturer le bulletin de fabriquation <?php echo $oc['Ref'];?></em></label>
+                                 <label for='Cloture'><em>Clôturer le bulletin de fabrication <?php echo $oc['Ref'];?></em></label>
                                     </div>
                                     <div class="span5">
                                        <table class="table table-striped">  
@@ -207,7 +207,7 @@ if(isset($_POST['action']))
                                            </tr>
                                             <tr>
                                                <td>
-                                                   Total Matière
+                                                   Total Matières
                                                </td>
                                                 <td ID="totalmatiere">
                                                     <?php  foreach( $Sum as $unesomme)
@@ -225,7 +225,7 @@ if(isset($_POST['action']))
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Total cout eleve  
+                                                 Total coût élève  
                                                </th>
                                                 <td id="totalcouteleve">
                                                   
@@ -233,7 +233,7 @@ if(isset($_POST['action']))
                                            </tr>
                                             <tr>
                                                <td>
-                                                   Cout machine
+                                                   Coût machine
                                                </td >
                                                 <td id=coutmachine>
                                                  
@@ -241,7 +241,7 @@ if(isset($_POST['action']))
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Total cout public  
+                                                 Total coût public  
                                                </th>
                                                 <td id="totalcoutpublic">
                                                    
@@ -257,7 +257,7 @@ if(isset($_POST['action']))
                                            </tr>
                                             <tr>
                                                <th>
-                                                 Prix unitaire eleve  
+                                                 Prix unitaire élève  
                                                </th>
                                                 <td id="prixunitaireeleve">
                                                    

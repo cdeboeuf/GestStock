@@ -30,7 +30,7 @@ if(!isset($_SESSION['idVisiteur']))
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -55,7 +55,7 @@ if(!isset($_SESSION['idVisiteur']))
                 <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./newProduit.php">Mode</a></li>
                     <li><a href="./newProduit2.php">Esthétique</a></li>
-                    <li class="active"><a href="./newProduit4.php">Nouvelle ajout</a></li>
+                    <li class="active"><a href="./newProduit4.php">Nouvel ajout</a></li>
                 </ul>
                 
             <div class="span12">

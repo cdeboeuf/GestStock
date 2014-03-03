@@ -4,6 +4,9 @@
 include('produit.class.php');
 include ('Valorisation.class.php');
 include('bonjour.php');
+include('fournisseurs.class.php');
+$fournisseur=new Fournisseurs();
+$Lesfour=$fournisseur->affiche_Fournisseurs();
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
@@ -19,17 +22,34 @@ if(isset($_POST['action']))
                     $QuantiteTotal1=$QuantiteTotal[$i];
                     $nb=$id[$i];            
                     $produit->MajValorisationStock($QuantiteTotal1, $nb);
-                }
-                
+                }     
       }     
 }
 }
 include ('pagination.php');
       $pagination=new Pagination();
- $resultat = $produit->GetValorisationStockMODE();
+  
+      
+  if(isset($_POST['four'])){
+ $resultat = $produit->GetValorisationStockMODEFournisseur($_POST['four']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
+  }  else {
+    $resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+    
+}
+
+if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
 
 if(isset($_POST['annee']))
     {
@@ -41,7 +61,7 @@ if(isset($_POST['annee']))
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
                <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -71,9 +91,23 @@ if(isset($_POST['annee']))
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">                                         
-                                <form  method="POST" action="Inventaire1.php">
+                        <div class="hero-unit" style="background-color: #EFFBEF">
+                            <div class="row-fluid">   
+                                <form method="POST" action="Inventaire1.php">
+                                     <SELECT name="four" id="four">
+                                         <option value=''>Tous</option>
+                  <?php
+                 foreach ($Lesfour as $unfour)               
+                     {
+                     ?>
+                        <option value='<?php echo $unfour['Id']?>' <?php if(isset($_POST['four'])&& ($unfour['Id']==$_POST['four'])){ echo "selected";} ?>><?php echo $unfour['Nom'];?></option>
+                     <?php 
+                   
+                     }
+                  ?>          
+                 </SELECT>
+                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Valider</button>
+                    
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -84,15 +118,27 @@ if(isset($_POST['annee']))
 
                                         <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee"><i class="icon-hand-down icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee"><i class="icon-hand-up icon-white"></i></button>
+                                            </div>
                                         </th>
 
-                                        <th>
-                                            Référence Fournisseur
+                                        <th>Référence Fournisseur
+                                            <div class="btn-group ">
+                                            
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour"><i class="icon-hand-down icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour"><i class="icon-hand-up icon-white"></i></button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
-                                        </th>
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour"><i class="icon-hand-down icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour"><i class="icon-hand-up icon-white"></i></button>
+                                            </div>
+                                            </th>
 
                                         <th>
                                             Désignation
@@ -161,17 +207,12 @@ if(isset($_POST['annee']))
                                                     ?>  
                                                         <div class="controls">
                                                             <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
-                                                        </div>
-                                  
-                                                    <?php
-                                                    
+                                                        </div>                                 
+                                                    <?php                                                   
                                                     echo "</td>";
-                                                echo "</tr>";
-                                
+                                                echo "</tr>";                               
                                                 $nb=$nb+1;
                                         }
-
-
                                     ?>
                                 </tbody>
                                     <br>
@@ -183,10 +224,10 @@ if(isset($_POST['annee']))
                                   <?php 
                                 $annee=date('Y');
                                $annee1=(int)$annee+1;?>
-                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir cloturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Cloturer l'année <?php echo $annee ?></button>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $annee ?></button>
                             </div>
                                 </form>
-                                 <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
+                                 <?php  $pagination->affiche('inventaire1.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                             
                         </div>

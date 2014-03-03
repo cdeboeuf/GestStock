@@ -121,8 +121,11 @@ if(isset($_POST['action']))
         }
         if(!isset($_POST['CodeTVA']))
         {$Id_TVA=0;}else{
+       
         $postData = explode( '|', $_POST['CodeTVA'] );
-        $Id_TVA = $postData[0];}
+         $Id_TVA = $postData[0];
+        
+        }
         $rep = $Produit->AddProduit($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);       
     }
     if ($_POST['envoyer1']=='calculer')
@@ -136,7 +139,7 @@ if(isset($_POST['action']))
 
 <html>
     <head>
-        <title></title>
+        <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
