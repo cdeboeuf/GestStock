@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 
 <?php
-include('bonjour.php');
+
 include('produit.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-include('pagination.php');
-$pagination=new Pagination();
- $resultat = $produit->GetValorisationStockMODE();
-                                        $Resultat=$resultat[0];
-                                        $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
+
 
 ?>
 
 
 <html>
     <head>
-        <?php echo $onglet=onglet();?>
+        <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -30,28 +25,25 @@ $pagination=new Pagination();
     </head>
     <body>
         <div class="container-fluid">
-               
             <div class="page-header">
-                <table>
-               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Ajouter un produit</small></h1>
-                <?php bonjour() ?></td></th></table>
-            </div> 
+                <h1><small>Produit</small></h1>
+            </div>
             <?php include('Menu.php');
             $menu=new Menu();
-            $page=pathinfo($_SERVER['PHP_SELF']);
-            $menu->Verifdroit($page['basename']);?>
+            $menu->Verifdroit('stockeProduit.php');?>
+
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
-                    <li><a href="./newProduit4.php">Nouvel ajout</a></li>
+                    <li><a href="./stockeProduit.php">Mode</a></li>
+                    <li class="active"><a href="./stockeProduitEST.php">Esthétique</a></li>
+                        <li><a href="./stockeProduitOC.php">Objet Confectionné</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 
-                                <form  method="GET" action="newProduit1.php">
+                                <form  method="GET" action="stockeProduit1.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                 <thead>  
@@ -87,7 +79,7 @@ $pagination=new Pagination();
                                 </thead>
                                 <tbody>
                                     <?php
-                                        
+                                        $Resultat = $produit->GetValorisationStockMODE();
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
@@ -96,7 +88,7 @@ $pagination=new Pagination();
                                                         <?php $id = "id$nb"; $nb++;?>
                                                         <?php $idlien = $value["RefFournisseur"]; ?>
                                                         <?php $idid = $value['Id']; ?>
-                                                        <?php $lien = "newProduit1.php?num=$idlien&id=$idid"; ?> 
+                                                        <?php $lien = "stockeProduit1.php?num=$idlien&id=$idid"; ?> 
                                                         <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";
@@ -139,9 +131,7 @@ $pagination=new Pagination();
                                     <br>
                                 </table>
                                 <br>
-                                
                                 </form>
-                              <?php  $pagination->affiche('newProduit.php','idPage',$nbPages,$pageCourante,2);?>
                             </div>
                         </div>
                     </div>
