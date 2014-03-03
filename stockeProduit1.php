@@ -6,23 +6,6 @@ $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
-if(isset($_POST['action']))
-{
-    if (isset($_POST['action'])=='envoyer')
-    {    
-        extract($_POST);
-        if(!isset($_POST['obselete']))
-        {
-            $_POST['obselete']=1;
-        }
-        else
-        {
-            $_POST['obselete']=0;   
-         }
-        $rep = $Produit->MajProduit( $_POST['StockAlerte'], $_POST['obselete'], $_POST['RefFournisseurs']);
-    }
-}
-
 if(isset($_GET)&&  !empty($_GET))
 { 
     extract($_GET);
@@ -67,67 +50,28 @@ if(isset($_POST['RefFournisseurs']))
     foreach ($Resultat as $value)
     {
         $value['Nom'];
+        $value['PUTTCPondere'];
         $value['Coloris'];
         $value['RefLycee'];
         $value['Designation'];
         $value['Details'];
         $value['IdFour'];
         $value['uniteId'];
-        $value['StockAlerte'];
-        $value['Obselete'];
         $value['dQuantite'];
         $value['dDateChangement'];
         $value['dGratuit'];
         $value['dPUHT'];
         $value['dPUTTC'];
-        $value['dIdTVA'];
     }
 }
 
-if(isset($_POST['action']))
+if(isset($_POST['valider']))
 {
-    
-    if (isset($_POST['action'])=='envoyer')
-    {  
-        extract($_POST);
-        if(isset($_POST['obselete']))
-        {
-            $_POST['obselete']=1;}
-        else
-        {$_POST['obselete']=0;}
-      
-        $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
-    }
-}
-
-
- if(isset($_POST['envoyer1']))
-{
-    if ($_POST['envoyer1']=='valider')
+    if (isset($_POST['valider'])=='envoyer1')
     {    
         extract($_POST);
-        if(isset($_POST['chkb_1']))
-        {
-            $_POST['chkb_1']=1;
-        }
-        else
-        {
-            $_POST['chkb_1']=0;
-        }
-        if(!isset($_POST['PUHT']) && !isset($_POST['PUTTC']))
-        {
-            $_POST['PUHT'] = 0;
-            $_POST['PUTTC'] = 0;
-        }
-        if(!isset($_POST['CodeTVA']))
-        {$Id_TVA=0;}else{
-        $postData = explode( '|', $_POST['CodeTVA'] );
-        $Id_TVA = $postData[0];}
-        $rep = $Produit->AddProduit($_POST['RefLycee'], $_POST['DateEntree'], $Id_TVA, $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);       
-    }
-    if ($_POST['envoyer1']=='calculer')
-    { 
-        $Pondere=$Produit->calculPondereEssai($_POST['RefLycee'],$_POST['PUTTC'],$_POST['Quantite']);
+                
+        $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Id_TVA'], $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_SESSION['idVisiteur']);
     }
 }
 
@@ -211,14 +155,15 @@ if(isset($_POST['action']))
                                                 <th>Prix TTC</th>
                                                 
                                             </tr>
+                                            <tr>
                                                 <td>
-                                                    <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];}?>'>
+                                                    <?php if(!empty($_GET)){echo $value['QuantiteTotal'];} else {echo $_POST['QuantiteTotal'];}?>
                                                 </td>
                                                 
                                                 <td>
-                                                    <input type="text" name="StockAlerte" class="input-small" id="StockAlerte" value='<?php if(!empty($_GET)){echo $value['StockAlerte'];} else {echo $_POST['StockAlerte'];}?>'>
+                                                    <?php if(!empty($_GET)){echo $value['PUTTCPondere'];} else {echo $_POST['PUTTCPondere'];}?>
                                                 </td>  
-                                            
+                                            </tr>
                                             
                                              <?php if(isset($rep))
                                                    {
@@ -243,6 +188,27 @@ if(isset($_POST['action']))
                                     <table style="border:none;">
                                         <thead>
                                             <tr>
+                                                <td>
+                                                    <!-- Multiple Radios (inline) -->
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                            <label class="radio inline" for="2">
+                                                            <input name="Choix" id="Choix" value="2" type="radio">
+                                                            Pratique
+                                                            </label>
+                                                            <label class="radio inline" for="3">
+                                                            <input name="Choix" id="Choix" value="3" type="radio">
+                                                            Projet
+                                                            </label>
+                                                            <label class="radio inline" for="1">
+                                                            <input name="Choix" id="Choix" value="1" type="radio">
+                                                            Salon ou OC
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>        
                                                     <input type="hidden" name="Designation" id="Designation" value="<?php if(!empty($_GET)){echo $value['Designation'];} else {echo $_POST['Designation'];} ?>">
                                                     <input type="hidden" name="Coloris" id="Coloris" value="<?php if(!empty($_GET)){echo $value['Coloris'];} else {echo $_POST['Coloris'];} ?>">
@@ -253,6 +219,7 @@ if(isset($_POST['action']))
                                                     <input type="hidden" name="obselete" id="obselete" value="<?php if(!empty($_GET)){echo $value['Obselete'];} else {echo $_POST['obselete'];} ?>">
                                                     <input type="hidden" name="RefLycee" id="RefLycee" value='<?php if(!empty($_GET)){echo $value['RefLycee'];} else {echo $_POST['RefLycee'];}?>'>
                                                     <input type="hidden" name="id" id="id" value='<?php if(!empty($_GET)){ echo $Id;} else {echo $Id;}?>'>
+                                                    <input type="hidden" name="PUTTCPondere" id="PUTTCPondere" value='<?php if(!empty($_GET)){echo $value['PUTTCPondere'];} else {echo $_POST['PUTTCPondere'];}?>'>
 
 
                                                     <label for="DateEntree"><b>Date de sortie:</b></label>   
@@ -267,7 +234,7 @@ if(isset($_POST['action']))
 
                                                 <td>
                                                     <label for="Quantite"><b>Quantité :</b></label>
-                                                    <input type="text" name="Quantite" id="Quantite" value="<?php if(isset($_POST['Quantite'])){echo $_POST['Quantite'];}?>" required="">
+                                                    <input type="text" name="Quantite" id="Quantite" value="" required="">
                                             
                                             </tr>
 
@@ -279,6 +246,8 @@ if(isset($_POST['action']))
                                                     <button type="reset" class="btn btn-danger" value="reset" name="reset">Annulation</button>
                                                 </td>
                                             </tr>
+                                            
+                                            
                                         </thead>
                                     </table>
                                 </form>

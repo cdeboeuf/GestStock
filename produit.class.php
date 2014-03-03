@@ -232,7 +232,7 @@ include('connexion.php');
             try 
            {
             $requete = "
-                SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id as IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, unite.Id as uniteId, 
+                SELECT Produit.PUTTCPondere, Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id as IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, unite.Id as uniteId, 
                 detailsligneproduit.DateChangement as dDateChangement, detailsligneproduit.Quantite as dQuantite, detailsligneproduit.Gratuit as dGratuit, detailsligneproduit.PUHT as dPUHT, detailsligneproduit.PUTTC as dPUTTC, detailsligneproduit.IdTVA as dIdTVA
                 From Produit Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id 
                 Left join detailsligneproduit on Produit.Id = detailsligneproduit.Id
@@ -305,6 +305,30 @@ include('connexion.php');
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";
               
+                $this->calculPondere($RefLycee,$newId);               
+                
+            header('location:newProduit.php?rep=LeProduitEstAjoute');
+        }
+        
+         public function AddProduit2($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Users)
+        {
+            $Quantite=str_replace ( ',', '.', $Quantite);
+            
+            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
+            $rs1 = Produit::$bdd->query($req1);
+            $result1 = $rs1->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $idp=$unid['id'];
+            }
+            echo   $newId=$idp+1;
+ 
+                $requete1 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, IdTVA, Gratuit, PUHT, PUTTC, Id,Quantite, SortieEntree, IdUsers)
+                VALUES ('$RefLycee', '$DateEntree', '$idTVA', '$Gratuit', '$PUHT', '$PUTTC', '$newId','$Quantite',  'S', '$Users');";
+                $this->retour = Produit::$bdd->prepare($requete1);
+                $this->retour->execute();
+                $rep = "Le produit à été ajouté.";
+                              
                 $this->calculPondere($RefLycee,$newId);               
                 
             header('location:newProduit.php?rep=LeProduitEstAjoute');
