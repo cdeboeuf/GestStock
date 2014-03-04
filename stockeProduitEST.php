@@ -16,10 +16,6 @@ $pagination=new Pagination();
 ?>
 
 
-
-?>
-
-
 <html>
     <head>
         <title></title>

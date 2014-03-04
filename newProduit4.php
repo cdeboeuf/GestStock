@@ -63,7 +63,7 @@ if(!isset($_SESSION['idVisiteur']))
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                <legend>Produit Mode</legend> 
+                                <legend>Ajouter un Produit</legend> 
                                 <form method="POST" action="newProduit4.php">
                                     <table style="border:none;">
                                         <thead>

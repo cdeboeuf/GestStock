@@ -3,6 +3,7 @@
 <?php
 
 include('produit.class.php');
+include('bonjour.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
