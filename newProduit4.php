@@ -86,7 +86,7 @@ if(!isset($_SESSION['idVisiteur']))
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
                                                     <input type="text" name="RefFournisseurs" id="RefFournisseurs" value="" OnKeyUp="javascript:GenerationRefLycee()">
-                                                    <input type="hidden" name="nb" id="nb" value="<?php $tab1 = $Produit->MaxId();foreach ($tab1 as $valeur1){$nbid = $valeur1['Max(Id)'];$nbid++;echo $nbid++;}?> ">
+                                                    <input type="hidden" name="nb" id="nb" required ="" value="<?php $tab1 = $Produit->MaxId();foreach ($tab1 as $valeur1){$nbid = $valeur1['Max(Id)'];$nbid++;echo $nbid++;}?> ">
 
 
                                                 </td>
@@ -99,7 +99,7 @@ if(!isset($_SESSION['idVisiteur']))
                                             <tr>
                                                 <td>
                                                     <label for="Désignation"><b>Désignation :</b></label>
-                                                    <input type="text" name="Designation" class="input-xxlarge" id="Designation" value="">
+                                                    <input type="text" name="Designation" class="input-xxlarge" required ="" id="Designation" value="">
                                                 </td>
                                                  <td>
                                                     <label for="Section"><b>Section :</b></label>
@@ -119,7 +119,7 @@ if(!isset($_SESSION['idVisiteur']))
                                                 <td>
                                                     <label for="RéfLycee" ><b>Référence Lycée :</b></label>
                                                  
-                                                    <input type="text" name="RefLycee" id="RefLycee" value="" >
+                                                    <input type="text" name="RefLycee" id="RefLycee" value="" required ="">
                                                 </td>   
                                             
                                                 <td>
@@ -191,9 +191,11 @@ if(!isset($_SESSION['idVisiteur']))
             var objControle2 = document.getElementById('RefFournisseurs').value;
             var objControle3 = document.getElementById('Coloris').value;
             
+            if(objControle3 == ''){ var objControle4 = '' }
+            else { var objControle4 = '-' + objControle3 }
 
             
-            document.getElementById('RefLycee').value = objControle1.substr(0,3)  + '-' + objControle2 + '-'+ objControle3;
+            document.getElementById('RefLycee').value = objControle1.substr(0,3)  + '-' + objControle2 + objControle4 ;
             
             }
         </script>

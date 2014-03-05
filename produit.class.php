@@ -485,11 +485,19 @@ include('connexion.php');
         
         public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section, $Id)
         {
+             if($StockAlerte=="")
+             {
+                 $StockAlerte =0;
+             }
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
+            $Designation=mysql_real_escape_string($Designation);
+            $Coloris=mysql_real_escape_string($Coloris);
             
             if (is_numeric($StockAlerte))
             { 
+
                 $requete1 = "INSERT INTO Produit (Id, RefLycee, RefFournisseur, StockAlerte, IdFournisseur,Obselete, Designation, Coloris, idUniteAchat, IdSection) VALUES ('$Id', '$RefLycee', '$RefFournisseur', '$StockAlerte', '$four', '$Obselete', '$Designation', '$Coloris', '$unite', '$Section')";
+
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";

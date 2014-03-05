@@ -216,8 +216,8 @@ if(isset($_POST['RefFournisseurs']))
                                                 <?php if($value['IdSection'] == 2){?>
                                                 <td  style="padding-left: 20px">
                                                     
-                                                    <label for="OC" id="OC2"><b>Objet Confectionné:</b></label>
-                                                    <select name = "OC" class="input-medium" id="OC"> 
+                                                    <label for="OC" id="OC2" style="visibility: hidden; "><b>Objet Confectionné:</b></label>
+                                                    <select name = "OC" class="input-medium" id="OC" style="visibility: hidden; "> 
                                                     <?php
                                                         
                                                         $tab1 = $Produit->ListeOC();
