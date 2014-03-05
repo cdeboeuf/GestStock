@@ -16,17 +16,30 @@ if(isset($_POST['action']))
                 {     
                     $QuantiteTotal1=$QuantiteTotal[$i];
                     $nb=$id[$i];            
-                    $produit->MajValorisationStock($QuantiteTotal1, $nb);
+                    $produit->MajValorisationStockOC($QuantiteTotal1, $nb);
                 }
                 
       }     
  }
-  include('pagination.php');
-$pagination=new Pagination();
- $resultat = $produit->GetValorisationStockOC();
+ include ('pagination.php');
+      $pagination=new Pagination();
+  
+      
+
+    $resultat = $produit->GetValorisationStockOC();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];      
+                                        $pageCourante=$resultat[2];
+    
+
+if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockOCTrie($_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
+     
 ?>
 
 
@@ -61,9 +74,10 @@ $pagination=new Pagination();
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit-tab" style="background-color: #FFECFF">
                             <div class="row-fluid">                                         
                                 <form  method="POST" action="Inventaire3.php">
+                                   
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -74,6 +88,10 @@ $pagination=new Pagination();
 
                                         <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
@@ -119,22 +137,24 @@ $pagination=new Pagination();
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["Quantite"] ?>"
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value["Quantite"],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
                                                              OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                         </div>
                                                     <?php
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["PrixEleveUnitaire"];
+                                                    echo number_format($value["PrixEleveUnitaire"],2,$dec_point = ',' ,$thousands_sep = ' ');
+                                                    
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["PrixUnitairePublic"];
+                                                    echo number_format($value["PrixUnitairePublic"],2,$dec_point = ',' ,$thousands_sep = ' ');
+                                       
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PrixUnitairePublic"] ?>">
                                                    <?php 
                                                     echo "</td>";
                                                     echo "<td>";
                                                     ?>  
-                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['TotalP'],2) ?>">                                                                                 
+                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['TotalP'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>">                                                                                 
                                                     <?php
                                                     
                                                     echo "</td>";
@@ -163,14 +183,32 @@ $pagination=new Pagination();
         </div>
         <!--Js -->
                <script type="text/javascript">
-        function calcul(nb)
+                                         function calcul(nb)
         {
-            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PUTTCPondere'+nb).value);
+            qte=document.getElementById('QuantiteTotal'+nb).value;
+            qte=qte.replace("\,","\.");
+            result = parseFloat(qte*document.getElementById('PUTTCPondere'+nb).value);
             result1 = result*100;          
             result2 = Math.round(result1); 
             result3 = result2/100; 
-            document.getElementById('Total'+nb).value = result3;
+            document.getElementById('Total'+nb).value = lisibilite_nombre(result3.toFixed(2));
         }
+        function lisibilite_nombre(nbr)
+{
+		var nombre = ''+nbr;
+		var retour = '';
+		var count=0;
+		for(var i=nombre.length-1 ; i>=0 ; i--)
+		{
+			if(count!=0 && count % 3 == 0)
+				retour = nombre[i]+' '+retour ;
+			else
+				retour = nombre[i]+retour ;
+			count++;
+		}
+                retour=retour.replace(' \.',',');
+		return retour;
+}
         </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>

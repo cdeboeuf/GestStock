@@ -70,7 +70,7 @@ $LesTva= $tvaP->affiche_Tva();
                      {
                  
                      ?>
-                        <option value='<?php echo $unetva['taux'] ?>'><?php echo $unetva['taux']." (Utilisation:".$unetva['utiliser'].")"?></option>
+                        <option value='<?php echo $unetva['taux'] ?>'><?php echo number_format($unetva['taux'],2,$dec_point = ',' ,$thousands_sep = ' ')." (Utilisation:".$unetva['utiliser'].")"?></option>
                      <?php }
                   ?>          
                  </SELECT>

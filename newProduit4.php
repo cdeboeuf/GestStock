@@ -10,6 +10,10 @@ if(isset($_POST['action']))
     if (isset($_POST['action'])=='envoyer')
     {    
         extract($_POST);
+        if($_POST['StockAlerte']=="")
+        {
+           $_POST['StockAlerte']=0; 
+        }
         if(isset($_POST['obselete']))
         {
             $_POST['obselete']=1;}
@@ -63,7 +67,7 @@ if(!isset($_SESSION['idVisiteur']))
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">
-                                <legend>Produit Mode</legend> 
+                                <legend>Nouveau produit</legend> 
                                 <form method="POST" action="newProduit4.php">
                                     <table style="border:none;">
                                         <thead>

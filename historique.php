@@ -86,17 +86,17 @@ $pagination=new Pagination();
                                              <td> 
                                                  <?php if($value['Gratuit']==0){echo "Non"; }elseif($value['Gratuit']==1){echo "Oui"; }?>
                                              </td>
-                                             <td> 
-                                                 <?php echo $value['PUHT'];?>
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['PUHT'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
+                                             </td>
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['Taux'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
+                                             </td>
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['PUTTC'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
                                              </td>
                                              <td> 
-                                                 <?php echo $value['Taux'];?>
-                                             </td>
-                                             <td> 
-                                                 <?php echo $value['PUTTC'];?>
-                                             </td>
-                                             <td> 
-                                                 <?php echo $value['Quantite'];?>
+                                                 <?php echo number_format($value['Quantite'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
                                              </td>
                                          </tr> 
                                              <?php } ?>

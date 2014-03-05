@@ -4,7 +4,6 @@ include('connexion.php');
 include('objetConfectionne.class.php');
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-//tadda
 $LesOc=new ObjectConfectionne();
 $OcNc=$LesOc->affiche_objetNC();
 $OcC=$LesOc->affiche_objetC();
@@ -47,7 +46,7 @@ $OcC=$LesOc->affiche_objetC();
                      {
                  
                      ?>
-                        <option value='<?php echo $unOcNc['Ref'] ?>'><?php echo $unOcNc['Ref']." ".$unOcNc['Designation']?></option>
+                        <option value='<?php echo $unOcNc['Ido'] ?>'><?php echo $unOcNc['Ref']." ".$unOcNc['Designation']?></option>
                      <?php }
                   ?>          
                  </SELECT>
@@ -56,16 +55,16 @@ $OcC=$LesOc->affiche_objetC();
                      
                            
                            
-                    <form name="OcC" action="voirOcCloturer.php" method="post">
+                    <form name="id" action="voirOcCloturer.php" method="GET">
                          
-                        <label for='OcC'>Objets confectionnés clôturés :</label>
-                        <SELECT name="OcC" id="OcC">
+                        <label for='id'>Objets confectionnés clôturés :</label>
+                        <SELECT name="id" id="id">
                   <?php
                  foreach ($OcC as $unOcC)               
                      {
                  
                      ?>
-                        <option value='<?php echo $unOcC['Ref'] ?>'><?php echo $unOcC['Ref']." ".$unOcC['Designation']?></option>
+                        <option value='<?php echo $unOcC['Ido'] ?>'><?php echo $unOcC['Ref']." ".$unOcC['Designation']?></option>
                      <?php }
                   ?>          
                  </SELECT>

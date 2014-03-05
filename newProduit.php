@@ -8,6 +8,25 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }
 include('pagination.php');
 $pagination=new Pagination();
+  if(isset($_POST['four'])){
+ $resultat = $produit->GetValorisationStockMODEFournisseur($_POST['four']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+  }  else {
+    $resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+    
+}
+if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
  $resultat = $produit->GetValorisationStockMODE();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
@@ -48,7 +67,7 @@ $pagination=new Pagination();
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit-tab" style="background-color: #FFECFF">
                             <div class="row-fluid">
                                 
                                 <form  method="GET" action="newProduit1.php">
@@ -116,11 +135,11 @@ $pagination=new Pagination();
                                                     echo "<td>";
                                                     echo $value["Nom"];
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["QuantiteTotal"];
+                                                    echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];

@@ -14,9 +14,9 @@ $Sum=$LesOc->SommeUnOc($_POST['OcNc']);
 }
 else{
     $ref="OC".$_POST['Id']."/".$_POST['Annee'];
-    $OC=$LesOc->affiche_OC($ref);
-    $ligne=$LesOc->affiche_ligne($ref);
-    $Sum=$LesOc->SommeUnOc($ref);
+    $OC=$LesOc->affiche_OC($_POST['Id']);
+    $ligne=$LesOc->affiche_ligne($_POST['Id']);
+    $Sum=$LesOc->SommeUnOc($_POST['Id']);
 }
  $LesCoef=$Parametre->affiche_CoefCorrection();
                
@@ -47,11 +47,12 @@ if(isset($_POST['action']))
     {
       if(!empty($_POST['Cloture'])) 
       {
-           $ref="OC".$_POST['Id']."/".$_POST['Annee'];
-          
+          echo $ref="OC".$_POST['Id']."/".$_POST['Annee'];
+          $oc=$_POST['Id'];
           $temp=(($_POST['heure']*60)+$_POST['minute'])/60;
           $LesOc->ClotureOc($temp,$_POST['ObjetRealise'],$_POST['DateFabriquation'],$_POST['TTMatiere'],$_POST['NombrePrevu'],$ref  );
-     header("Location:VoirOcCloturer.php?id=$ref"); }
+           header("Location:VoirOcCloturer.php?id=$oc");
+     }
       else{
           $erreur="Vous n'avez pas coché la case clôturer le bulletin.";
           
@@ -104,9 +105,11 @@ if(isset($_POST['action']))
                               BULLETIN DE FABRICATION </strong>
                               </div>
                               <div class='span3 offset1'>
-                              Exercice : <?php echo $oc['Annee'];?>                         
+                              Exercice : <?php echo $oc['Annee'];?>
+                              <input type='hidden' name='Annee' id='Id' value='<?php echo $oc['Annee']?>'>
                               <br>
-                              N°ordre : <?php echo $oc['Id'];?>                         
+                              N°ordre : <?php echo "OC".$oc['Ido'];?>
+                                <input type='hidden' name='Id' id='Id' value='<?php echo $oc['Ido']?>'>
                               </div>
                                    </td>
                                </tr>
@@ -129,9 +132,10 @@ if(isset($_POST['action']))
                                <div class='span4 offset3'>
                                <em>Nombre prévu : </em>
                               <small> <?php echo $oc['NbPrevision'];?></small><br>
+                               <input type='hidden' name='NombrePrevu' id='NombrePrevu' value='<?php echo $oc['NbPrevision']?>'>
 
                                <em>Date de l'ordre de service : </em>
-                              <small> <?php echo $oc['DateEmi'];?></small><br>
+                              <small> <?php echo $oc['DateEmiF'];?></small><br>
                               <br>
                               <br>
                                </div>   
@@ -154,9 +158,9 @@ if(isset($_POST['action']))
                                      ?>    <TR> 
                                     <TD> <?php echo $uneligne['DesiProduit']?> </TD> 
                                     <TD> <?php echo $uneligne['RefProduit'] ?></TD> 
-                                    <TD> <?php echo $uneligne['QuantiteLigne']?> </TD> 
-                                    <TD> <?php echo $uneligne['PuTTCLigne']?></TD> 
-                                     <TD> <?php echo $res=$uneligne['QuantiteLigne']*$uneligne['PuTTCLigne']?></TD> 
+                                    <TD> <?php echo number_format($uneligne['QuantiteLigne'],2,$dec_point = ',' ,$thousands_sep = ' ') ?> </TD> 
+                                    <TD> <?php echo number_format($uneligne['PuTTCLigne'],2,$dec_point = ',' ,$thousands_sep = ' ')?></TD> 
+                                     <TD> <?php echo number_format($res=$uneligne['QuantiteLigne']*$uneligne['PuTTCLigne'],2,$dec_point = ',' ,$thousands_sep = ' ')?></TD> 
                                      </TR> 
                                     <?php  }
                                     ?>
@@ -165,14 +169,14 @@ if(isset($_POST['action']))
                                         <br>
                                         <br>
                                         <br>
-                                        Coefficient de correction : <?php echo $Coef?> % du total matières.<br>
+                                        Coefficient de correction : <?php echo number_format($Coef,2,$dec_point = ',' ,$thousands_sep = ' ')?> % du total matières.<br>
                                         Coût machine : <input type="text" name="heure" id="heure" placeholder="heure" OnKeyUp="javascript:calcul()" class="input-small"/>
                                         <select id="minute" name="minute" OnClick="javascript:calcul()" class="input-mini" id="minute">
     <?php  for($i=00;$i<60;$i++){?>
     <option value="<?php echo $i ?>">
         <?php echo $i ;?>
     </option> <?php } ?> </select>
-<small>(<small id="temps">0 X <?php echo $Cout?>€</small>)</small><br>
+<small>(<small id="temps">0 X <?php echo number_format($Cout,2,$dec_point = ',' ,$thousands_sep = ' ')?>€</small>)</small><br>
 <br>
                                         
   <?php
@@ -211,7 +215,8 @@ if(isset($_POST['action']))
                                                </td>
                                                 <td ID="totalmatiere">
                                                     <?php  foreach( $Sum as $unesomme)
-                                    {echo number_format($unesomme['prix'],2); ?>
+                                    {echo number_format($unesomme['prix'],2,$dec_point = ',' ,$thousands_sep = ' '); 
+                                 ?>
                                               <input type='hidden' name='TTMatiere' id='TTmatiere' value='<?php echo $unesomme['prix']?>'><?php }?>    
                                                </td>
                                            </tr>
@@ -267,7 +272,7 @@ if(isset($_POST['action']))
                                     </div>
                                 </div>
                                 <div class="btn-group ">
-                              <button type="submit" class="btn btn-info" name="action" value="Valider">Enregistrer<br> les modifications</button>
+                             
                               <button type="submit" class="btn btn-success" name="action" value="Cloturer">Terminer <br>l'objet confectionné</button>
                               </div>
                             </form>
@@ -279,14 +284,33 @@ if(isset($_POST['action']))
         </div>
         <!--Js -->
         <script type="text/javascript">
+            
+            function lisibilite_nombre(nbr)
+{
+		var nombre = ''+nbr;
+		var retour = '';
+		var count=0;
+		for(var i=nombre.length-1 ; i>=0 ; i--)
+		{
+			if(count!=0 && count % 3 == 0)
+				retour = nombre[i]+' '+retour ;
+			else
+				retour = nombre[i]+retour ;
+			count++;
+		}
+                retour=retour.replace(' \.',',');
+		return retour;
+}
         function calcul()
 {
 totalmatiere=<?php echo $unesomme['prix'] ?>;
 coef=<?php echo $Coef?>;
 cout=<?php echo $Cout?>;
 prevision=<?php echo $oc['NbPrevision']?>;
-document.getElementById('totalfrais').innerHTML=Math.round((parseFloat(totalmatiere)*(parseFloat(coef)/100))*100)/100;
-document.getElementById('totalcouteleve').innerHTML=Math.round((parseFloat(document.getElementById('totalfrais').innerHTML)+parseFloat(totalmatiere))*100)/100;
+        totalfrais=Math.round((parseFloat(totalmatiere)*(parseFloat(coef)/100))*100)/100;
+        document.getElementById('totalfrais').innerHTML=lisibilite_nombre(totalfrais.toFixed(2));
+        totalcouteleve=Math.round((parseFloat(totalmatiere))*100)/100;
+        document.getElementById('totalcouteleve').innerHTML=lisibilite_nombre(totalcouteleve.toFixed(2));
 if(document.getElementById('heure').value==="")
     {
         heure=0;
@@ -305,10 +329,14 @@ if(document.getElementById('minute').value ==="")
         }
 temps=Math.round((((parseFloat(heure)*60)+parseFloat(minute))/60)*100)/100;
 document.getElementById('temps').innerHTML=temps+" X <?php echo $Cout?>€";
-document.getElementById('coutmachine').innerHTML=Math.round((parseFloat(temps)*parseFloat(cout))*100)/100;
-document.getElementById('totalcoutpublic').innerHTML=Math.round((parseFloat(document.getElementById('totalcouteleve').innerHTML)+parseFloat(document.getElementById('coutmachine').innerHTML))*100)/100;
-document.getElementById('prixunitairepublic').innerHTML=Math.round((parseFloat(document.getElementById('totalcoutpublic').innerHTML)/parseFloat(prevision))*100)/100;
-document.getElementById('prixunitaireeleve').innerHTML=Math.round((parseFloat(document.getElementById('totalcouteleve').innerHTML)/parseFloat(prevision))*100)/100;
+ coutmachine= Math.round((parseFloat(temps)*parseFloat(cout))*100)/100;
+ document.getElementById('coutmachine').innerHTML=lisibilite_nombre(coutmachine.toFixed(2));
+totalcoutpublic=Math.round((parseFloat(totalcouteleve)+parseFloat(coutmachine))*100)/100;
+document.getElementById('totalcoutpublic').innerHTML=lisibilite_nombre(totalcoutpublic.toFixed(2));
+prixunitairepublic=Math.round((parseFloat(totalcoutpublic)/parseFloat(prevision))*100)/100;
+document.getElementById('prixunitairepublic').innerHTML=lisibilite_nombre(prixunitairepublic.toFixed(2));
+prixunitaireeleve=Math.round((parseFloat(totalcouteleve)/parseFloat(prevision))*100)/100;
+document.getElementById('prixunitaireeleve').innerHTML=lisibilite_nombre(prixunitaireeleve.toFixed(2));
 }
         </script>
         <script src="http://code.jquery.com/jquery.js"></script>

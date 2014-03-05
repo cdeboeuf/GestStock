@@ -19,7 +19,8 @@ if(isset($_POST['action']))
         {
             $_POST['obselete']=0;   
          }
-        $rep = $Produit->MajProduit( $_POST['StockAlerte'], $_POST['obselete'], $_POST['RefFournisseurs']);
+     
+        $rep = $Produit->MajProduit($_POST['RefFournisseurs'], $_POST['StockAlerte'], $_POST['obselete']);
     }
 }
 
@@ -84,21 +85,6 @@ if(isset($_POST['RefFournisseurs']))
     }
 }
 
-if(isset($_POST['action']))
-{
-    
-    if (isset($_POST['action'])=='envoyer')
-    {  
-        extract($_POST);
-        if(isset($_POST['obselete']))
-        {
-            $_POST['obselete']=1;}
-        else
-        {$_POST['obselete']=0;}
-      
-        $rep = $Produit->MajProduit($_POST['RefLycee'],  $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'],$_POST['RefFournisseurs']);
-    }
-}
 
 
  if(isset($_POST['envoyer1']))
@@ -400,6 +386,7 @@ if(isset($_POST['action']))
             {
                
                 ttc=document.getElementById('PUTTC').value;
+                ttc=ttc.replace('\,','.');
                 TVA=document.getElementById('CodeTVA').value;             
                 Taux=TVA.split('|');
                 PUHT=parseFloat(ttc)/(1+parseFloat(Taux[1])/100);  
@@ -408,6 +395,7 @@ if(isset($_POST['action']))
             function calculTTC()
             {
                 ht=document.getElementById('PUHT').value;
+                ht=ht.replace('\,','.');
                 TVA=document.getElementById('CodeTVA').value;             
                 Taux=TVA.split('|');
                 PUTTC=parseFloat(ht)*(1+parseFloat(Taux[1])/100);
