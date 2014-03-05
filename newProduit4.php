@@ -10,6 +10,10 @@ if(isset($_POST['action']))
     if (isset($_POST['action'])=='envoyer')
     {    
         extract($_POST);
+        if($_POST['StockAlerte']=="")
+        {
+           $_POST['StockAlerte']=0; 
+        }
         if(isset($_POST['obselete']))
         {
             $_POST['obselete']=1;}

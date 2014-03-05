@@ -91,7 +91,7 @@ if(isset($_POST['annee']))
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #EFFBEF">
+                        <div class="hero-unit-tab" style="background-color: #EFFBEF">
                             <div class="row-fluid">   
                                 <form method="POST" action="Inventaire1.php">
                                      <SELECT name="four" id="four">
@@ -106,7 +106,7 @@ if(isset($_POST['annee']))
                      }
                   ?>          
                  </SELECT>
-                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Valider</button>
+                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button>
                     
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
@@ -119,24 +119,24 @@ if(isset($_POST['annee']))
                                         <th>
                                             Référence Lycée
                                             <div class="btn-group ">
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee"><i class="icon-hand-down icon-white"></i></button>
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee"><i class="icon-hand-up icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
                                             </div>
                                         </th>
 
                                         <th>Référence Fournisseur
                                             <div class="btn-group ">
                                             
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour"><i class="icon-hand-down icon-white"></i></button>
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour"><i class="icon-hand-up icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour">Z-A</button>
                                             </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
                                             <div class="btn-group ">
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour"><i class="icon-hand-down icon-white"></i></button>
-                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour"><i class="icon-hand-up icon-white"></i></button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour">Z-A</button>
                                             </div>
                                             </th>
 
@@ -184,13 +184,13 @@ if(isset($_POST['annee']))
                                                     echo "<td>";
                                                     echo $value["Nom"];
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
                                                     ?>
                                                             <div class="controls">
-                                                                <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($value["RefLycee"] == $produit->QuantiteNonModifiable()) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                                <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($value["RefLycee"] == $produit->QuantiteNonModifiable()) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
                                                                 OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                             </div>
                                                         <?php
@@ -198,15 +198,15 @@ if(isset($_POST['annee']))
                                                     echo "<td>";
                                                     echo $value["Coloris"];
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo $value["PUTTCPondere"];
+                                                    echo "<td nowrap>";
+                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
+                                                            <input type="text" name="Total" class="input-mini" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>">
                                                         </div>                                 
                                                     <?php                                                   
                                                     echo "</td>";
@@ -240,12 +240,30 @@ if(isset($_POST['annee']))
                <script type="text/javascript">
         function calcul(nb)
         {
-            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PUTTCPondere'+nb).value);
+            qte=document.getElementById('QuantiteTotal'+nb).value;
+            qte=qte.replace("\,","\.");
+            result = parseFloat(qte*document.getElementById('PUTTCPondere'+nb).value);
             result1 = result*100;          
             result2 = Math.round(result1); 
             result3 = result2/100; 
-            document.getElementById('Total'+nb).value = result3;
+            document.getElementById('Total'+nb).value = lisibilite_nombre(result3.toFixed(2));
         }
+        function lisibilite_nombre(nbr)
+{
+		var nombre = ''+nbr;
+		var retour = '';
+		var count=0;
+		for(var i=nombre.length-1 ; i>=0 ; i--)
+		{
+			if(count!=0 && count % 3 == 0)
+				retour = nombre[i]+' '+retour ;
+			else
+				retour = nombre[i]+retour ;
+			count++;
+		}
+                retour=retour.replace(' \.',',');
+		return retour;
+}
         </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>

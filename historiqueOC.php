@@ -50,14 +50,9 @@ $pagination=new Pagination();
                                         <tr>
                                         <th>N°</th>
                                         <th>Date</th>
-                                        <th>Action</th>
-                                        <th>Utilisation</th>
-                                        <th>Utilisateur</th>
-                                        <th>Gratuit</th>
-                                        <th>PUHT</th>
-                                        <th>TVA</th>
-                                        <th>PUTTC</th>
+                                        <th>PU</th>
                                         <th>Quantité</th>
+                                        <th>Total</th>
                                         </tr> </thead>
                                     <tbody>
                                                <?php  foreach ($Resultat as $value)
@@ -65,39 +60,22 @@ $pagination=new Pagination();
 
                                          ?> <tr> 
                                              <td>
-                                             <?php echo$value['IdP']; ?>
+                                             <?php echo$value['Id']; ?>
                                              </td>
                                              <td> 
-                                                 <?php echo $value['DateChangement'];?>
+                                                 <?php echo $value['Date'];?>
                                              </td>
-                                             <td> 
-                                                 <?php if($value['SortieEntree']=="E")
-                                                     {echo "Entrée"; }
-                                                     elseif ($value['SortieEntree']=="S")
-                                                         {echo "Sortie"; } else{ echo" ";
-                                                         
-                                                     };?></td>
-                                             <td> 
-                                                 <?php echo $value['DetailsU'];if($value['Utilisation']==4) {echo "<br><small>". $value['OC']."</small>"; };?>
+                                         
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['PrixU'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
                                              </td>
-                                             <td> 
-                                                 <?php echo $value['Login'];?>
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['Quantite'],2,$dec_point = ',' ,$thousands_sep = ' ');?>
                                              </td>
-                                             <td> 
-                                                 <?php if($value['Gratuit']==0){echo "Non"; }elseif($value['Gratuit']==1){echo "Oui"; }?>
+                                             <td nowrap> 
+                                                 <?php echo number_format($value['PrixU']*$value['Quantite'],2,$dec_point = ',' ,$thousands_sep = ' ')?>
                                              </td>
-                                             <td> 
-                                                 <?php echo $value['PUHT'];?>
-                                             </td>
-                                             <td> 
-                                                 <?php echo $value['Taux'];?>
-                                             </td>
-                                             <td> 
-                                                 <?php echo $value['PUTTC'];?>
-                                             </td>
-                                             <td> 
-                                                 <?php echo $value['Quantite'];?>
-                                             </td>
+                                          
                                          </tr> 
                                              <?php } ?>
                                     </tbody>

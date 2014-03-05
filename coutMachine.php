@@ -52,7 +52,7 @@ if(isset($_POST['cout']))
                     <?php $LesCout=$Parametre->affiche_CoutMachine();
                     foreach ($LesCout as $unCout)
                     {
-                    echo $unCout['Details'];
+                    echo number_format($unCout['Details'],2,$dec_point = ',' ,$thousands_sep = ' ')." €";
                     }                  ?>
                 </div>
                     <form  name="ModifCout" action="coutMachine.php" method="post">

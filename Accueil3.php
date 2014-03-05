@@ -8,6 +8,13 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }  
 include('pagination.php');
 $pagination=new Pagination();
+if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
  $resultat = $produit->GetValorisationStockOC();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
@@ -44,7 +51,7 @@ $pagination=new Pagination();
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit-tab" style="background-color: #FFECFF">
                         <div class="row-fluid"> 
                             <form  method="GET" action="historique.php">
                         <table class="table table-bordered table-striped table-condensed">
@@ -89,7 +96,7 @@ $pagination=new Pagination();
                                                 <tr>
                                                     <td><?php
                                                    $id = "id$nb"; $nb++;?>
-                                                        <?php $idlien = $value["Id"]; ?>
+                                                        <?php $idlien = $value["Ref"]; ?>
                                                        
                                                         <?php $lien = "historiqueOC.php?num=$idlien"; ?> 
                                                         <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
@@ -100,22 +107,22 @@ $pagination=new Pagination();
                                                     echo "<td>";
                                                     echo $value["Ref"];                       
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                  echo $value["Quantite"];
+                                                    echo number_format($value["Quantite"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                 
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo $value["PrixEleveUnitaire"];
+                                                    echo "<td nowrap>";
+                                                    echo number_format($value["PrixEleveUnitaire"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo $value["PrixUnitairePublic"];
+                                                    echo "<td nowrap>";
+                                                    echo number_format($value["PrixUnitairePublic"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                 
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                   echo number_format($value['TotalP'],2);                                                                                                                               
+                                                    echo "<td nowrap>";
+                                                   echo number_format($value['TotalP'],2,$dec_point = ',' ,$thousands_sep = ' ');                                                                                                                               
                                                     echo "</td>";
                                                 echo "</tr>";
                                 

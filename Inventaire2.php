@@ -2,7 +2,10 @@
 
 <?php include('bonjour.php');  
 include('produit.class.php');
+include('fournisseurs.class.php');
+$fournisseur=new Fournisseurs();
 $produit = new produit();
+$Lesfour=$fournisseur->affiche_Fournisseurs();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 if(isset($_POST['action']))
@@ -20,12 +23,30 @@ if(isset($_POST['action']))
                 
       }     
  }
-                include('pagination.php');
-$pagination=new Pagination();
- $resultat = $produit->GetValorisationStockEST();
+ 
+ include ('pagination.php');
+      $pagination=new Pagination();
+ 
+  if(isset($_POST['four'])){
+ $resultat = $produit->GetValorisationStockESTFournisseur($_POST['four']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
+  }  else {
+    $resultat = $produit->GetValorisationStockEST();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+    
+}
+
+if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockESTFournisseurTrie($_POST['four'],$_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
 ?>
 
 
@@ -63,6 +84,19 @@ $pagination=new Pagination();
                         <div class="hero-unit" style="background-color: #FFECFF">
                             <div class="row-fluid">                                         
                                 <form  method="POST" action="Inventaire2.php">
+                                     <SELECT name="four" id="four">
+                                         <option value=''>Tous</option>
+                  <?php
+                 foreach ($Lesfour as $unfour)               
+                     {
+                     ?>
+                        <option value='<?php echo $unfour['Id']?>' <?php if(isset($_POST['four'])&& ($unfour['Id']==$_POST['four'])){ echo "selected";} ?>><?php echo $unfour['Nom'];?></option>
+                     <?php 
+                   
+                     }
+                  ?>          
+                 </SELECT>
+                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button>
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -73,14 +107,27 @@ $pagination=new Pagination();
 
                                         <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Référence Fournisseur
+                                             <div class="btn-group ">
+                                            
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
+                                             <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
@@ -126,13 +173,13 @@ $pagination=new Pagination();
                                                     echo "<td>";
                                                     echo $value["Nom"];
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo $value["QuantiteTotal"] ?>"
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); ?>"
                                                              OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                         </div>
                                                     <?php
@@ -141,14 +188,14 @@ $pagination=new Pagination();
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo $value["PUTTCPondere"];
+                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
                                                     echo "<td >";
                                                     ?>  
                                                        
-                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value['Total'],2) ?>">
+                                                            <input type="text" name="Total" class="input-small" disabled="disabled" id="Total<?php echo $nb ?>"  value="<?php echo number_format($value["Total"],2,$dec_point = ',' ,$thousands_sep = ' '); ?>">
                                           
                                                     <?php
                                                     
@@ -177,14 +224,32 @@ $pagination=new Pagination();
         </div>
         <!--Js -->
                <script type="text/javascript">
-        function calcul(nb)
+                function calcul(nb)
         {
-            result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PUTTCPondere'+nb).value);
+            qte=document.getElementById('QuantiteTotal'+nb).value;
+            qte=qte.replace("\,","\.");
+            result = parseFloat(qte*document.getElementById('PUTTCPondere'+nb).value);
             result1 = result*100;          
             result2 = Math.round(result1); 
             result3 = result2/100; 
-            document.getElementById('Total'+nb).value = result3;
+            document.getElementById('Total'+nb).value = lisibilite_nombre(result3.toFixed(2));
         }
+        function lisibilite_nombre(nbr)
+{
+		var nombre = ''+nbr;
+		var retour = '';
+		var count=0;
+		for(var i=nombre.length-1 ; i>=0 ; i--)
+		{
+			if(count!=0 && count % 3 == 0)
+				retour = nombre[i]+' '+retour ;
+			else
+				retour = nombre[i]+retour ;
+			count++;
+		}
+                retour=retour.replace(' \.',',');
+		return retour;
+}
         </script> 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>

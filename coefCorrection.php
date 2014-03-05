@@ -52,7 +52,7 @@ if(isset($_POST['coef']))
                     <?php $LesCout=$Parametre->affiche_CoefCorrection();
                     foreach ($LesCout as $unCout)
                     {
-                    echo $unCout['Details']." %";
+                    echo number_format($unCout['Details'],2,$dec_point = ',' ,$thousands_sep = ' ')." %";
                     }                  ?>
                 </div>
                     <form class="span3" name="ModifCout" action="coefCorrection.php" method="post">

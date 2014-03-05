@@ -92,7 +92,7 @@ foreach($OC as $oc)
                               Exercice : <?php echo $oc['Annee'];?>
                              
                               <br>
-                              N°ordre : <?php echo $oc['Id'];?>
+                              N°ordre : <?php echo "OC".$oc['Ido'];?>
                               
                               </div>
                                    </td>
@@ -137,9 +137,9 @@ foreach($OC as $oc)
                                      ?>    <TR> 
                                     <TD> <?php echo $uneligne['DesiProduit']?> </TD> 
                                     <TD> <?php echo $uneligne['RefProduit'] ?></TD> 
-                                    <TD> <?php echo $uneligne['QuantiteLigne']?> </TD> 
-                                    <TD> <?php echo $uneligne['PuTTCLigne']?></TD> 
-                                     <TD> <?php echo $res=$uneligne['QuantiteLigne']*$uneligne['PuTTCLigne']?></TD> 
+                                    <TD> <?php echo number_format($uneligne['QuantiteLigne'],2,$dec_point = ',' ,$thousands_sep = ' ')?> </TD> 
+                                    <TD> <?php echo number_format($uneligne['PuTTCLigne'],2,$dec_point = ',' ,$thousands_sep = ' ')?></TD> 
+                                     <TD> <?php echo number_format($res=$uneligne['QuantiteLigne']*$uneligne['PuTTCLigne'],2,$dec_point = ',' ,$thousands_sep = ' ')?></TD> 
                                      </TR> 
                                   <?php  }
                                     ?>
@@ -148,8 +148,8 @@ foreach($OC as $oc)
                                         <br>
                                         <br>
                                         <br>
-                                        Coefficient de correction : <?php echo $oc['CoefCorrection'];?> % du total matières.<br>
-                                        Coût machine : <?php echo $oc['Temps'] ?> X <?php echo $oc['CoutMachinePU'];?>€.
+                                        Coefficient de correction : <?php echo number_format($oc['CoefCorrection'],2,$dec_point = ',' ,$thousands_sep = ' ');?> % du total matières.<br>
+                                        Coût machine : <?php echo $oc['Temps'] ?> X <?php echo number_format($oc['CoutMachinePU'],2,$dec_point = ',' ,$thousands_sep = ' ');?>€.
                                <br>
                                <br>
                                <?php
@@ -186,7 +186,7 @@ foreach($OC as $oc)
                                                    Total Matières
                                                </td>
                                                 <td ID="totalmatiere">   
-                                                  <?php echo $oc['TotalMatiere'] ?>
+                                                  <?php echo number_format( $oc['TotalMatiere'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -194,7 +194,7 @@ foreach($OC as $oc)
                                                    Total Frais
                                                </td>
                                                 <td id="totalfrais">
-                                                 <?php echo $oc['TotalFrais']; ?>
+                                                 <?php echo number_format( $oc['TotalFrais'],2,$dec_point = ',' ,$thousands_sep = ' ')?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -202,7 +202,7 @@ foreach($OC as $oc)
                                                  Total coût élève  
                                                </th>
                                                 <td id="totalcouteleve">
-                                                  <?php echo $oc['TotalCoutEleve']; ?>
+                                                  <?php echo number_format($oc['TotalCoutEleve'],2,$dec_point = ',' ,$thousands_sep = ' ') ; ?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -210,7 +210,7 @@ foreach($OC as $oc)
                                                    Coût machine
                                                </td >
                                                 <td id=coutmachine>
-                                                  <?php echo $oc['CoutMachine']; ?>
+                                                  <?php echo number_format( $oc['CoutMachine'],2,$dec_point = ',' ,$thousands_sep = ' '); ?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -218,7 +218,7 @@ foreach($OC as $oc)
                                                  Total coût public  
                                                </th>
                                                 <td id="totalcoutpublic">
-                                                    <?php echo $oc['TotalCoutPublic']; ?>
+                                                    <?php echo number_format($oc['TotalCoutPublic'],2,$dec_point = ',' ,$thousands_sep = ' '); ?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -227,7 +227,7 @@ foreach($OC as $oc)
                                                </th>
                                                 <td id="prixunitairepublic">
                                                     <?php echo
-                                                  $oc['PrixUnitairePublic']; ?>
+                                                  number_format($oc['PrixUnitairePublic'],2,$dec_point = ',' ,$thousands_sep = ' ')?>
                                                </td>
                                            </tr>
                                             <tr>
@@ -235,8 +235,8 @@ foreach($OC as $oc)
                                                  Prix unitaire élève  
                                                </th>
                                                 <td id="prixunitaireeleve">
-                                                   <?php echo
-  $oc['PrixEleveUnitaire']; ?>
+                                                   <?php 
+                                                   echo number_format($oc['PrixEleveUnitaire'],2,$dec_point = ',' ,$thousands_sep = ' '); ?>
                                                </td>
                                            </tr>
                                        </table> 

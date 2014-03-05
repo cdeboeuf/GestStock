@@ -7,6 +7,13 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }
         include('pagination.php');
  $pagination=new Pagination();
+ if(isset($_POST['trie']))
+{
+     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
  $resultat = $produit->GetValorisationStockMODE();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
@@ -40,9 +47,10 @@ if(!isset($_SESSION['idVisiteur']))
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
-                            <div class="row-fluid">                                                                     
-                               <form  method="GET" action="historique.php"> <table class="table table-bordered table-striped table-condensed">
+                        <div class="hero-unit-tab" style="background-color: #FFECFF" >
+                           <div class="row-fluid "  >                                                                     
+                               <form  method="GET" action="historique.php"> 
+                                   <table class="table table-bordered table-striped table-condensed" >
                                     <caption> Tableau des produits </caption>
                         <thead>  
                                     <tr>
@@ -106,21 +114,21 @@ if(!isset($_SESSION['idVisiteur']))
                                                     echo "<td>";
                                                     echo $value["Nom"];
                                                     echo "</td>";
-                                                    echo "<td>";
+                                                    echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                   echo $value["QuantiteTotal"]; 
+                                                   echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); 
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo $value["PUTTCPondere"];
+                                                    echo "<td nowrap>";
+                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
                                                   
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo number_format($value['Total'],2) ;
+                                                    echo "<td nowrap>";
+                                                    echo number_format($value['Total'],2,$dec_point = ',' ,$thousands_sep = ' ') ;
                                                  
                                                     echo "</td>";
                                                 echo "</tr>";
@@ -147,16 +155,7 @@ if(!isset($_SESSION['idVisiteur']))
             
         </div>
         <!--Js -->
-               <script type="text/javascript">
-        function calcul(nb)
-        {
-        result = parseFloat(document.getElementById('QuantiteTotal'+nb).value*document.getElementById('PUTTCPondere'+nb).value);
-        result1 = result*100;          
-        result2 = Math.round(result1); 
-        result3 = result2/100; 
-        document.getElementById('Total'+nb).value = result3;
-        }
-        </script> 
+       
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
