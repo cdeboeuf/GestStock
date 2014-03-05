@@ -508,6 +508,20 @@ include('connexion.php');
             }	
         }
         
+        public function ListeOC()
+        {
+            try 
+            {
+                $requete = "SELECT * From objetconfectionne;";
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
+            } 
+            catch (Exception $e) 
+            {
+                 echo 'Échec lors de la connexion : ' . $e->getMessage();
+            }	
+        }
+        
         public function ListeSection()
         {
             try 
@@ -543,15 +557,13 @@ include('connexion.php');
            {
                 
             $requete = "
-                SELECT Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id AS IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, unite.Id AS uniteId, detailsligneproduit.DateChangement AS dDateChangement, detailsligneproduit.Quantite AS dQuantite, detailsligneproduit.Gratuit AS dGratuit, detailsligneproduit.PUHT AS dPUHT, detailsligneproduit.PUTTC AS dPUTTC, detailsligneproduit.IdTVA AS dIdTVA, MAX( detailsligneproduit.Id ) AS IdD
-FROM Produit
-INNER JOIN Fournisseurs ON Produit.IdFournisseur = Fournisseurs.Id
-INNER JOIN unite ON Produit.IdUniteAchat = unite.Id
-LEFT JOIN detailsligneproduit ON Produit.RefLycee = detailsligneproduit.RefLycee
-WHERE RefFournisseur =  '$RefFournisseur';"; 
-            
+                SELECT Produit.IdSection, Produit.PUTTCPondere, Produit.Id, Produit.RefLycee, StockAlerte, Obselete, RefFournisseur, Fournisseurs.Id as IdFour, Fournisseurs.Nom, Designation, QuantiteTotal, Coloris, unite.Details, unite.Id as uniteId, 
+                detailsligneproduit.DateChangement as dDateChangement, detailsligneproduit.Quantite as dQuantite, detailsligneproduit.Gratuit as dGratuit, detailsligneproduit.PUHT as dPUHT, detailsligneproduit.PUTTC as dPUTTC, detailsligneproduit.IdTVA as dIdTVA
+                From Produit Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id inner join unite on Produit.IdUniteAchat = unite.Id 
+                Left join detailsligneproduit on Produit.Id = detailsligneproduit.Id
+                Where RefFournisseur = '$RefFournisseur';"; 
             $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll();      
+            return $laLigne = $rs->fetchAll();    
            } 
            catch (Exception $e) 
            {
@@ -701,6 +713,25 @@ WHERE RefFournisseur =  '$RefFournisseur';";
                 $this->calculPondere($RefLycee,$newId);               
                 
             header('location:newProduit.php?rep=LeProduitEstAjoute');
+        }
+        
+         public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC)
+        {
+            $Quantite=str_replace ( ',', '.', $Quantite);
+
+            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
+            $rs1 = Produit::$bdd->query($req1);
+            $result1 = $rs1->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $idp=$unid['id'];
+            }
+           $newId=$idp+1;
+
+            $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation, OC)
+            VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation', '$OC');";
+            $this->retour = Produit::$bdd->prepare($requete2);
+            $this->retour->execute();
         }
         
         public function QuantiteNonModifiable()

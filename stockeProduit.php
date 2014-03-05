@@ -3,13 +3,18 @@
 <?php
 
 include('produit.class.php');
+include('bonjour.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
-
+        include('pagination.php');
+$pagination=new Pagination();
+ $resultat = $produit->GetValorisationStockMODE();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
 ?>
-
 
 <html>
     <head>
@@ -80,7 +85,7 @@ if(!isset($_SESSION['idVisiteur']))
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $Resultat = $produit->GetValorisationStockMODE();
+                                        
                                         $nb=0;
                                         foreach ($Resultat as $value) 
                                         {?>
