@@ -70,8 +70,12 @@ function verification($nom,$mdp)
 
 function MajMdp($Mdp, $Login)
 {
-            $req = "UPDATE users SET Mdp = (md5('$Mdp')) where Login = '$Login';";
+            $req = "SELECT Mdp from users where Login = '$Login';";
             $this->retour = Users::$bdd->prepare($req);
+            $rs = $this->retour->execute(); 
+
+            $req1 = "UPDATE users SET Mdp = (md5('$Mdp')) where Login = '$Login';";
+            $this->retour = Users::$bdd->prepare($req1);
             $this->retour->execute(); 
 }
       

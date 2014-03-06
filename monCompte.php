@@ -12,6 +12,7 @@ if (isset($_POST['action'])=='submit')
         $Login = $_SESSION['nom'];
         $Mdp =$_POST['psd'];
         $confirmMdp =$_POST['confirmpsd'];
+        $oldMdp=$_POST['oldpsd'];
         
         //on compare si le nouveau passe correspond à la confirmation
         if ($Mdp == $confirmMdp)
@@ -59,6 +60,14 @@ if (isset($_POST['action'])=='submit')
 
                                     <!-- Form Name -->
                                     <legend>Votre Mot de passe</legend>
+                                    
+                                    <!-- Text input-->
+                                    <div class="control-group">
+                                    <label class="control-label" for="NewMDP">Ancien mot de passe :</label>
+                                    <div class="controls">
+                                        <input name="oldpsd" placeholder="Ancien mot de passe" class="input-medium" required="" type="password" id="oldpsd">
+                                    </div>
+                                    </div>
 
 
                                     <!-- Text input-->
@@ -81,7 +90,7 @@ if (isset($_POST['action'])=='submit')
                                     if(isset($_POST['action']))
                                     if (isset($_POST['action'])=='submit')
                                     {
-                                        if ($Mdp == $confirmMdp)
+                                        if ($Mdp == $confirmMdp && $oldMdp == $rs )
                                         {
                                         ?>  <div class="alert alert-success">  
                                                 <a class="close" data-dismiss="alert">×</a>  
