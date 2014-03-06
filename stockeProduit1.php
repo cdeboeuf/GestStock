@@ -84,7 +84,7 @@ if(isset($_POST['RefFournisseurs']))
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     </head>
-    <body>
+    <body onload="GereControle('3')">
         
         <div class="container-fluid">
             <div class="page-header">
@@ -218,7 +218,8 @@ if(isset($_POST['RefFournisseurs']))
                                                     
                                                     <label for="OC" id="OC2"><b>Objet Confectionné:</b></label>
                                                     <select name = "OC" class="input-medium" id="OC"> 
-                                                    <?php
+                                                  <option value="">  </option>
+  <?php
                                                         
                                                         $tab1 = $Produit->ListeOC();
                                                         foreach ($tab1 as $valeur1)
@@ -285,6 +286,7 @@ if(isset($_POST['RefFournisseurs']))
         <script language="Javascript">
             function GereControle(obj) 
             { 
+               
             var objControle1 = document.getElementById('OC');
             var objControle2 = document.getElementById('OC2');
             
@@ -297,6 +299,7 @@ if(isset($_POST['RefFournisseurs']))
                         {
                             objControle1.style.visibility = "hidden";
                             objControle2.style.visibility = "hidden";
+                            document.getElementById('OC').value="";
                         }
                     return true;
             }

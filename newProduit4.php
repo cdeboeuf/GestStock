@@ -19,7 +19,9 @@ if(isset($_POST['action']))
             $_POST['obselete']=1;}
         else
         {$_POST['obselete']=0;}
-        $rep = $Produit->AddNewProduit($_POST['RefLycee'], $_POST['RefFournisseurs'], $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'], $_POST['Section'], $_POST['nb']);
+		  $postData = explode( '|', $_POST['Fournisseurs'] );
+         $Fournisseurs = $postData[0];
+        $rep = $Produit->AddNewProduit($_POST['RefLycee'], $_POST['RefFournisseurs'], $_POST['StockAlerte'], $_POST['obselete'], $_POST['Designation'], $_POST['Coloris'], $_POST['UniteAchat'],$_POST['Fournisseurs'], $_POST['Section']);
     }
 }
  
@@ -76,12 +78,13 @@ if(!isset($_SESSION['idVisiteur']))
                                                     <label for="Fournisseurs"><b>Fournisseur :</b></label>                    
                                                     <input type="hidden" name="Nom" value="">
                                                     <select name = "Fournisseurs" class="input-medium" id="Fournisseurs" onchange="GenerationRefLycee(this)"> 
-                                                    <?php	
+                                                    <?php	$nb=0;
                                                         $tab1 = $Produit->ListeFournisseurs();
                                                         foreach ($tab1 as $valeur1)
                                                         {
-                                                           ?><option value="<?php echo $valeur1['Id']; ?>"> <?php echo $valeur1['Nom']; ?></option><?php
-                                                        }
+                                                           ?><option value="<?php echo $valeur1['Id']."|".$nb.""; ?>"> <?php echo $valeur1['Nom']; ?></option><?php
+                                                        $nb=$nb+1;
+                                                           }
                                                     ?>
                                                     </select>
 
@@ -90,8 +93,6 @@ if(!isset($_SESSION['idVisiteur']))
                                                 <td>
                                                     <label for="RefFournisseur"><b>Référence Fournisseur:</b></label>
                                                     <input type="text" name="RefFournisseurs" id="RefFournisseurs" value="" OnKeyUp="javascript:GenerationRefLycee()">
-                                                    <input type="hidden" name="nb" id="nb" value="<?php $tab1 = $Produit->MaxId();foreach ($tab1 as $valeur1){$nbid = $valeur1['Max(Id)'];$nbid++;echo $nbid++;}?> ">
-
 
                                                 </td>
 
@@ -103,7 +104,7 @@ if(!isset($_SESSION['idVisiteur']))
                                             <tr>
                                                 <td>
                                                     <label for="Désignation"><b>Désignation :</b></label>
-                                                    <input type="text" name="Designation" class="input-xxlarge" id="Designation" value="">
+                                                    <input type="text" name="Designation" class="input-xxlarge" required ="" id="Designation" value="">
                                                 </td>
                                                  <td>
                                                     <label for="Section"><b>Section :</b></label>
@@ -123,7 +124,7 @@ if(!isset($_SESSION['idVisiteur']))
                                                 <td>
                                                     <label for="RéfLycee" ><b>Référence Lycée :</b></label>
                                                  
-                                                    <input type="text" name="RefLycee" id="RefLycee" value="" >
+                                                    <input type="text" name="RefLycee" id="RefLycee" value="" required ="">
                                                 </td>   
                                             
                                                 <td>
@@ -131,12 +132,14 @@ if(!isset($_SESSION['idVisiteur']))
                                                     <input type="hidden" name="unite" value="">
                                                     <select name = "UniteAchat" id="UniteAchat" class="input-medium" > 
                                                         <?php	
+														
                                                             $tab1 = $Produit->ListeUniteAchat();
                                                             
                                                             foreach ($tab1 as $valeur1)
                                                             {
                                                             ?><option value="<?php echo $valeur1['Id']; ?>"><?php echo $valeur1['Details']; ?> </option><?php 
-                                                            }
+                                                           
+															}
                                                     ?>
                                                     </select>
                                                 </td>
@@ -190,14 +193,19 @@ if(!isset($_SESSION['idVisiteur']))
             function GenerationRefLycee() 
             {  
              
-            var x = document.getElementById('Fournisseurs').value - 1;
-            var objControle1 = document.getElementsByTagName('select')[0].options[x].text
+             var x = document.getElementById('Fournisseurs').value;
+          
+           x=x.split('|');
+           xx=x[1];         
+            var objControle1 = document.getElementsByTagName('select')[0].options[xx].text
             var objControle2 = document.getElementById('RefFournisseurs').value;
             var objControle3 = document.getElementById('Coloris').value;
             
+            if(objControle3 == ''){ var objControle4 = '' }
+            else { var objControle4 = '-' + objControle3 }
 
             
-            document.getElementById('RefLycee').value = objControle1.substr(0,3)  + '-' + objControle2 + '-'+ objControle3;
+            document.getElementById('RefLycee').value = objControle1.substr(0,3)  + '-' + objControle2 + objControle4 ;
             
             }
         </script>
@@ -205,4 +213,3 @@ if(!isset($_SESSION['idVisiteur']))
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
-

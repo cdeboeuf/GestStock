@@ -669,10 +669,20 @@ include('connexion.php');
 
         }
         
-        public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section, $Id)
+        public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section)
         {
+              if($StockAlerte=="")
+             {
+                 $StockAlerte =0;
+             }
+             $lesId=$this->MaxId();
+             foreach ($lesId as $Id)
+             {
+                 $Id=$Id[0]+1;
+             }
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
-            
+            $Designation=mysql_real_escape_string($Designation);
+            $Coloris=mysql_real_escape_string($Coloris);
             if (is_numeric($StockAlerte))
             { 
                 $requete1 = "INSERT INTO Produit (Id, RefLycee, RefFournisseur, StockAlerte, IdFournisseur,Obselete, Designation, Coloris, idUniteAchat, IdSection) VALUES ('$Id', '$RefLycee', '$RefFournisseur', '$StockAlerte', '$four', '$Obselete', '$Designation', '$Coloris', '$unite', '$Section')";
