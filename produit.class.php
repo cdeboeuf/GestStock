@@ -669,21 +669,23 @@ include('connexion.php');
 
         }
         
-        public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section, $Id)
+        public function AddNewProduit($RefLycee, $RefFournisseur, $StockAlerte, $Obselete, $Designation, $Coloris, $unite, $four, $Section)
         {
-             if($StockAlerte=="")
+              if($StockAlerte=="")
              {
                  $StockAlerte =0;
+             }
+             $lesId=$this->MaxId();
+             foreach ($lesId as $Id)
+             {
+                 $Id=$Id[0]+1;
              }
             $StockAlerte=str_replace ( ',', '.', $StockAlerte);
             $Designation=mysql_real_escape_string($Designation);
             $Coloris=mysql_real_escape_string($Coloris);
-            
             if (is_numeric($StockAlerte))
             { 
-
                 $requete1 = "INSERT INTO Produit (Id, RefLycee, RefFournisseur, StockAlerte, IdFournisseur,Obselete, Designation, Coloris, idUniteAchat, IdSection) VALUES ('$Id', '$RefLycee', '$RefFournisseur', '$StockAlerte', '$four', '$Obselete', '$Designation', '$Coloris', '$unite', '$Section')";
-
                 $this->retour = Produit::$bdd->prepare($requete1);
                 $this->retour->execute();
                 $rep = "Le produit à été ajouté.";
@@ -723,7 +725,7 @@ include('connexion.php');
             header('location:newProduit.php?rep=LeProduitEstAjoute');
         }
         
-         public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC)
+         public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
 
