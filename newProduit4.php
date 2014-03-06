@@ -195,8 +195,8 @@ if(!isset($_SESSION['idVisiteur']))
              
              var x = document.getElementById('Fournisseurs').value;
           
-           x=x.split('|');
-           xx=x[1];         
+             x=x.split('|');
+             xx=x[1];
             var objControle1 = document.getElementsByTagName('select')[0].options[xx].text
             var objControle2 = document.getElementById('RefFournisseurs').value;
             var objControle3 = document.getElementById('Coloris').value;

@@ -61,11 +61,23 @@ if(isset($_POST['RefFournisseurs']))
         $value['dDateChangement'];
     }
 }
-    echo $_POST['OC'] = null;
     if (isset($_POST['envoyer1'])=='valider')
     { 
-        extract($_POST);
-        $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']), $_POST['OC']);
+
+        
+        if ($_POST['OC'] == '')
+        {
+            echo "if";
+            extract($_POST);
+            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']) );
+        }
+        else
+        {
+            echo "else";
+            extract($_POST);
+            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']), $_POST['OC']);
+        }
+        
 
     }
 
@@ -216,14 +228,14 @@ if(isset($_POST['RefFournisseurs']))
                                                 <?php if($value['IdSection'] == 2){?>
                                                 <td  style="padding-left: 20px">
                                                     
-                                                    <label for="OC" id="OC2"><b>Objet Confectionné:</b></label>
-                                                    <select name = "OC" class="input-medium" id="OC"> 
-                                                  <option value="">  </option>
-  <?php
+                                                    <label for="OC" id="OC2" style="visibility: hidden; "><b>Objet Confectionné:</b></label>
+                                                    <select name = "OC" class="input-medium" id="OC" style="visibility: hidden; " OnChange="javascripte:efface()"> 
+                                                    <?php
                                                         
                                                         $tab1 = $Produit->ListeOC();
                                                         foreach ($tab1 as $valeur1)
                                                         {
+                                                            
                                                           echo "<option value=".$valeur1['Ref']."";
                                                           echo "> ".$valeur1["Ref"]."</option>";
                                                         }
@@ -289,14 +301,18 @@ if(isset($_POST['RefFournisseurs']))
                
             var objControle1 = document.getElementById('OC');
             var objControle2 = document.getElementById('OC2');
+            var objControleur = document.getElementById('Choix').value;
             
                     if (obj == '1')
                         {
                             objControle1.style.visibility = "visible";
+                            objControle1.disabled=(objControleur.checked==true);
                             objControle2.style.visibility = "visible";
                         }
                     else
                         {
+                            objControle1.disabled=(objControleur.checked==false)?false:true;
+                            objControle1.value = "";
                             objControle1.style.visibility = "hidden";
                             objControle2.style.visibility = "hidden";
                             document.getElementById('OC').value="";

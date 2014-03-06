@@ -725,7 +725,7 @@ include('connexion.php');
             header('location:newProduit.php?rep=LeProduitEstAjoute');
         }
         
-         public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC)
+         public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
 
