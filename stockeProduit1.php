@@ -96,7 +96,7 @@ if(isset($_POST['RefFournisseurs']))
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     </head>
-    <body>
+    <body onload="GereControle('3')">
         
         <div class="container-fluid">
             <div class="page-header">
@@ -298,6 +298,7 @@ if(isset($_POST['RefFournisseurs']))
         <script language="Javascript">
             function GereControle(obj) 
             { 
+               
             var objControle1 = document.getElementById('OC');
             var objControle2 = document.getElementById('OC2');
             var objControleur = document.getElementById('Choix').value;
@@ -314,6 +315,7 @@ if(isset($_POST['RefFournisseurs']))
                             objControle1.value = "";
                             objControle1.style.visibility = "hidden";
                             objControle2.style.visibility = "hidden";
+                            document.getElementById('OC').value="";
                         }
                     return true;
             }
