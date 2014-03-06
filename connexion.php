@@ -37,6 +37,7 @@ function connecter($id,$nom,$type,$nomtype){
 	$_SESSION['nom']= $nom;
         $_SESSION['type']=$type;
         $_SESSION['nomtype']=$nomtype;
+        
 }
 function deconnecter(){
 	session_destroy();
