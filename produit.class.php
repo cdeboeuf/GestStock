@@ -675,6 +675,7 @@ include('connexion.php');
              {
                  $StockAlerte =0;
              }
+             
              $lesId=$this->MaxId();
              foreach ($lesId as $Id)
              {
@@ -728,7 +729,7 @@ include('connexion.php');
          public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
-
+ echo "/".$OC."/";
             $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
             $rs1 = Produit::$bdd->query($req1);
             $result1 = $rs1->fetchAll(); 
@@ -737,9 +738,12 @@ include('connexion.php');
                 $idp=$unid['id'];
             }
            $newId=$idp+1;
-
+ if($OC==null)    
+ {echo"1";
+     $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation)
+ VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation');";}else{
             $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation, OC)
-            VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation', '$OC');";
+ VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation', '$OC');";}
             $this->retour = Produit::$bdd->prepare($requete2);
             $this->retour->execute();
         }

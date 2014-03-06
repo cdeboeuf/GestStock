@@ -65,7 +65,7 @@ if(isset($_POST['RefFournisseurs']))
     { 
 
         
-        if ($_POST['OC'] == '')
+        if (!isset($_POST['OC'])|| $_POST['OC'] == '')
         {
             echo "if";
             extract($_POST);
@@ -229,8 +229,9 @@ if(isset($_POST['RefFournisseurs']))
                                                 <td  style="padding-left: 20px">
                                                     
                                                     <label for="OC" id="OC2" style="visibility: hidden; "><b>Objet Confectionné:</b></label>
-                                                    <select name = "OC" class="input-medium" id="OC" style="visibility: hidden; " OnChange="javascripte:efface()"> 
-                                                    <?php
+                                                    <select name = "OC" class="input-medium" id="OC" style="visibility: hidden; "> 
+                                                        <option value=""> </option>
+                                                        <?php
                                                         
                                                         $tab1 = $Produit->ListeOC();
                                                         foreach ($tab1 as $valeur1)
