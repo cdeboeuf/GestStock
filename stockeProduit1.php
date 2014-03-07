@@ -67,13 +67,11 @@ if(isset($_POST['RefFournisseurs']))
         
         if (!isset($_POST['OC'])|| $_POST['OC'] == '')
         {
-            echo "if";
             extract($_POST);
             $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']) );
         }
         else
         {
-            echo "else";
             extract($_POST);
             $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']), $_POST['OC']);
         }
@@ -170,23 +168,7 @@ if(isset($_POST['RefFournisseurs']))
                                                     <?php if(!empty($_GET)){echo $value['PUTTCPondere'];} else {echo $_POST['PUTTCPondere'];}?>
                                                 </td>  
                                             </tr>
-                                            
-                                             <?php if(isset($rep))
-                                                   {
-                                                        if ($rep=="Le produit à été modifié.")
-                                                        {?>
-                                                            <div class="alert alert-success "><?php echo $rep;
-                                                        } 
-                                                        else
-                                                        {?>
-                                                            </div>
-                                                            <div class="alert alert-danger"><?php echo $rep;
-                                                        }?>
-                                                            </div>
-                                            <?php  
-                                                   
-                                                   }
-                                            ?>
+
                                         </thead>
                                     </table>
   
@@ -275,7 +257,13 @@ if(isset($_POST['RefFournisseurs']))
                                                     <input type="text" name="Quantite" id="Quantite" value="" required="">
                                             
                                             </tr>
-
+                                                <?php if(isset($rep) && isset($_POST))
+                                                        {
+                                                            if ($rep=="La sortie à été effectué.")
+                                                                {?><div class="alert alert-success"><?php echo $rep;?></div><?php } 
+                                                            else
+                                                                {?><div class="alert alert-danger"><?php echo $rep; ?></div><?php }          
+                                                        }?>
                                             <tr>
                                                 <td>        
                                                     <button type="submit" class="btn btn-success" value="valider" name="envoyer1" onClick="return confirm('Etes-vous sûr?');">Validation</button>

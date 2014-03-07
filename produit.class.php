@@ -729,23 +729,35 @@ include('connexion.php');
          public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
- echo "/".$OC."/";
-            $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
-            $rs1 = Produit::$bdd->query($req1);
-            $result1 = $rs1->fetchAll(); 
-            foreach ($result1 as $unid)
+            if (is_numeric($Quantite))
             {
-                $idp=$unid['id'];
+                $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
+                $rs1 = Produit::$bdd->query($req1);
+                $result1 = $rs1->fetchAll(); 
+                foreach ($result1 as $unid)
+                {
+                    $idp=$unid['id'];
+                }
+                $newId=$idp+1;
+                if($OC==null)    
+                {
+                    $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation)
+                    VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation');";
+                }
+                else
+                {
+                    $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation, OC)
+                    VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation', '$OC');";
+                }
+                $this->retour = Produit::$bdd->prepare($requete2);
+                $this->retour->execute();
+                $rep = "La sortie à été effectué.";
             }
-           $newId=$idp+1;
- if($OC==null)    
- {echo"1";
-     $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation)
- VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation');";}else{
-            $requete2 = "INSERT INTO detailsligneproduit (RefLycee, DateChangement, Id ,Quantite, SortieEntree, IdUsers, Gratuit, Utilisation, OC)
- VALUES ('$RefLycee', '$DateEntree','$newId','$Quantite',  'S', '$Users', '1', '$Utilisation', '$OC');";}
-            $this->retour = Produit::$bdd->prepare($requete2);
-            $this->retour->execute();
+            else
+            {
+                $rep = "Erreur, champs invalide.";
+            }
+            return $rep;
         }
         
         public function QuantiteNonModifiable()
