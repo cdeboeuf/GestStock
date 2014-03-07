@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-include('menu.class.php');
+//include('menu.class.php');
 //include ('connexion.php');
 ?>
            <script type="text/javascript">
@@ -23,7 +23,7 @@ include('menu.class.php');
                     foreach ($lesMenus as $UnMenu)                        
                      {
                         
-                        ?><li <?php if($page['basename']==$UnMenu['Adresse']) {echo "class='active'";}?>><a href="<?php echo $UnMenu['Adresse']?>"><?php echo $UnMenu['Details']?></a></li>
+                        ?><li <?php if($page['basename']==$UnMenu['Madresse']) {echo "class='active'";}?>><a href="<?php echo $UnMenu['Ladresse']?>"><?php echo $UnMenu['Mdetail']?></a></li>
                     
                         <?php    
                      }?>

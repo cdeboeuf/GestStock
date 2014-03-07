@@ -51,7 +51,10 @@ if (isset($_POST['action'])=='submit')
            $menu->Verifdroit($page['basename']);
            ?>
             <div class="span12">
-
+ <ul class="nav nav-tabs" id="profileTabs">
+                    <?php include('monprofil.php');?>                  
+                                 
+                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit">

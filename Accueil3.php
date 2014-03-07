@@ -45,9 +45,7 @@ if(isset($_POST['trie']))
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./Accueil1.php">Mode</a></li>
-                    <li><a href="./Accueil2.php">Esthétique</a></li>
-                    <li class="active"><a href="./Accueil3.php">Objet Confectionné</a></li>
+                    <?php   include('Accueil.php'); ?>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   

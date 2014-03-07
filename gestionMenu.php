@@ -49,16 +49,14 @@ $LesType= $Typeuser->affiche_Type();
             </div> 
             <?php include('Menu.php');
             $menu=new Menu();
-           $menu->Verifdroit('parametre.php');
+          $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
  
             if(isset($rep)){echo $rep;}?>
                   <div class="span12"> 
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unitée d'achat</a></li>
-                    <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
-                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li class="active"><a href="./gestionMenu.php">Gérer les menus</a></li>                             
+                    <?php include('parametre.php');?>                  
+                                 
                 </ul>
                 <div class="hero-unit"> 
                     
@@ -129,7 +127,7 @@ $LesType= $Typeuser->affiche_Type();
                      <?php foreach ($manque as $m)               
                      {
                      ?>
-                        <option value='<?php echo $m['Id']?>'><?php echo $m['Details']?></option>
+                        <option value='<?php echo $m['Id']?>'><?php echo $m['Action']?></option>
                      <?php 
                    
                      }    ?>       
@@ -143,7 +141,7 @@ $LesType= $Typeuser->affiche_Type();
                     <?php foreach ($possede as $p)     
                                                   {
                      ?>
-                        <option value='<?php echo $p['IdLien']?>'><?php echo $p['Details']?></option>
+                        <option value='<?php echo $p['IdLien']?>'><?php echo $p['Action']?></option>
                      <?php 
                    
                      }   

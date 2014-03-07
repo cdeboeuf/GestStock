@@ -41,9 +41,10 @@ if(!isset($_SESSION['idVisiteur']))
             <?php include('Menu.php');?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./Accueil1.php">Mode</a></li>
+                    <?php include('accueil.php') ?>
+                 <!--   <li  class="active"><a href="./Accueil1.php">Mode</a></li>
                     <li><a href="./Accueil2.php">Esthétique</a></li>
-                    <li><a href="./Accueil3.php">Objet Confectionné</a></li>
+                    <li><a href="./Accueil3.php">Objet Confectionné</a></li>-->
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   

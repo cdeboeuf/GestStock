@@ -30,7 +30,7 @@
         <div class="container-fluid">
             <div class="page-header">
                 <table>
-                    <th> <td><?php logo() ?></td><td><?php nomlogiciel()?><h1><small>Connexion</small></h1>
+                    <th> <td><?php logoP() ?></td><td><?php nomlogiciel()?><h1><small>Connexion</small></h1>
                 </td></th></table>
             </div>  <h5><?php If(isset($resultat)){echo $resultat;}?></h5>
             <div class="hero-unit"> 

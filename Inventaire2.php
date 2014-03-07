@@ -72,12 +72,14 @@ if(isset($_POST['trie']))
             </div> 
             <?php include('Menu.php');
             $menu=new Menu();
-           $menu->Verifdroit('Inventaire1.php');?>
+        $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./Inventaire1.php">Mode</a></li>
+                    <?php include('Inventaire.php') ?>
+<!--                    <li><a href="./Inventaire1.php">Mode</a></li>
                     <li class="active"><a href="./Inventaire2.php">Esthétique</a></li>
-                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>
+                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>-->
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   

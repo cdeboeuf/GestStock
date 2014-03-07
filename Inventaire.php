@@ -17,7 +17,7 @@
                     <?php 
                     $page= pathinfo($_SERVER['PHP_SELF']);
                     $menu=new Menu();
-                    $lesMenus=$menu->affiche_sous_menu('parametre.php');
+                    $lesMenus=$menu->affiche_sous_menu('Inventaire.php');
                     foreach ($lesMenus as $UnMenu)                        
                      {
                       
