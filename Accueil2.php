@@ -2,22 +2,40 @@
 <?php
 include('bonjour.php'); 
 include('produit.class.php');
+include('fournisseurs.class.php');
 $produit = new produit();
+$fournisseur=new Fournisseurs();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
         include('pagination.php');
 $pagination=new Pagination();
-if(isset($_POST['trie']))
+ $Lesfour=$fournisseur->affiche_Fournisseurs();
+       
+  if(isset($_GET['four'])){
+ $resultat = $produit->GetValorisationStockESTFournisseur($_GET['four']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+  }  else {
+    $resultat = $produit->GetValorisationStockEST();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+    
+}
+
+if(isset($_GET['trie']))
 {
-     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+     $resultat = $produit->GetValorisationStockESTFournisseurTrie($_GET['four'],$_GET['trie']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
 }
- $resultat = $produit->GetValorisationStockEST();
-                                        $Resultat=$resultat[0];
-                                        $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
+ if(isset($_GET['num']))
+ {
+        header("location: historique.php?nom=".$_GET['num']."");
+        
+ }
 ?>
 
 
@@ -41,7 +59,9 @@ if(isset($_POST['trie']))
                <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Accueil</small></h1>
                 <?php bonjour() ?></td></th></table>
             </div> 
-            <?php include('Menu.php');?>
+            <?php include('Menu.php');
+            $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
                 <?php   include('Accueil.php'); ?>
@@ -50,7 +70,19 @@ if(isset($_POST['trie']))
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#F6CECE">
                             <div class="row-fluid">                                                                        
-                                                <form  method="GET" action="historique.php"> <table class="table table-bordered table-striped table-condensed">
+                                                          <form  method="GET" action="Accueil2.php"> 
+                                   <SELECT name="four" id="four">
+                                         <option value=''>Tous</option>
+                  <?php
+                 foreach ($Lesfour as $unfour)               
+                     {
+                     ?>
+                        <option value='<?php echo $unfour['Id']?>' <?php if(isset($_GET['four'])&& ($unfour['Id']==$_GET['four'])){ echo "selected";} ?>><?php echo $unfour['Nom'];?></option>
+                     <?php 
+                   
+                     }
+                  ?>          
+                 </SELECT> <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button> <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
                                     <tr>
@@ -58,17 +90,29 @@ if(isset($_POST['trie']))
                                             ID
                                         </th>
 
-                                        <th>
+                                                   <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
-                                        <th>
-                                            Référence Fournisseur
+                                        <th>Référence Fournisseur
+                                            <div class="btn-group ">
+                                            
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
-                                        </th>
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour">Z-A</button>
+                                            </div>
+                                            </th>
 
                                         <th>
                                             Désignation

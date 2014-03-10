@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 
-<?php
-include('bonjour.php');
+<?php include('bonjour.php');  
 include('produit.class.php');
+include('fournisseurs.class.php');
+$fournisseur=new Fournisseurs();
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-include('pagination.php');
-$pagination=new Pagination();
-  if(isset($_POST['four'])){
- $resultat = $produit->GetValorisationStockMODEFournisseur($_POST['four']);
+        include('pagination.php');
+ $pagination=new Pagination();
+ $Lesfour=$fournisseur->affiche_Fournisseurs();
+       
+  if(isset($_GET['four'])){
+ $resultat = $produit->GetValorisationStockMODEFournisseur($_GET['four']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
@@ -20,18 +23,14 @@ $pagination=new Pagination();
                                         $pageCourante=$resultat[2];
     
 }
-if(isset($_POST['trie']))
+
+if(isset($_GET['trie']))
 {
-     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_GET['four'],$_GET['trie']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
 }
- $resultat = $produit->GetValorisationStockMODE();
-                                        $Resultat=$resultat[0];
-                                        $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
-
 ?>
 
 
@@ -74,7 +73,20 @@ if(isset($_POST['trie']))
                         <div class="hero-unit-tab" style="background-color:#CEF6CE">
                             <div class="row-fluid">
                                 
-                                <form  method="GET" action="newProduit1.php">
+                                <form  method="GET" action="newProduit.php">
+                                     <SELECT name="four" id="four">
+                                         <option value=''>Tous</option>
+                  <?php
+                 foreach ($Lesfour as $unfour)               
+                     {
+                     ?>
+                        <option value='<?php echo $unfour['Id']?>' <?php if(isset($_GET['four'])&& ($unfour['Id']==$_GET['four'])){ echo "selected";} ?>><?php echo $unfour['Nom'];?></option>
+                     <?php 
+                   
+                     }
+                  ?>          
+                 </SELECT>
+                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button>
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                 <thead>  
@@ -85,15 +97,27 @@ if(isset($_POST['trie']))
 
                                         <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
-                                        <th>
-                                            Référence Fournisseur
+                                        <th>Référence Fournisseur
+                                            <div class="btn-group ">
+                                            
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
-                                        </th>
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour">Z-A</button>
+                                            </div>
+                                            </th>
 
                                         <th>
                                             Désignation

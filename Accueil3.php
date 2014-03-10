@@ -8,17 +8,20 @@ if(!isset($_SESSION['idVisiteur']))
 {header('location: index.php');  }  
 include('pagination.php');
 $pagination=new Pagination();
-if(isset($_POST['trie']))
+   $resultat = $produit->GetValorisationStockOC();
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+    
+
+if(isset($_GET['trie']))
 {
-     $resultat = $produit->GetValorisationStockMODEFournisseurTrie($_POST['four'],$_POST['trie']);
+     $resultat = $produit->GetValorisationStockOCTrie($_GET['trie']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
 }
- $resultat = $produit->GetValorisationStockOC();
-                                        $Resultat=$resultat[0];
-                                        $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
+if(isset($_GET['num'])){ header("location: historiqueOC.php?nom=".$_GET['num']."");}
 ?>
 
 
@@ -51,7 +54,7 @@ if(isset($_POST['trie']))
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#CEF6CE">
                         <div class="row-fluid"> 
-                            <form  method="GET" action="historique.php">
+                            <form  method="GET" action="Accueil3.php">
                         <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -60,8 +63,12 @@ if(isset($_POST['trie']))
                                             ID
                                         </th>
 
-                                        <th>
+                                          <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>

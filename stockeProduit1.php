@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <?php
+include('Menu.php');
 include('Produit.class.php');
 $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
@@ -100,7 +101,7 @@ if(isset($_POST['RefFournisseurs']))
             <div class="page-header">
                 <h1><small>Achat</small></h1>
             </div>
-            <?php include('Menu.php');?>
+          
             <div class="span12">
                 <div class="tab-content">
                     <div class="tab-pane active">   

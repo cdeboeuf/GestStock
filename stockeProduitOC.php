@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 
 <?php
-
+include('bonjour.php'); 
 include('produit.class.php');
 $produit = new produit();
 if(!isset($_SESSION['idVisiteur'])) 
-{header('location: index.php');  }
-
-        include('pagination.php');
+{header('location: index.php');  }  
+include('pagination.php');
 $pagination=new Pagination();
- $resultat = $produit->GetValorisationStockOC();
+   $resultat = $produit->GetValorisationStockOC();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
-?>
+    
 
+if(isset($_GET['trie']))
+{
+     $resultat = $produit->GetValorisationStockOCTrie($_GET['trie']);
+                                        $Resultat=$resultat[0];
+                                        $nbPages=$resultat[1];
+                                        $pageCourante=$resultat[2];
+}
+if(isset($_GET['num'])){ header("location: historiqueOC.php?nom=".$_GET['num']."");}
+?>
 
 <html>
     <head>
-        <title></title>
+         <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -30,11 +38,13 @@ $pagination=new Pagination();
     </head>
     <body>
         <div class="container-fluid">
-            <div class="page-header">
-                <h1><small>Produit</small></h1>
-            </div>
+           <div class="page-header">
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Sortir un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
             <?php include('Menu.php');
-            $menu=new Menu();
+     
             $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
@@ -52,7 +62,7 @@ $pagination=new Pagination();
                         <div class="hero-unit" style="background-color:#CEF6CE">
                             <div class="row-fluid">
                                 
-                                <form  method="GET" action="stockeProduit1.php">
+                                <form  method="GET" action="stockeProduitOC.php">
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                 <thead>  
@@ -63,6 +73,10 @@ $pagination=new Pagination();
 
                                         <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
