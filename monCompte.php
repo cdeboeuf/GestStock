@@ -10,16 +10,31 @@ if(isset($_POST['action']))
 if (isset($_POST['action'])=='submit')
 {
         $Login = $_SESSION['nom'];
-        $Mdp =$_POST['psd'];
-        $confirmMdp =$_POST['confirmpsd'];
-        $oldMdp=$_POST['oldpsd'];
+        $Mdp = $_POST['psd'];
+        $confirmMdp = $_POST['confirmpsd'];
+        $oldMdp = $_POST['oldpsd'];
         
-        //on compare si le nouveau passe correspond à la confirmation
-        if ($Mdp == $confirmMdp)
-        {
-            //si oui on update le nouveau mot de passe dans la bdd
-            $user->MajMdp($Mdp, $Login);
+        $OLD = $user->MajOldMdp($Login);
+        Echo $OLD;
+        
+        $req = "SELECT Mdp from users where Login = '$Login';";
+        $rs = mysql_query($req);
+        echo $rs;
+        Echo $oldMdp;
 
+        //on compare l'ancier mot de passe aux champs ancien mot de passe
+        if($oldMdp == $OLD)
+        {
+            //on compare si le nouveau passe correspond à la confirmation
+            if ($Mdp == $confirmMdp)
+            {
+                //si oui on update le nouveau mot de passe dans la bdd
+                $user->MajMdp($Mdp, $Login);
+            }
+        }
+        else
+        {
+            $rep = "Les mot de passes ne correspondent pas";
         }
  }
 ?>
@@ -90,7 +105,7 @@ if (isset($_POST['action'])=='submit')
                                     if(isset($_POST['action']))
                                     if (isset($_POST['action'])=='submit')
                                     {
-                                        if ($Mdp == $confirmMdp && $oldMdp == $rs )
+                                        if ($Mdp == $confirmMdp)
                                         {
                                         ?>  <div class="alert alert-success">  
                                                 <a class="close" data-dismiss="alert">×</a>  
