@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-include('Menu.php');
+include('bonjour.php'); 
 include('Produit.class.php');
 $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
@@ -85,7 +85,7 @@ if(isset($_POST['RefFournisseurs']))
 
 <html>
     <head>
-        <title></title>
+         <?php echo $onglet=onglet();?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--CSS -->
               <link rel="stylesheet"   media="screen" href="css/bootstrap-responsive.min.css">
@@ -98,10 +98,14 @@ if(isset($_POST['RefFournisseurs']))
     <body onload="GereControle('3')">
         
         <div class="container-fluid">
-            <div class="page-header">
-                <h1><small>Achat</small></h1>
-            </div>
-          
+           <div class="page-header">
+                <table>
+               <th> <td><?php logo() ?></td><td><?php annee()?><h1><small>Sortir un produit</small></h1>
+                <?php bonjour() ?></td></th></table>
+            </div> 
+              <?php include('Menu.php');
+     ?>
+            
             <div class="span12">
                 <div class="tab-content">
                     <div class="tab-pane active">   
