@@ -78,7 +78,7 @@ foreach ($ordre as $unOrdre)
             </div> 
             <?php include('Menu.php');
             $menu=new Menu();
-            $menu->Verifdroit('objetConfectionne.php');
+            $menu->Verifdroit('MenuObjetConfectionne.php');
            ?><div class="span12">
                    <div class="hero-unit"> 
                        <?php if(isset($erreur))

@@ -81,7 +81,7 @@ if(isset($_POST['action']))
             </div> 
             <?php include('Menu.php');
             $menu=new Menu();
-            $menu->Verifdroit('objetConfectionne.php');
+            $menu->Verifdroit('MenuObjetConfectionne.php');
            ?><div class="span12">
                    <div class="hero-unit" style="background-color:#CEF6CE"> 
                        <?php if(isset($erreur))

@@ -9,7 +9,6 @@ if(!isset($_SESSION['idVisiteur']))
 if(isset($_POST['action']))
 if (isset($_POST['action'])=='submit')
 {
-        $Login = $_SESSION['nom'];
         $Mdp =$_POST['psd'];
         $confirmMdp =$_POST['confirmpsd'];
         $oldMdp=$_POST['oldpsd'];
@@ -18,7 +17,7 @@ if (isset($_POST['action'])=='submit')
         if ($Mdp == $confirmMdp)
         {
             //si oui on update le nouveau mot de passe dans la bdd
-            $user->MajMdp($Mdp, $Login);
+           $reponse= $user->MajMdp($Mdp, $oldMdp);
 
         }
  }
@@ -90,26 +89,14 @@ if (isset($_POST['action'])=='submit')
                                     </div>
                                     
                                     <?php 
-                                    if(isset($_POST['action']))
-                                    if (isset($_POST['action'])=='submit')
-                                    {
-                                        if ($Mdp == $confirmMdp && $oldMdp == $rs )
-                                        {
-                                        ?>  <div class="alert alert-success">  
+                                  
+                                    if (isset($reponse))
+                                    {                                   
+                                        ?>  <div class="alert">  
                                                 <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Merci</strong>, Votre mot de passe a été modifié.  
+                                                <strong>Merci, </strong><?php echo $reponse ?>  
                                             </div>
-                                        <?php 
-                                        }
-                                        else
-                                        {
-                                        ?>
-                                            <div class="alert alert-error">  
-                                                <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Erreur</strong>, les mots de passe ne correspondent pas.  
-                                            </div>
-                                        <?php
-                                        }
+<?php
                                     }
                                     ?>
                                     

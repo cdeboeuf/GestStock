@@ -60,7 +60,7 @@ $LesTva= $tvaP->affiche_Tva();
                       <div class="row-fluid">
                       
                              <?php if(isset($rep)){ 
-                             if ($rep=="Le taux de tva a été ajouté"){?>
+                             if ($rep=="Le taux de TVA a été ajouté"){?>
                              <div class="alert alert-success "><?php echo $rep;} else{?></div>
                          <div class="alert alert-danger"><?php echo $rep;}?></div>
                          <?php } ?>

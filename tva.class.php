@@ -42,7 +42,7 @@ group by taux";
              {
         $req="Insert Into tva(Taux)values($tva)" ;  
         $rs = Tva::$bdd->query($req);
-        $reponce = "Le taux de tva a été ajouté";
+        $reponce = "Le taux de TVA a été ajouté";
         } 
         else{$reponce="Le taux existe déjà";}
         
