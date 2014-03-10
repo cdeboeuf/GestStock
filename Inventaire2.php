@@ -83,7 +83,7 @@ if(isset($_POST['trie']))
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit" style="background-color:#F6CECE">
                             <div class="row-fluid">                                         
                                 <form  method="POST" action="Inventaire2.php">
                                      <SELECT name="four" id="four">

@@ -92,7 +92,7 @@ $pagination=new Pagination();
                 </ul>-->
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit-tab" style="background-color: #FFECFF">
+                        <div class="hero-unit-tab" style="background-color:#F6CECE">
                             <div class="row-fluid">
                                 
                                 <form  method="GET" action="newProduit3.php">

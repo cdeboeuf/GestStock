@@ -92,7 +92,7 @@ if(isset($_POST['annee']))
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit-tab" style="background-color: #EFFBEF">
+                        <div class="hero-unit-tab" >
                             <div class="row-fluid">   
                                 <form method="POST" action="Inventaire1.php">
                                      <SELECT name="four" id="four">

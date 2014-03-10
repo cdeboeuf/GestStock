@@ -50,7 +50,7 @@ $LesType= $Typeuser->affiche_Type();
             <?php include('Menu.php');
             $menu=new Menu();
           $page=pathinfo($_SERVER['PHP_SELF']);
-           $menu->Verifdroit($page['basename']);?>
+           $menu->Verifdroit($page['basename']);
  
             if(isset($rep)){echo $rep;}?>
                   <div class="span12"> 
