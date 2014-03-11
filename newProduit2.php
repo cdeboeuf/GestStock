@@ -78,16 +78,21 @@ $pagination=new Pagination();
             </div> 
             <?php include('Menu.php');
             $menu=new Menu();
-            $menu->Verifdroit('newProduit.php');?>
+            $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
+                 <ul class="nav nav-tabs" id="profileTabs">
+                    <?php include('ajoutProduit.php');?>                  
+                                 
+                </ul>
+<!--                <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./newProduit.php">Mode</a></li>
                     <li class="active"><a href="./newProduit2.php">Esthétique</a></li>
                     <li><a href="./newProduit4.php">Nouvel ajout</a></li>
-                </ul>
+                </ul>-->
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit-tab" style="background-color: #FFECFF">
+                        <div class="hero-unit-tab" style="background-color:#F6CECE">
                             <div class="row-fluid">
                                 
                                 <form  method="GET" action="newProduit3.php">

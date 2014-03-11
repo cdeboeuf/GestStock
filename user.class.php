@@ -68,18 +68,33 @@ function verification($nom,$mdp)
             return  $reponse ;                 
 }
 
-function MajMdp($Mdp, $Login)
-{       
-            $req1 = "UPDATE users SET Mdp = (md5('$Mdp')) where Login = '$Login';";
+function MajMdp($Mdp,$VMdp)
+{
+    $req="SELECT * FROM users inner join typeuser on typeuser.Id=users.Type Where Login='".$_SESSION['nom']."';";
+    $rs = Users::$bdd->query($req);
+    $result = $rs->fetchAll();
+    if(count($result)==1) 
+        {  
+            foreach ($result as $value) 
+            {
+                if ($value['Mdp']== (md5($VMdp)))
+                {
+                    $req1 = "UPDATE users SET Mdp = (md5('$Mdp')) where Login = '".$_SESSION['nom']."';";
             $this->retour = Users::$bdd->prepare($req1);
             $this->retour->execute(); 
-}
-
-function MajOldMdp($Login)
-{
-            $req = "SELECT Mdp from users where Login = '$Login';";
-            $this->retour = Users::$bdd->prepare($req);
-            $this->retour->execute(); 
+            $reponse="Le mot de passe a été changé";
+              }
+                else
+                {
+                    $reponse="<br>Mauvais mot de passe";
+                }
+            }
+        }
+        else
+        {
+            $reponse="<br>Erreur";
+        }    
+        return $reponse;
 }
       
          function affiche_unuser($id)

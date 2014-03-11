@@ -9,18 +9,15 @@ if(!isset($_SESSION['idVisiteur']))
 if(isset($_POST['action']))
 if (isset($_POST['action'])=='submit')
 {
-        $Login = $_SESSION['nom'];
-        $Mdp = $_POST['psd'];
-        $confirmMdp = $_POST['confirmpsd'];
-        $oldMdp = $_POST['oldpsd'];
+        $Mdp =$_POST['psd'];
+        $confirmMdp =$_POST['confirmpsd'];
+        $oldMdp=$_POST['oldpsd'];
         
-        $OLD = $user->MajOldMdp($Login);
-        Echo $OLD;
-        
-        $req = "SELECT Mdp from users where Login = '$Login';";
-        $rs = mysql_query($req);
-        echo $rs;
-        Echo $oldMdp;
+        //on compare si le nouveau passe correspond à la confirmation
+        if ($Mdp == $confirmMdp)
+        {
+            //si oui on update le nouveau mot de passe dans la bdd
+           $reponse= $user->MajMdp($Mdp, $oldMdp);
 
         //on compare l'ancier mot de passe aux champs ancien mot de passe
         if($oldMdp == $OLD)
@@ -66,7 +63,10 @@ if (isset($_POST['action'])=='submit')
            $menu->Verifdroit($page['basename']);
            ?>
             <div class="span12">
-
+ <ul class="nav nav-tabs" id="profileTabs">
+                    <?php include('monprofil.php');?>                  
+                                 
+                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit">
@@ -102,26 +102,14 @@ if (isset($_POST['action'])=='submit')
                                     </div>
                                     
                                     <?php 
-                                    if(isset($_POST['action']))
-                                    if (isset($_POST['action'])=='submit')
-                                    {
-                                        if ($Mdp == $confirmMdp)
-                                        {
-                                        ?>  <div class="alert alert-success">  
+                                  
+                                    if (isset($reponse))
+                                    {                                   
+                                        ?>  <div class="alert">  
                                                 <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Merci</strong>, Votre mot de passe a été modifié.  
+                                                <strong>Merci, </strong><?php echo $reponse ?>  
                                             </div>
-                                        <?php 
-                                        }
-                                        else
-                                        {
-                                        ?>
-                                            <div class="alert alert-error">  
-                                                <a class="close" data-dismiss="alert">×</a>  
-                                                <strong>Erreur</strong>, les mots de passe ne correspondent pas.  
-                                            </div>
-                                        <?php
-                                        }
+<?php
                                     }
                                     ?>
                                     

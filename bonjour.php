@@ -1,4 +1,6 @@
-<?php function annee(){
+<?php 
+include('menu.class.php');
+function annee(){
     $nomlogiciel=nomlogiciel();?>
 <h1><?php echo $nomlogiciel." ".$_SESSION['annee']; ?></h1><?php }
 
@@ -19,8 +21,24 @@ function onglet()
             
 }
 
+function logoP()
+{
+                    
+                      echo '<img src="img/logo.png" width="75px" height="33px"></img>';
+                                          
+}
+
 function logo()
 {
-    echo '<a href="Accueil1.php"><img src="img/logo.png" width="75px" height="33px"></img></a>';
+                    $menu=new Menu();
+                    $lesMenus=$menu->affiche_sous_menu('Accueil.php');
+                    foreach ($lesMenus as $UnMenu)                        
+                     {                    
+                     $UnMenu['Madresse'];
+                     }            
+                     if(isset($UnMenu['Madresse']))
+                         {
+                     echo '<a href="'.$UnMenu['Madresse'].'"><img src="img/logo.png" width="75px" height="33px"></img></a>';
+                         }else {  echo '<img src="img/logo.png" width="75px" height="33px"></img>';}
 }
 ?>

@@ -25,7 +25,7 @@ group by unite.Id;" ;
         {
         $req="Delete FROM unite Where Details='$Unite'" ;  
         $rs = Unite::$bdd->query($req);
-        return $reponce=" Le $Unite % a été supprimé";}
+        return $reponce="$Unite % a été supprimé";}
     }
     
     function Ajout_Unite($Unite)
@@ -34,7 +34,7 @@ group by unite.Id;" ;
              {
         $req="Insert Into unite(Details)values('$Unite')" ;  
         $rs = Unite::$bdd->query($req);
-        $reponce = "L'unitée d'achat a été ajouté";
+        $reponce = "L'unité d'achat a été ajoutée";
         } 
         else{
             $reponce="L'unitée d'achat existe déjà";

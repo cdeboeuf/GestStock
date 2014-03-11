@@ -35,16 +35,21 @@ $pagination=new Pagination();
             </div>
             <?php include('Menu.php');
             $menu=new Menu();
-            $menu->Verifdroit('stockeProduit.php');?>
+            $page=pathinfo($_SERVER['PHP_SELF']);
+           $menu->Verifdroit($page['basename']);?>
             <div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
+                 <ul class="nav nav-tabs" id="profileTabs">
+                    <?php include('sortieProduit.php');?>                  
+                                 
+                </ul>
+<!--                <ul class="nav nav-tabs" id="profileTabs">
                     <li><a href="./stockeProduit.php">Mode</a></li>
                     <li><a href="./stockeProduitEST.php">Esthétique</a></li>
                     <li class="active"><a href="./stockeProduitOC.php">Objet Confectionné</a></li>
-                </ul>
+                </ul>-->
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit" style="background-color:#CEF6CE">
                             <div class="row-fluid">
                                 
                                 <form  method="GET" action="stockeProduit1.php">

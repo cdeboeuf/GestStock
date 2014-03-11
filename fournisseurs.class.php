@@ -29,7 +29,7 @@ group by Nom";
      $reponce=" Le Fournisseur $four a été supprimé";
     }else
     {
-        $reponce=" Le Fournisseur $four est utilisé par plusieurs produit il ne peut donc pas etre supprimé";
+        $reponce=" Le Fournisseur $four est utilisé par plusieurs produits, il ne peux donc pas être supprimé";
     }
     return$reponce;
     }

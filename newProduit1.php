@@ -148,7 +148,7 @@ if(isset($_POST['RefFournisseurs']))
             <div class="span12">
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit" style="background-color: #FFECFF">
+                        <div class="hero-unit" >
                             <div class="row-fluid">
                                 <legend>Produit Mode</legend> 
                                 

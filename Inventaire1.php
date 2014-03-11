@@ -85,13 +85,14 @@ if(isset($_POST['annee']))
            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./Inventaire1.php">Mode</a></li>
+                      <?php include('Inventaire.php') ?>
+<!--                    <li  class="active"><a href="./Inventaire1.php">Mode</a></li>
                     <li><a href="./Inventaire2.php">Esthétique</a></li>
-                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>
+                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>-->
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">   
-                        <div class="hero-unit-tab" style="background-color: #EFFBEF">
+                        <div class="hero-unit-tab" >
                             <div class="row-fluid">   
                                 <form method="POST" action="Inventaire1.php">
                                      <SELECT name="four" id="four">

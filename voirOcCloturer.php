@@ -65,10 +65,10 @@ foreach($OC as $oc)
             
             <?php include('Menu.php');
             $menu=new Menu();
-            $menu->Verifdroit('objetConfectionne.php');
+            $menu->Verifdroit('MenuObjetConfectionne.php');
             
            ?><div class="span12">
-                   <div class="hero-unit"> 
+                   <div class="hero-unit" style="background-color:#CEF6CE"> 
                        <?php if(isset($erreur))
                        {?><div class="alert alert-danger"><?php echo $erreur?></div><?php }?>
                        <?php if(isset($rep))
