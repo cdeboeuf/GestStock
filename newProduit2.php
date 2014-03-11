@@ -1,37 +1,18 @@
 <!DOCTYPE html>
-
 <?php
- include('bonjour.php');  
+include('bonjour.php'); 
 include('produit.class.php');
+include('fournisseurs.class.php');
 $produit = new produit();
-
+$fournisseur=new Fournisseurs();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
-
-if(isset($_POST['action1']))
-{
-    if (isset($_POST['action1'])=='envoyer1')
-    {    
-        extract($_POST);
-        if(isset($_POST['chkb_1']))
-        {
-            $_POST['chkb_1']=1;
-        }
-        else
-        {
-            $_POST['chkb_1']=0;
-        }
-        if(!isset($_POST['PUHT']) && !isset($_POST['PUTTC']))
-        {
-            $_POST['PUHT'] = 0;
-            $_POST['PUTTC'] = 0;
-        }
-        $rep = $produit->AddProduitMode($_POST['RefLycee'], $_POST['DateEntree'], $_POST['CodeTVA'], $_POST['chkb_1'],  $_POST['PUHT'], $_POST['PUTTC'], $_POST['Quantite'], $_POST['id'], $_SESSION['idVisiteur']);
-        
-    }
-}
-  if(isset($_POST['four'])){
- $resultat = $produit->GetValorisationStockESTFournisseur($_POST['four']);
+        include('pagination.php');
+$pagination=new Pagination();
+ $Lesfour=$fournisseur->affiche_Fournisseurs();
+       
+  if(isset($_GET['four'])){
+ $resultat = $produit->GetValorisationStockESTFournisseur($_GET['four']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
@@ -42,17 +23,14 @@ if(isset($_POST['action1']))
                                         $pageCourante=$resultat[2];
     
 }
-if(isset($_POST['trie']))
+
+if(isset($_GET['trie']))
 {
-     $resultat = $produit->GetValorisationStocESTFournisseurTrie($_POST['four'],$_POST['trie']);
+     $resultat = $produit->GetValorisationStockESTFournisseurTrie($_GET['four'],$_GET['trie']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
 }
- include('pagination.php');
-$pagination=new Pagination();
-
-
 ?>
 
 
@@ -95,8 +73,20 @@ $pagination=new Pagination();
                         <div class="hero-unit-tab" style="background-color:#F6CECE">
                             <div class="row-fluid">
                                 
-                                <form  method="GET" action="newProduit3.php">
-                                <table class="table table-bordered table-striped table-condensed">
+                                <form  method="GET" action="newProduit2.php">
+                                               <SELECT name="four" id="four">
+                                         <option value=''>Tous</option>
+                  <?php
+                 foreach ($Lesfour as $unfour)               
+                     {
+                     ?>
+                        <option value='<?php echo $unfour['Id']?>' <?php if(isset($_GET['four'])&& ($unfour['Id']==$_GET['four'])){ echo "selected";} ?>><?php echo $unfour['Nom'];?></option>
+                     <?php 
+                   
+                     }
+                  ?>          
+                 </SELECT> <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button>
+                                    <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                                 <thead>  
                                     <tr>
@@ -104,17 +94,29 @@ $pagination=new Pagination();
                                             ID
                                         </th>
 
-                                        <th>
+                                                        <th>
                                             Référence Lycée
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRLycee">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRLycee">Z-A</button>
+                                            </div>
                                         </th>
 
-                                        <th>
-                                            Référence Fournisseur
+                                        <th>Référence Fournisseur
+                                            <div class="btn-group ">
+                                            
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscRFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescRFour">Z-A</button>
+                                            </div>
                                         </th>
 
                                         <th>
                                             Fournisseur
-                                        </th>
+                                            <div class="btn-group ">
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="AscFour">A-Z</button>
+                                            <button type="submit" class="btn btn-info btn-mini" name="trie" value="DescFour">Z-A</button>
+                                            </div>
+                                            </th>
 
                                         <th>
                                             Désignation
