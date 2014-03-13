@@ -47,9 +47,9 @@ if(isset($_GET['num'])){ header("location: historiqueOC.php?nom=".$_GET['num']."
             </div> 
             <?php include('Menu.php');?>
             <div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
+              <div class="menu">  <ul class="nav nav-tabs" id="profileTabs">
                     <?php   include('Accueil.php'); ?>
-                </ul>
+                </ul></div>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#CEF6CE">

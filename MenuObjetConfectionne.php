@@ -32,10 +32,11 @@ $OcC=$LesOc->affiche_objetC();
             $page=pathinfo($_SERVER['PHP_SELF']);
             $menu->Verifdroit($page['basename']);
            ?><div class="span12">
+               <div class="menu">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('ObjetConfectione.php');?>                  
                                  
-                </ul>
+                </ul></div>
                    <div class="hero-unit" style="background-color:#CEF6CE"> 
                        <div class="row-fluid">                      
                            <form name="OcNc" action="CreeobjetConfectionne.php" method="post">

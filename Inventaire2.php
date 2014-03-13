@@ -27,26 +27,23 @@ if(isset($_POST['action']))
  include ('pagination.php');
       $pagination=new Pagination();
  
-  if(isset($_POST['four'])){
- $resultat = $produit->GetValorisationStockESTFournisseur($_POST['four']);
+if(!isset($_POST['rechercheDate'])){$jour=date("d");
+                               $mois=date("m");
+                               $ans=date("Y");
+                               $date=$ans."-".$mois."-".$jour;}else{ $date=str_replace ( '/', '-',$_POST['rechercheDate']);};
+if(isset($_POST['four']))  
+{  
+    if(!isset($_POST['trie'])){$_POST['trie']="";};
+     $resultat = $produit->GetValorisationStockESTdate($_POST['rechercheDate'],$_POST['trie'],$_POST['four']);
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
                                         $pageCourante=$resultat[2];
-  }  else {
+                                      
+}else{
     $resultat = $produit->GetValorisationStockEST();
                                         $Resultat=$resultat[0];
                                         $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
-    
-}
-
-if(isset($_POST['trie']))
-{
-     $resultat = $produit->GetValorisationStockESTFournisseurTrie($_POST['four'],$_POST['trie']);
-                                        $Resultat=$resultat[0];
-                                        $nbPages=$resultat[1];
-                                        $pageCourante=$resultat[2];
-}
+                                        $pageCourante=$resultat[2];}
 ?>
 
 
@@ -75,18 +72,17 @@ if(isset($_POST['trie']))
         $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
+                <div class="menu">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('Inventaire.php') ?>
-<!--                    <li><a href="./Inventaire1.php">Mode</a></li>
-                    <li class="active"><a href="./Inventaire2.php">Esthétique</a></li>
-                    <li><a href="./Inventaire3.php">Objet Confectionné</a></li>-->
                 </ul>
+                </div>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit" style="background-color:#F6CECE">
                             <div class="row-fluid">                                         
                                 <form  method="POST" action="Inventaire2.php">
-                                     <SELECT name="four" id="four">
+                                           <div class="span6" >  <SELECT name="four" id="four">
                                          <option value=''>Tous</option>
                   <?php
                  foreach ($Lesfour as $unfour)               
@@ -98,7 +94,8 @@ if(isset($_POST['trie']))
                      }
                   ?>          
                  </SELECT>
-                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button>
+                                  <button type="submit" class="btn btn-info" name="action" value="Valider">Rechercher</button></div>
+                                  <div class="span6">   <input type="date" id="rechercheDate" name="rechercheDate" value="<?php echo $date;?>" >  <button type="submit" class="btn btn-info" name="action" value="Date">Aller à la date</button> </div>
                                 <table class="table table-bordered table-striped table-condensed">
                                     <caption> Tableau des produits </caption>
                         <thead>  
@@ -181,7 +178,7 @@ if(isset($_POST['trie']))
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); ?>"
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini"  <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); ?>"
                                                              OnKeyUp="javascript:calcul(<?php echo $nb?>);">
                                                         </div>
                                                     <?php
@@ -190,7 +187,7 @@ if(isset($_POST['trie']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
+                                                    echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
                                                    <?php 
                                                     echo "</td>";
@@ -213,10 +210,23 @@ if(isset($_POST['trie']))
                                     <br>
                                 </table>
                                 <br>
-                                <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Valider</button>
+                                                                <div class="btn-group ">
+                              <?php if($produit->QuantiteNonModifiable()==0) { ?>  <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Enregistrer</button> <?php } ?>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
+                                  <?php 
+                                $annee=date('Y');
+                               $annee1=(int)$annee+1;?>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $annee ?></button>
+                                <button type="submit" class="btn btn-info" value="Variation" name="Variation" >Variation de stocks</button>
+                                 </div>
                                 </form>
-                                 <?php  $pagination->affiche('Inventaire2.php','idPage',$nbPages,$pageCourante,2);?>
+                                 <?php  $pagination->affiche('inventaire1.php','idPage',$nbPages,$pageCourante,2);
+                                if(isset($_POST['annee']))
+    {
+    $valorisation= new Valorisation();
+    $valorisation->nouvelleBDD();
+   ?> <form name="DC" action="deconnexion.php" method="post"><button class="btn btn-info">Retour à la page de connexion</button></form><?php
+    }?>
                             </div>
                         </div>
                     </div>

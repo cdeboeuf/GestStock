@@ -701,7 +701,7 @@ include('connexion.php');
         
  public function AddProduit($RefLycee, $DateEntree, $idTVA, $Gratuit, $PUHT, $PUTTC, $Quantite, $Users)
         {
-     echo $idTVA;
+    if($idTVA==0){$idTVA='null';};
             $Quantite=str_replace ( ',', '.', $Quantite);
             $PUHT=str_replace ( ',', '.', $PUHT);
             $PUTTC=str_replace ( ',', '.', $PUTTC);
@@ -762,9 +762,14 @@ include('connexion.php');
         
         public function QuantiteNonModifiable()
         {
-            $requete = "Select RefLycee from detailsligneproduit;";
+            $requete = "Select count(*) from detailsligneproduit;";
             $rs = Produit::$bdd->query($requete);
-            return $laLigne = $rs->fetchAll(); 
+            $rs1=$rs->fetchAll(); 
+            foreach ($rs1 as $nb)
+            { 
+                echo $nombre=$nb[0];
+            }
+            return $nombre;
         }
         
         public function ChampsRefLycee($Nom, $RefFournisseur, $Coloris)
@@ -835,5 +840,395 @@ $produit['PUTTCPondere'];
 $stock=$Qte+$produit['quantitetotal'];
  return $PUTTCPondere=(($Qte*$PUTTC)+($produit['quantitetotal']*$produit['PUTTCPondere']))/($stock);
 }
+
+function variationMS($type)
+{
+    if($type=="mode")
+    {$val=2;}
+    elseif ($type=="esthetique"){$val=1;}
+    $req="SELECT SUM(QuantiteTotal*PUTTCPondere) as variation FROM produit WHERE IdSection=$val";
+    $req1="SELECT SUM(StockInitial*PondereInitial) as variation FROM produit WHERE IdSection=$val";
+    $rs1 = Produit::$bdd->query($req);
+    $result1 = $rs1->fetchAll();
+    $rs2 = Produit::$bdd->query($req1);
+    $result2 = $rs2->fetchAll();
+     foreach ($result1 as $res1)
+    {
+     $SF=$res1[0];
+    }
+    foreach ($result2 as $res2)
+    {
+     $SI=$res2[0];
+    }
+    $total=$SF-$SI;
+    return array($SI,$SF,$total);
+}
+function variationO()
+{  
+    $req="SELECT SUM(StockInital*PrixUnitairePublic) as variation FROM objetconfectionne";
+    $req1="SELECT SUM(Quantite*PrixUnitairePublic) as variation FROM objetconfectionne";
+    $rs1 = Produit::$bdd->query($req);
+    $result1 = $rs1->fetchAll();
+    $rs2 = Produit::$bdd->query($req1);
+    $result2 = $rs2->fetchAll();
+    foreach ($result1 as $res1)
+    {
+      $SI=($res1[0]);
+    }
+    foreach ($result2 as $res2)
+    {
+     $SF=$res2[0];
+    }
+    $total=$SF-$SI;
+    return array($SI,$SF,$total);
+}
+ public function GetValorisationStockESTDate($date,$trie,$fournisseur)
+        { 
+            try 
+           {
+                   if($trie == '')
+                {
+                    $trie= "";
+                }
+                if($date != '')
+                {
+                    $date= "<='$date'";
+                }else {$date= "<= '".date("Y-m-d")."'";}
+                
+                if($fournisseur != '')
+                {
+                    $fournisseur= "='$fournisseur'";
+                }else {$fournisseur= "!=''";
+ }
+ if($trie=="AscRLycee")
+ {
+     $trie= "ORDER BY RefLycee ASC";
+ }
+ elseif($trie=="DescRLycee")
+ {
+     $trie= "ORDER BY RefLycee DESC";
+ }
+ elseif($trie=="AscRFour")
+ {
+     $trie= "ORDER BY RefFournisseur ASC";
+ }
+ elseif($trie=="DescRFour")
+ {
+     $trie= "ORDER BY RefFournisseur DESC";
+ }
+ elseif($trie=="AscFour")
+ {
+     $trie= "ORDER BY IdFournisseur ASC";
+ }
+ elseif($trie=="DescFour")
+ {
+     $trie= "ORDER BY IdFournisseur DESC";
+ }
+ else{$trie="ORDER BY Produit.id";}
+ 
+        //Récupère le nombre total d'items
+        $result0 = Produit::$bdd->query('SELECT COUNT(*) FROM Produit  Where IdSection = 1 and  IdFournisseur '.$fournisseur.' '.$trie.'');
+        $result01 = $result0->fetchAll(); 
+            foreach ($result01 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+        $requete = 'SELECT Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 1 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $resul = Produit::$bdd->query($requete);
+        $resultl = $resul->rowCount();
+        $result = $resul->fetchAll();      
+        $i=0;
+        if($resultl!=0)
+        {
+        foreach ($result as $res)
+        {
+        $pondereinital=  $res['PondereInitial'];
+        $quantite=$res['StockInitial'];
+        $ref= $res['RefLycee'];
+        $requete1 = "SELECT RefLycee,DateChangement,SortieEntree,PUTTC,Quantite,detailsligneproduit.Id From detailsligneproduit Where RefLycee='$ref' and DateChangement $date ORDER BY DateChangement";
+        $resul1 = Produit::$bdd->query($requete1);
+        $resultl1 = $resul1->rowCount();
+        $resultt1 = $resul1->fetchAll(); 
+        if($resultl1!=0)
+        {
+        foreach ($resultt1 as $res1)
+        {
+          if($res1['SortieEntree']=="E")
+              {
+                $stock=$quantite+$res1['Quantite'];
+                $PUTTCPondere=(($quantite* $pondereinital)+($res1['Quantite']*$res1['PUTTC']))/($stock);
+                $pondereinital= $PUTTCPondere;                          
+          }  elseif ($res1['SortieEntree']=="S") {
+       $stock=$quantite-$res1['Quantite']; 
+}       $quantite=$stock;         
+           }
+           $Total=$quantite*$pondereinital;
+     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'Designation'=>$res['Designation'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
+        }
+        else {
+            $Total=$quantite*$pondereinital;
+            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
+        }
+        $tab[$i]=$tab1;  
+        $i=$i+1;    
+        
+          
+        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'Designation'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
+
+        return array($tab,$nbPages,$pageCourante); 
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+ public function GetValorisationStockMODEDate($date,$trie,$fournisseur)
+        { 
+            try 
+           {
+                   if($trie == '')
+                {
+                    $trie= "";
+                }
+                if($date != '')
+                {
+                    $date= "<='$date'";
+                }else {$date= "<= '".date("Y-m-d")."'";}
+                
+                if($fournisseur != '')
+                {
+                    $fournisseur= "='$fournisseur'";
+                }else {$fournisseur= "!=''";
+ }
+ if($trie=="AscRLycee")
+ {
+     $trie= "ORDER BY RefLycee ASC";
+ }
+ elseif($trie=="DescRLycee")
+ {
+     $trie= "ORDER BY RefLycee DESC";
+ }
+ elseif($trie=="AscRFour")
+ {
+     $trie= "ORDER BY RefFournisseur ASC";
+ }
+ elseif($trie=="DescRFour")
+ {
+     $trie= "ORDER BY RefFournisseur DESC";
+ }
+ elseif($trie=="AscFour")
+ {
+     $trie= "ORDER BY IdFournisseur ASC";
+ }
+ elseif($trie=="DescFour")
+ {
+     $trie= "ORDER BY IdFournisseur DESC";
+ }
+ else{$trie="ORDER BY Produit.id";}
+ 
+        //Récupère le nombre total d'items
+        $result0 = Produit::$bdd->query('SELECT COUNT(*) FROM Produit  Where IdSection = 2 and  IdFournisseur '.$fournisseur.' '.$trie.'');
+        $result01 = $result0->fetchAll(); 
+            foreach ($result01 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+        $requete = 'SELECT Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 2 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $resul = Produit::$bdd->query($requete);
+        $resultl = $resul->rowCount();
+        $result = $resul->fetchAll();      
+        $i=0;
+        if($resultl!=0)
+        {
+        foreach ($result as $res)
+        {
+        $pondereinital=  $res['PondereInitial'];
+        $quantite=$res['StockInitial'];
+        $ref= $res['RefLycee'];
+        $requete1 = "SELECT RefLycee,DateChangement,SortieEntree,PUTTC,Quantite,detailsligneproduit.Id From detailsligneproduit Where RefLycee='$ref' and DateChangement $date ORDER BY DateChangement";
+        $resul1 = Produit::$bdd->query($requete1);
+        $resultl1 = $resul1->rowCount();
+        $resultt1 = $resul1->fetchAll(); 
+        if($resultl1!=0)
+        {
+        foreach ($resultt1 as $res1)
+        {
+          if($res1['SortieEntree']=="E")
+              {
+                $stock=$quantite+$res1['Quantite'];
+                $PUTTCPondere=(($quantite* $pondereinital)+($res1['Quantite']*$res1['PUTTC']))/($stock);
+                $pondereinital= $PUTTCPondere;                          
+          }  elseif ($res1['SortieEntree']=="S") {
+       $stock=$quantite-$res1['Quantite']; 
+}       $quantite=$stock;         
+           }
+           $Total=$quantite*$pondereinital;
+     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'Designation'=>$res['Designation'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
+        }
+        else {
+            $Total=$quantite*$pondereinital;
+            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
+        }
+        $tab[$i]=$tab1;  
+        $i=$i+1;    
+        
+          
+        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'Designation'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
+
+        return array($tab,$nbPages,$pageCourante); 
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        public function GetValorisationStockOCDate($date,$trie)
+        { 
+            try 
+           {
+                   if($trie == '')
+                {
+                    $trie= "";
+                }
+                if($date != '')
+                {
+                    $date= "<='$date'";
+                }else {$date= "<= '".date("Y-m-d")."'";}
+
+ 
+ if($trie=="AscRLycee")
+ {
+     $trie= "ORDER BY Ref ASC";
+ }
+ elseif($trie=="DescRLycee")
+ {
+     $trie= "ORDER BY Ref DESC";
+ }
+ 
+        //Récupère le nombre total d'items
+        $result = Produit::$bdd->query("SELECT COUNT(*) FROM ObjetConfectionne Where NbRealise>0");
+        $result1 = $result->fetchAll(); 
+            foreach ($result1 as $unid)
+            {
+                $nbItems=$unid['0'];
+            }
+     
+ 
+        $itemsParPage = 10 ;
+ 
+        //Nombre de pages
+        $nbPages = ceil($nbItems/$itemsParPage);
+ 
+        //Numéro de Page courante
+        if(!isset($_GET['idPage']))
+            $pageCourante = 1;
+        elseif(is_numeric($_GET['idPage']) && $_GET['idPage']<=$nbPages)
+            $pageCourante = $_GET['idPage'];
+        else
+            $pageCourante = $nbPages;
+ 
+        //Calcul de la clause LIMIT
+        $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
+ 
+        $requete = 'SELECT Ref,Designation,Quantite,NbRealise, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0 '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $resul = Produit::$bdd->query($requete);
+        $resultl = $resul->rowCount();
+        $result = $resul->fetchAll();      
+        $i=0;
+        if($resultl!=0)
+        {
+        foreach ($result as $res)
+        {
+        $quantite=$res['StockInital'];
+        $ref= $res['Ref'];
+        $requete1 = "SELECT * From sortieoc Where RefOC='$ref' and Date $date ORDER BY Date";
+        $resul1 = Produit::$bdd->query($requete1);
+        $resultl1 = $resul1->rowCount();
+        $resultt1 = $resul1->fetchAll(); 
+        if($resultl1!=0)
+        {
+        foreach ($resultt1 as $res1)
+        {
+
+            $quantite= $quantite-$res1['Quantite'] ;
+           }
+           $Total=$quantite*$res['PrixUnitairePublic'];
+     $tab1=array('Ref'=>$ref,'Id'=>$res['Id'],'Designation'=>$res['Designation'],'TotalP'=>$Total,'Quantite'=>$quantite,'PrixEleveUnitaire'=>$res["PrixEleveUnitaire"],'PrixUnitairePublic'=>$res["PrixUnitairePublic"]);     
+        }
+        else {
+             $Total=$quantite*$res['PrixUnitairePublic'];
+            $tab1=array('Ref'=>$ref,'Designation'=>$res['Designation'],'Id'=>$res['Id'],'TotalP'=>$Total,'Quantite'=>$res['NbRealise'],'PrixEleveUnitaire'=>$res["PrixEleveUnitaire"],'PrixUnitairePublic'=>$res["PrixUnitairePublic"]);     
+        }
+        $tab[$i]=$tab1;  
+        $i=$i+1;    
+        
+          
+        }}else{$tab[0]=array('Ref'=>Null,'Designation'=>null,'Id'=>null,'Total'=>null,'QuantiteTotal'=>null,'PrixEleveUnitaire'=>null,'PrixUnitairePublic'=>null);}
+
+        return array($tab,$nbPages,$pageCourante); 
+           } 
+           catch (Exception $e) 
+           {
+                echo 'Échec lors de la connexion : ' . $e->getMessage();
+           }	
+        }
+        
+        function TMode()
+        {
+        $requete1 = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+                       (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 2 ORDER BY id";
+        $resul1 = Produit::$bdd->query($requete1);
+        return  $resultt1 = $resul1->fetchAll(); 
+        }
+        function TEsthetique()
+        {
+        $requete1 = "SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+                       (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
+                        Where IdSection = 1 ORDER BY id";
+        $resul1 = Produit::$bdd->query($requete1);
+        return  $resultt1 = $resul1->fetchAll(); 
+        }
+        function TOC()
+        {
+        $requete1 = "SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne";
+        $resul1 = Produit::$bdd->query($requete1);
+        return  $resultt1 = $resul1->fetchAll(); 
+        }
 }
 ?>

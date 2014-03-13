@@ -41,18 +41,12 @@ $LesUnite= $uniteP->affiche_Unite();
            $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);?>
             
-                  <div class="span12"> 
+                  <div class="span12">  <div class="menu"> 
                        <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('parametre.php');?>                  
                                  
                 </ul>
-<!--                <ul class="nav nav-tabs" id="profileTabs">
-                    <li><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li class="active"><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
-                    <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
-                    <li><a href="./gestionMenu.php">Gérer les menus</a></li>                   
-                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>               
-                </ul>-->
+                      </div>
                       <div class="hero-unit"> 
                       <div class="row-fluid">
                       
@@ -88,6 +82,7 @@ $LesUnite= $uniteP->affiche_Unite();
             </div>
                           <div class="alert alert-info">Vous ne pouvez pas supprimer une unité utilisée</div>
         </div>
+                  </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>

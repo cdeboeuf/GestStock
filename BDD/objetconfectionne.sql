@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS `objetconfectionne` (
   `Destination` char(30) NOT NULL,
   `DateEmi` date NOT NULL,
   `DateFabri` date NOT NULL,
-  `CoefCorrection` int(10) NOT NULL,
+  `CoefCorrection` decimal(10,2) NOT NULL,
   `NbRealise` int(2) NOT NULL,
-  `Temps` decimal(12,4) NOT NULL,
+  `Temps` decimal(10,2) NOT NULL,
   `TotalMatiere` decimal(12,4) NOT NULL,
   `TotalFrais` decimal(12,4) NOT NULL,
   `TotalCoutEleve` decimal(12,4) NOT NULL,
@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS `objetconfectionne` (
   `TotalCoutPublic` decimal(12,4) NOT NULL,
   `PrixUnitairePublic` decimal(12,4) NOT NULL,
   `PrixEleveUnitaire` decimal(12,4) NOT NULL,
-  `CoutMachinePU` decimal(12,4) NOT NULL,
+  `CoutMachinePU` decimal(10,2) NOT NULL,
+  `Quantite` int(3) NOT NULL,
+  `StockInital` int(3) NOT NULL,
   PRIMARY KEY (`Ref`), 
   FOREIGN KEY (`Professeur`) REFERENCES users(`Id`)
 );
