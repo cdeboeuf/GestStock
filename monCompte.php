@@ -13,14 +13,28 @@ if (isset($_POST['action'])=='submit')
         $confirmMdp =$_POST['confirmpsd'];
         $oldMdp=$_POST['oldpsd'];
         
-        //on compare si le nouveau passe correspond à la confirmation
+        //on compare si le nouveau passe correspond à la confirmation    
         if ($Mdp == $confirmMdp)
         {
-            //si oui on update le nouveau mot de passe dans la bdd
-           $reponse= $user->MajMdp($Mdp, $oldMdp);
+             //si oui on update le nouveau mot de passe dans la bdd
+             $reponse= $user->MajMdp($Mdp, $oldMdp);
 
+            //on compare l'ancien mot de passe aux champs ancien mot de passe
+            if($oldMdp == $OLD)
+            {
+                //on compare si le nouveau passe correspond à la confirmation
+                if ($Mdp == $confirmMdp)
+                {
+                    //si oui on update le nouveau mot de passe dans la bdd
+                    $user->MajMdp($Mdp, $Login);
+                }
+            }
+            else
+            {
+                $rep = "Les mot de passes ne correspondent pas";
+            }
         }
- }
+}
 ?>
 
 
@@ -115,5 +129,5 @@ if (isset($_POST['action'])=='submit')
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>
-</html>
 
+</html>
