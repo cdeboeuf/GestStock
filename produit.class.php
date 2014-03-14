@@ -453,14 +453,14 @@ include('connexion.php');
         
         public function MajValorisationStock($QuantiteTotal, $Id)
         {
-            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal' where Produit.Id = '$Id';"; 
+            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal',StockInital='$QuantiteTotal' where Produit.Id = '$Id';"; 
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 
         }
          public function MajValorisationStockOC($QuantiteTotal, $Id)
         {
-            $requete1 = "UPDATE objetconfectionne SET Quantite = '$QuantiteTotal' where Id = '$Id';"; 
+            $requete1 = "UPDATE objetconfectionne SET Quantite = '$QuantiteTotal',StockInital='$QuantiteTotal' where Id = '$Id';"; 
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 

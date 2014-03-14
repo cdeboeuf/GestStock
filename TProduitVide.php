@@ -62,21 +62,16 @@ $Esth=$produit->TEsthetique();
                                             Désignation
                                         </th>
 
-                                        <th>
-                                            Quantité
-                                        </th>
-                                        
+                                           
                                         <th>
                                             Coloris
                                         </th>
+                                        <th>
+                                            Quantité
+                                        </th>
+                                     
 
-                                        <th>
-                                            Prix Pondéré
-                                        </th>
-                                        
-                                        <th>
-                                            Total
-                                        </th>
+                                    
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,20 +97,14 @@ $Esth=$produit->TEsthetique();
                                                     echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                   echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); 
-                                                    echo "</td>";
-                                                    echo "<td>";
+                                                      echo "<td>";
                                                     echo $value["Coloris"];
                                                     echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
+                                                    echo "<td>";
+                                                   echo " "; 
+                                                    echo "</td>";
                                                   
-                                                    echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value['Total'],2,$dec_point = ',' ,$thousands_sep = ' ') ;
-                                                 
-                                                    echo "</td>";
+                                                    
                                                 echo "</tr>";
                                 
                                                 
@@ -157,23 +146,16 @@ $Esth=$produit->TEsthetique();
 
                                         <th>
                                             Désignation
+                                        </th> 
+                                        <th>
+                                            Coloris
                                         </th>
 
                                         <th>
                                             Quantité
                                         </th>
                                         
-                                        <th>
-                                            Coloris
-                                        </th>
-
-                                        <th>
-                                            Prix Pondéré
-                                        </th>
-                                        
-                                        <th>
-                                            Total
-                                        </th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -198,21 +180,14 @@ $Esth=$produit->TEsthetique();
                                                     echo "</td>";
                                                     echo "<td nowrap>";
                                                     echo $value["Designation"];
-                                                    echo "</td>";
-                                                    echo "<td>";
-                                                   echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); 
-                                                    echo "</td>";
+                                                    echo "</td>"; 
                                                     echo "<td>";
                                                     echo $value["Coloris"];
+                                                    echo "</td>";  
+                                                    echo "<td>";
+                                                   echo " "; 
                                                     echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
-                                                  
-                                                    echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value['Total'],2,$dec_point = ',' ,$thousands_sep = ' ') ;
-                                                 
-                                                    echo "</td>";
+                                                                                                 
                                                 echo "</tr>";
                                 
                                                 
@@ -249,19 +224,7 @@ $Esth=$produit->TEsthetique();
 
                                         <th>
                                             Quantité
-                                        </th>
-                                        
-                                        <th>
-                                            Prix unitaire éleve
-                                        </th>
-
-                                        <th>
-                                            Prix unitaire public
-                                        </th>
-                                        
-                                        <th>
-                                            Total public
-                                        </th>
+                                        </th>                                      
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -284,19 +247,8 @@ $Esth=$produit->TEsthetique();
                                                     echo $value["Designation"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    echo number_format($value["Quantite"],2,$dec_point = ',' ,$thousands_sep = ' ');
-                                                
-                                                    echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value["PrixEleveUnitaire"],2,$dec_point = ',' ,$thousands_sep = ' ');
-                                                    echo "</td>";
-                                                    echo "<td nowrap>";
-                                                    echo number_format($value["PrixUnitairePublic"],2,$dec_point = ',' ,$thousands_sep = ' ');
-                                                
-                                                    echo "</td>";
-                                                    echo "<td nowrap>";
-                                                   echo number_format($value['TotalP'],2,$dec_point = ',' ,$thousands_sep = ' ');                                                                                                                               
-                                                    echo "</td>";
+                                                    echo " ";                                               
+                                                    echo "</td>";                                                                                                                                                 
                                                 echo "</tr>";
                                 
                                             

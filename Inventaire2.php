@@ -132,14 +132,14 @@ if(isset($_POST['four']))
                                         <th>
                                             Désignation
                                         </th>
-
+  <th>
+                                            Coloris
+                                        </th>
                                         <th>
                                             Quantité
                                         </th>
                                         
-                                        <th>
-                                            Coloris
-                                        </th>
+                                      
 
                                         <th>
                                             Prix Pondéré
@@ -175,6 +175,9 @@ if(isset($_POST['four']))
                                                     echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
+                                                      echo "<td>";
+                                                    echo $value["Coloris"];
+                                                    echo "</td>";
                                                     echo "<td>";
                                                     ?>  
                                                         <div class="controls">
@@ -183,9 +186,7 @@ if(isset($_POST['four']))
                                                         </div>
                                                     <?php
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                    echo $value["Coloris"];
-                                                    echo "</td>";
+                                                  
                                                     echo "<td>";
                                                     echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
                                                     ?><input type="hidden" name="PUTTCPondere[]" id="PUTTCPondere<?php echo $nb ?>" value="<?php echo $value["PUTTCPondere"] ?>">
@@ -214,11 +215,10 @@ if(isset($_POST['four']))
                               <?php if($produit->QuantiteNonModifiable()==0) { ?>  <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Enregistrer</button> <?php } ?>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                   <?php 
-                                $annee=date('Y');
-                               $annee1=(int)$annee+1;?>
-                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $annee ?></button>
+                               $annee1=(int)$_SESSION['annee'] +1;?>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $_SESSION['annee']  ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $_SESSION['annee'] ?></button>
                                 <button type="submit" class="btn btn-info" value="Variation" name="Variation" >Variation de stocks</button>
-                                 </div>
+                                </div>
                                 </form>
                                  <?php  $pagination->affiche('inventaire1.php','idPage',$nbPages,$pageCourante,2);
                                 if(isset($_POST['annee']))

@@ -174,9 +174,9 @@ if(isset($_POST['rechercheDate']))
                               <?php if($produit->QuantiteNonModifiable()==0) { ?>  <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Enregistrer</button> <?php } ?>
                                 <button type="submit" class="btn btn-primary" onClick="window.print()">Imprimer</button>
                                   <?php 
-                                $annee=date('Y');
-                               $annee1=(int)$annee+1;?>
-                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $annee ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $annee ?></button>
+                        
+                               $annee1=(int)$_SESSION['annee'] +1;?>
+                                <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $_SESSION['annee']  ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $_SESSION['annee'] ?></button>
                                 <button type="submit" class="btn btn-info" value="Variation" name="Variation" >Variation de stocks</button>
                                  </div>
                                 </form>

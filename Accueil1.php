@@ -145,7 +145,7 @@ if(isset($_GET['trie']))
                                                         <?php $idlien = $value["RefLycee"]; ?>
                                                        
                                                         <?php $lien = "historique.php?num=$idlien"; ?> 
-                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
+                                                    <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";
                                                     echo "</td>";

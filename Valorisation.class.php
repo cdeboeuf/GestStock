@@ -224,7 +224,7 @@ class Valorisation
     Function donneeobjetconfectionne()
     {
          echo "Copie des donnees de la table Objet Confectionné";
-         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`objetconfectionne`(`Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,`Quantite`,`StockInital`) SELECT `Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,`Quantite`,`Quantite` FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` where `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` WHERE `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Quantite`=0 And `".Valorisation::$anneeancienne."`.`objetconfectionne`.`NbRealise`>0)";
+         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`objetconfectionne`(`Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,`Quantite`) SELECT `Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,'NULL' FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` where `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` WHERE `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Quantite`=0 And `".Valorisation::$anneeancienne."`.`objetconfectionne`.`NbRealise`>0)";
          Valorisation::$bddnew->query($req);
     }    
     
@@ -238,7 +238,7 @@ class Valorisation
     Function donneeproduit()
     {
          echo "Copie des données de la table produit";
-         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`produit`(`RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,`QuantiteTotal`,`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`StockInitial`,`PondereInitial`) SELECT `RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,`QuantiteTotal`,`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`QuantiteTotal`,`PUTTCPondere` FROM `".Valorisation::$anneeancienne."`.`produit` where `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` FROM `".Valorisation::$anneeancienne."`.`produit` WHERE `".Valorisation::$anneeancienne."`.`produit`.`QuantiteTotal`=0 And `".Valorisation::$anneeancienne."`.`produit`.`Obselete`=1)";
+         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`produit`(`RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,`QuantiteTotal`,`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`PondereInitial`) SELECT `RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,'NULL',`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`PUTTCPondere` FROM `".Valorisation::$anneeancienne."`.`produit` where `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` FROM `".Valorisation::$anneeancienne."`.`produit` WHERE `".Valorisation::$anneeancienne."`.`produit`.`QuantiteTotal`=0 And `".Valorisation::$anneeancienne."`.`produit`.`Obselete`=1)";
          Valorisation::$bddnew->query($req);
     } 
     
@@ -291,12 +291,6 @@ class Valorisation
         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`acces` SELECT * FROM  `".Valorisation::$anneeancienne."`.`acces`";
         Valorisation::$bddnew->query($req);
     }
-//       Function donneesortieoc()
-//    {
-//        echo "Copie des données de la table sortieoc";
-//        $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`sortieoc` SELECT * FROM  `".Valorisation::$anneeancienne."`.`sortieoc`";
-//        Valorisation::$bddnew->query($req);
-//    }
           Function donneesousmenu()
     {
         echo "Copie des données de la table sousmenu";
