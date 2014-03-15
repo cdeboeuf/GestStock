@@ -726,6 +726,18 @@ include('connexion.php');
             header('location:newProduit.php?rep=LeProduitEstAjoute');
         }
         
+                
+        function obtenirstock($ref)
+        {
+            $result = Produit::$bdd->query(" Select QuantiteTotal from Produit where RefLycee = '$ref'; ");
+            $result1 = $result->fetchAll(); 
+            foreach ($result1 as $sto)
+            {
+                $stock =$sto['0'];                
+            }
+            return $stock;
+        }
+        
          public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
@@ -752,6 +764,33 @@ include('connexion.php');
                 $this->retour = Produit::$bdd->prepare($requete2);
                 $this->retour->execute();
                 $rep = "La sortie à été effectué.";
+                               
+                if(!empty($OC))
+                {
+                    $reqq = "SELECT PUTTCPondere FROM produit where RefLycee = '$RefLycee';";
+                    $this->retour = Produit::$bdd->prepare($reqq);
+                    $puTTC = $this->retour->execute();
+
+                    $stockOCajouter = $Quantite;
+
+                    $req1 = "INSERT INTO ligneoc (RefOC, RefLycee, Quantite, PuTTC) VALUES ('$OC','$RefLycee', '$stockOCajouter', '$puTTC'); ";
+                    $this->retour = Produit::$bdd->prepare($req1);
+                    $this->retour->execute();
+                }
+                else
+                {
+                    $stockaenlever = $Quantite;
+
+                    $Stock = $this->obtenirstock($RefLycee);
+                    $newstock = $Stock - $stockaenlever;
+
+                    $req1 = "UPDATE Produit SET QuantiteTotal = '$newstock' where RefLycee = '$RefLycee'; ";
+                    $this->retour = Produit::$bdd->prepare($req1);
+                    $this->retour->execute();
+                }
+                
+                
+                
             }
             else
             {
