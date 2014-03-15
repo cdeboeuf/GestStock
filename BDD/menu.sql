@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS `menu` (
-  `Idtype` int(3) NOT NULL,
-  `IdLien` int(3) NOT NULL,
-  PRIMARY KEY (`Idtype`,`IdLien`),
-  FOREIGN KEY (`Idtype`) REFERENCES typeuser(`Id`),
-  FOREIGN KEY (`IdLien`) REFERENCES lien(`Id`)
+  `Id` int(2) NOT NULL,
+  `Adresse` char(20) CHARACTER SET utf8 NOT NULL,
+  `Detail` char(50) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`Id`)
 )

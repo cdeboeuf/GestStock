@@ -63,9 +63,11 @@ if(isset($_GET['trie']))
             $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);?>
             <div class="span12">
+                <div class="menu">
                 <ul class="nav nav-tabs" id="profileTabs">
                 <?php   include('Accueil.php'); ?>
                 </ul>
+                </div>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#F6CECE">
@@ -168,7 +170,7 @@ if(isset($_GET['trie']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td nowrap>";
-                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
+                                                    echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
                                                   
                                                     echo "</td>";
                                                     echo "<td nowrap>";

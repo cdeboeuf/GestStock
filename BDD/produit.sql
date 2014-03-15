@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `produit` (
-  `RefLycee` char(30) NOT NULL,
+`RefLycee` varchar(30) NOT NULL,
   `Id` int(3) NOT NULL,
-  `RefFournisseur` char(30) NOT NULL,
+  `RefFournisseur` varchar(30) NOT NULL,
   `Designation` varchar(100) NOT NULL,
   `IdUniteAchat` int(3) NOT NULL,
   `IdFournisseur` int(3) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `PUTTCPondere` decimal(12,4) NOT NULL,
   `Coloris` char(15) NOT NULL,
   `IdSection` int(3) NOT NULL,
-  `StockInitial` int(2) NOT NULL,
+  `StockInitial` decimal(12,4) NOT NULL,
   `PondereInitial` decimal(12,4) NOT NULL,
   PRIMARY KEY (`RefLycee`),
   FOREIGN KEY (`IdFournisseur`) REFERENCES fournisseurs(`Id`),

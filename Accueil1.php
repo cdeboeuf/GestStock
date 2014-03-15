@@ -60,12 +60,10 @@ if(isset($_GET['trie']))
               $page=pathinfo($_SERVER['PHP_SELF']);
             $menu->Verifdroit($page['basename']);?>
             <div class="span12">
+                <div class="menu">
                 <ul class="nav nav-tabs" id="profileTabs">
-                    <?php include('accueil.php') ?>
-                 <!--   <li  class="active"><a href="./Accueil1.php">Mode</a></li>
-                    <li><a href="./Accueil2.php">Esthétique</a></li>
-                    <li><a href="./Accueil3.php">Objet Confectionné</a></li>-->
-                </ul>
+                    <?php include('accueil.php') ?>             
+                </ul></div>
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#CEF6CE" >
@@ -147,7 +145,7 @@ if(isset($_GET['trie']))
                                                         <?php $idlien = $value["RefLycee"]; ?>
                                                        
                                                         <?php $lien = "historique.php?num=$idlien"; ?> 
-                                                        <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
+                                                    <input type="button" name="lien1" value="<?php echo $value["Id"] ?>" onclick="self.location.href='<?php echo $lien?>'"> 
                                                         <?php 
                                                     echo "</td>";
                                                     echo "</td>";
@@ -170,7 +168,7 @@ if(isset($_GET['trie']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td nowrap>";
-                                                    echo number_format($value["PUTTCPondere"],2,$dec_point = ',' ,$thousands_sep = ' ');
+                                                    echo number_format($value["PUTTCPondere"],4,$dec_point = ',' ,$thousands_sep = ' ');
                                                   
                                                     echo "</td>";
                                                     echo "<td nowrap>";
@@ -206,4 +204,3 @@ if(isset($_GET['trie']))
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
-

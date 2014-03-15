@@ -313,7 +313,8 @@ if(isset($_POST['RefFournisseurs']))
                                                         {
                                                           echo "<option value=".$valeur1['Id']."|".$valeur1['Taux']." ";
                                                             
-                                                          if(!empty($_GET)|| !empty($_POST)){$val =$value["dIdTVA"];}
+                                                          if(!empty($_GET)){$val =$value["dIdTVA"];} elseif(!empty($_POST)){$postData = explode( '|', $_POST['CodeTVA'] );
+         $Id_TVA = $postData[0]; $val =$Id_TVA ;}
                                                           
                                                           if($val == $valeur1["Id"])
                                                           {

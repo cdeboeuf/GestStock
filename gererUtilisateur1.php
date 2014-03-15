@@ -87,16 +87,19 @@ $LesUsers= $usersP->affiche_user();
                $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);
            ?><div class="span12">
+               <div class="menu">
                 <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('gererUtilisateur.php');?>                  
                                  
-                </ul>
+                </ul></div>
                       <div class="hero-unit"> 
                           <div class="row-fluid">
                              <?php
                              if(isset($reponse))
                              {
-                                 ?><div class="alert alert-warning"><?php echo $reponse?></div><?php
+                                 ?><div class="alert alert-warning"><?php echo $reponse?> <div class="menu"> <button class="btn btn-info" onclick="print()">Imprimer </button></div></div>
+                                   
+                                            <?php
                              }
                              if(isset($rep)){ 
                                  if ($rep=="L'utilisateur a été ajouté"){?>
@@ -104,7 +107,7 @@ $LesUsers= $usersP->affiche_user();
                              <div class="alert alert-success "><?php echo $rep;} else{?></div>
                          <div class="alert alert-error"><?php echo $rep;}?></div>
                          <?php } ?>
-                        
+                         <div  class="menu">
                       <div class='<?php if(isset($_POST['action'])){echo 'span3';}else{echo 'span3';}?>'>
                 <form name="usernew" action="gererUtilisateur1.php" method="post">
                     <label class="badge" for="user">Nouvel Utilisateur :</label> <input type="text" name="user" id="user">
@@ -174,11 +177,17 @@ $LesUsers= $usersP->affiche_user();
                     }
                     ?>          
                           </div>
-                    
+                            
                          <br><br><br><br>
-            </div><div class="alert alert-info">Vous ne pouvez pas supprimer un utilisateur qui a créé un objet confectionné non clôturé</div>
+                         <div class="span12">  <div class="alert alert-info">Vous ne pouvez pas supprimer un utilisateur qui a créé un objet confectionné non clôturé</div>
+              <div class="btn-group ">                            
+                  
+                              <a href="TousUtilisateur.php" class="btn btn-info">Imprimer tous les Utilisateurs</a>
+   
+              </div> </div></div>
         </div>
            </div>
+        </div>
         </div>
         <!--Js -->
         <script src="http://code.jquery.com/jquery.js"></script>

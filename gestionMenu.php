@@ -54,10 +54,10 @@ $LesType= $Typeuser->affiche_Type();
  
             if(isset($rep)){echo $rep;}?>
                   <div class="span12"> 
-                <ul class="nav nav-tabs" id="profileTabs">
+               <div class="menu"> <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('parametre.php');?>                  
                                  
-                </ul>
+                </ul></div>
                 <div class="hero-unit"> 
                     
                            <div class="span3">

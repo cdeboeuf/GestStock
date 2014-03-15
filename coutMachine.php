@@ -34,15 +34,9 @@ if(isset($_POST['cout']))
            $menu->Verifdroit($page['basename']);?>
            
                   <div class="span12"> 
-                <ul class="nav nav-tabs" id="profileTabs">
-                    <?php include('parametre.php');?>
-<!--                    <li ><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
-                    <li class="active"><a href="./coutMachine.php">Modifier le coût machine</a></li>
-                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li><a href="./gestionMenu.php">Gérer les menus</a></li>                   -->
-                                 
-                </ul><div class="hero-unit"> 
+               <div class="menu"> <ul class="nav nav-tabs" id="profileTabs">
+                    <?php include('parametre.php');?>     
+                </ul></div><div class="hero-unit"> 
                     <?php if (isset($_POST['cout'])){
                       
                    ?>

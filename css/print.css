@@ -1,7 +1,4 @@
-/*!.menu{display: none;}
-.page-header{display: none;}
-
- /*!
+/*
  * Bootstrap v2.3.1
  *
  * Copyright 2012 Twitter, Inc
@@ -181,8 +178,30 @@ textarea {
     box-shadow: none !important;
     
   }
+   .hero-unit-tab{
+     overflow: auto;
+     padding:20px;
+     margin-bottom:30px;
+     font-size:10px;
+     font-weight:200;
+     line-height:30px;
+     color:inherit;
+     background-color:#eee;
+     -webkit-border-radius:6px;
+     -moz-border-radius:6px;
+     border-radius:6px
+ }
+ .hero-unit-tab h1{
+     margin-bottom:0;
+     font-size:60px;
+     line-height:1;
+     letter-spacing:-1px;
+     color:inherit
+ }
+ .hero-unit-tab li{line-height:30px}
   input{display: none;}
   .menu{display: none;}
+  .sousmenu{display: none;}
 .page-header{display: none;}
   a,
   a:visited {
@@ -2011,6 +2030,7 @@ table {
 
 .table {
   width: 100%;
+    font-size: 10px;
   margin-bottom: 20px;
 }
 
@@ -2019,16 +2039,18 @@ table {
   padding: 8px;
   line-height: 20px;
   text-align: left;
+    font-size: 10px;
   vertical-align: top;
   border-top: 1px solid #dddddd;
 }
 
 .table th {
   font-weight: bold;
+    font-size: 10px;
 }
 
 .table thead th {
-  vertical-align: bottom;
+  vertical-align: bottom; font-size: 10px;
 }
 
 .table caption + thead tr:first-child th,
@@ -2036,15 +2058,15 @@ table {
 .table colgroup + thead tr:first-child th,
 .table colgroup + thead tr:first-child td,
 .table thead:first-child tr:first-child th,
-.table thead:first-child tr:first-child td {
+.table thead:first-child tr:first-child td { font-size: 10px;
   border-top: 0;
 }
 
-.table tbody + tbody {
+.table tbody + tbody { font-size: 10px;
   border-top: 2px solid #dddddd;
 }
 
-.table .table {
+.table .table {  font-size: 10px;
   background-color: #ffffff;
 }
 
@@ -2054,6 +2076,7 @@ table {
 }
 
 .table-bordered {
+      font-size: 10px;
   border: 1px solid #dddddd;
   border-collapse: separate;
   *border-collapse: collapse;
@@ -2065,6 +2088,7 @@ table {
 
 .table-bordered th,
 .table-bordered td {
+      font-size: 10px;
   border-left: 1px solid #dddddd;
 }
 
@@ -2076,13 +2100,13 @@ table {
 .table-bordered colgroup + tbody tr:first-child td,
 .table-bordered thead:first-child tr:first-child th,
 .table-bordered tbody:first-child tr:first-child th,
-.table-bordered tbody:first-child tr:first-child td {
+.table-bordered tbody:first-child tr:first-child td {  font-size: 10px;
   border-top: 0;
 }
 
 .table-bordered thead:first-child tr:first-child > th:first-child,
 .table-bordered tbody:first-child tr:first-child > td:first-child,
-.table-bordered tbody:first-child tr:first-child > th:first-child {
+.table-bordered tbody:first-child tr:first-child > th:first-child {  font-size: 10px;
   -webkit-border-top-left-radius: 4px;
           border-top-left-radius: 4px;
   -moz-border-radius-topleft: 4px;
@@ -2090,7 +2114,7 @@ table {
 
 .table-bordered thead:first-child tr:first-child > th:last-child,
 .table-bordered tbody:first-child tr:first-child > td:last-child,
-.table-bordered tbody:first-child tr:first-child > th:last-child {
+.table-bordered tbody:first-child tr:first-child > th:last-child {  font-size: 10px;
   -webkit-border-top-right-radius: 4px;
           border-top-right-radius: 4px;
   -moz-border-radius-topright: 4px;
@@ -2100,7 +2124,7 @@ table {
 .table-bordered tbody:last-child tr:last-child > td:first-child,
 .table-bordered tbody:last-child tr:last-child > th:first-child,
 .table-bordered tfoot:last-child tr:last-child > td:first-child,
-.table-bordered tfoot:last-child tr:last-child > th:first-child {
+.table-bordered tfoot:last-child tr:last-child > th:first-child {  font-size: 10px;
   -webkit-border-bottom-left-radius: 4px;
           border-bottom-left-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
@@ -2110,19 +2134,19 @@ table {
 .table-bordered tbody:last-child tr:last-child > td:last-child,
 .table-bordered tbody:last-child tr:last-child > th:last-child,
 .table-bordered tfoot:last-child tr:last-child > td:last-child,
-.table-bordered tfoot:last-child tr:last-child > th:last-child {
+.table-bordered tfoot:last-child tr:last-child > th:last-child {  font-size: 10px;
   -webkit-border-bottom-right-radius: 4px;
           border-bottom-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
 }
 
-.table-bordered tfoot + tbody:last-child tr:last-child td:first-child {
+.table-bordered tfoot + tbody:last-child tr:last-child td:first-child {  font-size: 10px;
   -webkit-border-bottom-left-radius: 0;
           border-bottom-left-radius: 0;
   -moz-border-radius-bottomleft: 0;
 }
 
-.table-bordered tfoot + tbody:last-child tr:last-child td:last-child {
+.table-bordered tfoot + tbody:last-child tr:last-child td:last-child {  font-size: 10px;
   -webkit-border-bottom-right-radius: 0;
           border-bottom-right-radius: 0;
   -moz-border-radius-bottomright: 0;
@@ -2131,7 +2155,7 @@ table {
 .table-bordered caption + thead tr:first-child th:first-child,
 .table-bordered caption + tbody tr:first-child td:first-child,
 .table-bordered colgroup + thead tr:first-child th:first-child,
-.table-bordered colgroup + tbody tr:first-child td:first-child {
+.table-bordered colgroup + tbody tr:first-child td:first-child {  font-size: 10px;
   -webkit-border-top-left-radius: 4px;
           border-top-left-radius: 4px;
   -moz-border-radius-topleft: 4px;
@@ -2140,7 +2164,7 @@ table {
 .table-bordered caption + thead tr:first-child th:last-child,
 .table-bordered caption + tbody tr:first-child td:last-child,
 .table-bordered colgroup + thead tr:first-child th:last-child,
-.table-bordered colgroup + tbody tr:first-child td:last-child {
+.table-bordered colgroup + tbody tr:first-child td:last-child {  font-size: 10px;
   -webkit-border-top-right-radius: 4px;
           border-top-right-radius: 4px;
   -moz-border-radius-topright: 4px;

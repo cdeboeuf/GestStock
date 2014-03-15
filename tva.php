@@ -44,18 +44,11 @@ $LesTva= $tvaP->affiche_Tva();
                $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);
            ?><div class="span12"> 
-                <ul class="nav nav-tabs" id="profileTabs">
+              <div class="menu">    <ul class="nav nav-tabs" id="profileTabs">
                     <?php include('parametre.php');?>                  
                                  
-                </ul>
-<!--                <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./parametre.php">Modifier le taux de TVA</a></li>
-                    <li><a href="./uniteAchat.php">Modifier une unité d'achat</a></li>
-                    <li><a href="./coutMachine.php">Modifier le coût machine</a></li>
-                    <li><a href="./coefCorrection.php">Modifier le coefficient de correction</a></li>   
-                    <li><a href="./gestionMenu.php">Gerer les menus</a></li>                   
-                                
-                </ul>-->
+                </ul></div>
+
                       <div class="hero-unit"> 
                       <div class="row-fluid">
                       

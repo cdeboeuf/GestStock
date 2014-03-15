@@ -45,10 +45,10 @@ $LesFournisseurs= $fournisseurP->affiche_Fournisseurs();
                $page=pathinfo($_SERVER['PHP_SELF']);
            $menu->Verifdroit($page['basename']);
            ?><div class="span12">
-                <ul class="nav nav-tabs" id="profileTabs">
+                <div class="menu"><ul class="nav nav-tabs" id="profileTabs">
                     <?php include('fournisseur.php');?>                  
                                  
-                </ul>
+                </ul></div>
                       <div class="hero-unit"> 
                       <div class="row-fluid">
                       

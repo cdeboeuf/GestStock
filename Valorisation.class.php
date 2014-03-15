@@ -65,7 +65,13 @@ class Valorisation
         $this->tableligneoc();
         $this->donneeligneoc();
         $this->tabledetailsligneproduit();
-        $this->donneedetailsligneproduit();
+       // $this->donneedetailsligneproduit();
+        $this->tableacces();
+        $this->donneeacces();
+        $this->tablesortieoc();
+       // $this->donneesortieoc();
+        $this->tablesousmenu();
+        $this->donneesousmenu();
     }
 
         Function tabledetailsligneproduit()
@@ -166,6 +172,24 @@ class Valorisation
            $req=file_get_contents('./BDD/utilisation.sql');
            Valorisation::$bddnew->query($req);
     }
+      Function tableacces()
+    {
+        echo "création de la table acces <br>";
+           $req=file_get_contents('./BDD/acces.sql');
+           Valorisation::$bddnew->query($req);
+    }
+       Function tablesortieoc()
+    {
+        echo "création de la table sortieoc <br>";
+           $req=file_get_contents('./BDD/sortieoc.sql');
+           Valorisation::$bddnew->query($req);
+    }
+       Function tablesousmenu()
+    {
+        echo "création de la table sousmenu <br>";
+           $req=file_get_contents('./BDD/sousmenu.sql');
+           Valorisation::$bddnew->query($req);
+    }
     ///////////////////////////////////////////////////////////////////////////
     //////// DONNEES //////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
@@ -186,7 +210,7 @@ class Valorisation
     Function donneeligneoc()
     {
           echo "copie des données de la table ligneOC";
-           $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`ligneoc` SELECT * FROM  `".Valorisation::$anneeancienne."`.`ligneoc` INNER JOINE `".Valorisation::$anneeancienne."`.`objetconfectionne WHERE `".Valorisation::$anneeancienne."`.`objectconfectionne.NbRealise=Null``";
+           $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`ligneoc` SELECT * FROM `".Valorisation::$anneeancienne."`.`ligneoc` where `".Valorisation::$anneeancienne."`.`ligneoc`.`RefOc` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` WHERE `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Quantite`=0 And `".Valorisation::$anneeancienne."`.`objetconfectionne`.`NbRealise`>0)";
            Valorisation::$bddnew->query($req);
     }    
     
@@ -200,7 +224,7 @@ class Valorisation
     Function donneeobjetconfectionne()
     {
          echo "Copie des donnees de la table Objet Confectionné";
-         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`objetconfectionne` SELECT * FROM  `".Valorisation::$anneeancienne."`.`objetconefectionne` WHERE NbRealise=NULL";
+         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`objetconfectionne`(`Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,`Quantite`) SELECT `Ref`,`Id`,`Annee`,`Designation`,`NbPrevision`,`Professeur`,`Destination`,`DateEmi`,`DateFabri`,`CoefCorrection`,`NbRealise`,`Temps`,`TotalMatiere`,`TotalFrais`,`TotalCoutEleve`,`CoutMachine`,`TotalCoutPublic`,`PrixUnitairePublic`,`PrixEleveUnitaire`,`CoutMachinePU`,'NULL' FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` where `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Ref` FROM `".Valorisation::$anneeancienne."`.`objetconfectionne` WHERE `".Valorisation::$anneeancienne."`.`objetconfectionne`.`Quantite`=0 And `".Valorisation::$anneeancienne."`.`objetconfectionne`.`NbRealise`>0)";
          Valorisation::$bddnew->query($req);
     }    
     
@@ -214,7 +238,7 @@ class Valorisation
     Function donneeproduit()
     {
          echo "Copie des données de la table produit";
-         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`produit` SELECT * FROM  `".Valorisation::$anneeancienne."`.`produit`";
+         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`produit`(`RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,`QuantiteTotal`,`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`PondereInitial`) SELECT `RefLycee`,`Id`,`RefFournisseur`,`Designation`,`IdUniteAchat`,`IdFournisseur`,'NULL',`Obselete`,`StockAlerte`,`PUTTCPondere`,`Coloris`,`IdSection`,`PUTTCPondere` FROM `".Valorisation::$anneeancienne."`.`produit` where `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` NOT IN (SELECT `".Valorisation::$anneeancienne."`.`produit`.`RefLycee` FROM `".Valorisation::$anneeancienne."`.`produit` WHERE `".Valorisation::$anneeancienne."`.`produit`.`QuantiteTotal`=0 And `".Valorisation::$anneeancienne."`.`produit`.`Obselete`=1)";
          Valorisation::$bddnew->query($req);
     } 
     
@@ -261,7 +285,18 @@ class Valorisation
         $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`utilisation` SELECT * FROM  `".Valorisation::$anneeancienne."`.`utilisation`";
         Valorisation::$bddnew->query($req);
     }
-    
+       Function donneeacces()
+    {
+        echo "Copie des données de la table acces";
+        $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`acces` SELECT * FROM  `".Valorisation::$anneeancienne."`.`acces`";
+        Valorisation::$bddnew->query($req);
+    }
+          Function donneesousmenu()
+    {
+        echo "Copie des données de la table sousmenu";
+        $req="INSERT INTO `".Valorisation::$anneenouvelle."`.`sousmenu` SELECT * FROM  `".Valorisation::$anneeancienne."`.`sousmenu`";
+        Valorisation::$bddnew->query($req);
+    }
     
 }
 ?>

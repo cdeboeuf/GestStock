@@ -184,6 +184,13 @@ $string .= $chaine[rand()%strlen($chaine)];
 }
 return $string;
 }
-        
+                function Tuser()
+    {
+        $req="SELECT users.Id, Login, Details
+From users left join typeuser on users.Type=typeuser.Id
+group by Login,Id";  
+        $rs = Users::$bdd->query($req);
+        return $result = $rs->fetchAll();
+    }
 }
 ?>

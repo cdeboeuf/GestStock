@@ -60,14 +60,8 @@ if(isset($_GET['trie']))
             $menu->Verifdroit($page['basename']);?>
             <div class="span12">
                  <ul class="nav nav-tabs" id="profileTabs">
-                    <?php include('ajoutProduit.php');?>                  
-                                 
+                    <?php include('ajoutProduit.php');?>                                                  
                 </ul>
-<!--                <ul class="nav nav-tabs" id="profileTabs">
-                    <li  class="active"><a href="./newProduit.php">Mode</a></li>
-                    <li><a href="./newProduit2.php">Esthétique</a></li>
-                    <li><a href="./newProduit4.php">Nouvel ajout</a></li>
-                </ul>-->
                 <div class="tab-content">
                     <div class="tab-pane active">   
                         <div class="hero-unit-tab" style="background-color:#CEF6CE">
