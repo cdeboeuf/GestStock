@@ -21,7 +21,9 @@ INNER JOIN menu ON sousmenu.menu = menu.Id
 WHERE typeuser.Id =  ".$_SESSION['type']."
 GROUP BY menu.Detail, menu.adresse" ;  
         $rs = Menu::$bdd->query($req);
-        return $result = $rs->fetchAll();
+        $result = $rs->fetchAll();
+        $resulta = $rs->rowCount();
+        return array($result,$resulta);
     }
     function affiche_sous_menu($menu)
     {
@@ -49,6 +51,26 @@ WHERE typeuser.Id =".$_SESSION['type']." ;";
         $rs = Menu::$bdd->query($req);
         return $result = $rs->fetchAll();
     }
+    
+           function affiche_page()
+    {
+        $req="SELECT  lien.Details as Mdetail, lien.adresse as Madresse
+FROM typeuser
+INNER JOIN acces ON typeuser.Id = acces.IdType
+INNER JOIN lien ON acces.IdLien = lien.Id
+INNER JOIN sousmenu ON lien.Id = sousmenu.sousmenu
+INNER JOIN menu ON sousmenu.menu = menu.Id
+WHERE typeuser.Id =".$_SESSION['type']." ORDER BY Madresse LIMIT 0,1;";
+                
+        $rs = Menu::$bdd->query($req);
+        $result = $rs->fetchAll();
+        foreach ($result as $lien)
+        {
+            $lien['Madresse'];
+        }
+        return  $lien['Madresse'];
+    }
+    
         function affiche_menu_user($type)
     {
         $req="SELECT * From typeuser INNER JOIN Acces ON typeuser.Id=Acces.Idtype INNER JOIN lien ON Acces.IdLien=lien.Id WHERE typeuser.Id=".$type.";" ;  

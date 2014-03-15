@@ -6,7 +6,7 @@ $user = new Users();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
-if(isset($_POST['action']))
+
 if (isset($_POST['action'])=='submit')
 {
         $Mdp =$_POST['psd'];
@@ -18,23 +18,12 @@ if (isset($_POST['action'])=='submit')
         {
              //si oui on update le nouveau mot de passe dans la bdd
              $reponse= $user->MajMdp($Mdp, $oldMdp);
-
-            //on compare l'ancien mot de passe aux champs ancien mot de passe
-            if($oldMdp == $OLD)
-            {
-                //on compare si le nouveau passe correspond à la confirmation
-                if ($Mdp == $confirmMdp)
-                {
-                    //si oui on update le nouveau mot de passe dans la bdd
-                    $user->MajMdp($Mdp, $Login);
-                }
-            }
+        }
             else
             {
-                $rep = "Les mot de passes ne correspondent pas";
+                $reponse = "Les mot de passes ne correspondent pas";
             }
         }
-}
 ?>
 
 
@@ -106,8 +95,7 @@ if (isset($_POST['action'])=='submit')
                                   
                                     if (isset($reponse))
                                     {                                   
-                                        ?>  <div class="alert">  
-                                                <a class="close" data-dismiss="alert">×</a>  
+                                        ?>  <div class="alert">                                                
                                                 <strong>Merci, </strong><?php echo $reponse ?>  
                                             </div>
 <?php

@@ -237,10 +237,12 @@ if(isset($_POST['four']))
                               <?php if($produit->QuantiteNonModifiable()==0) { ?>  <button type="submit" class="btn btn-success" value="envoyer" name="action" onClick="return confirm('Etes-vous sûr de vouloir modifier le tableau?');">Enregistrer</button> <?php } ?>
                               <a href="TousProduit.php" class="btn btn-info">Imprimer tous les tableaux</a>
                               <a href="TProduitVide.php" class="btn btn-info">Imprimer tableaux vierge</a>
-                                  <?php 
+                                  <?php   $annee=$produit->DerniereAnnee();
+                        if($annee==$_SESSION['annee']){
+                              
                                $annee1=(int)$_SESSION['annee'] +1;?>
                                 <button type="submit" class="btn btn-danger" value="cloturer" name="annee" onClick="return confirm('Etes-vous sûr de vouloir clôturer l\'année <?php echo $_SESSION['annee']  ?>, et ouvrir l\'année <?php echo $annee1 ?> ?')">Clôturer l'année <?php echo $_SESSION['annee'] ?></button>
-                                <button type="submit" class="btn btn-info" value="Variation" name="Variation" >Variation de stocks</button>
+                            <?php } ?>  <button type="submit" class="btn btn-info" value="Variation" name="Variation" >Variation de stocks</button>
                                 </div>
                                 </form>
                                  <?php  $pagination->affiche('inventaire1.php','idPage',$nbPages,$pageCourante,2);

@@ -53,7 +53,10 @@ function verification($nom,$mdp)
                     $reponse="<br>Bienvenue ".$value['Login']."";
                     connecter($value['Id'], $value['Login'], $value['Type'],$value['Details']);
                 }
-                header("location: Accueil1.php");
+                $menu=new Menu();
+                $lien=$menu->affiche_page();
+                if(isset($lien)){
+                header("location: $lien");}else{header("location: probleme.php");}
                 }
                 else
                 {
@@ -147,6 +150,16 @@ group by Login,Id";
        $req="SELECT Login From Users WHERE Login='$user';" ;  
         $rs = Users::$bdd->query($req);
         return $result = count($rs->fetchAll());
+    }
+       function Verif_mdp($mdp)
+    { 
+       $req="SELECT Mdp From Users WHERE Login='$mdp';" ;  
+        $rs = Users::$bdd->query($req);
+        foreach($rs as $mdp)
+        {
+           $vmdp= $mdp[0];
+        }
+        return $vmdp;
     }
        
     function Modifier_user($Id,$user,$type)
