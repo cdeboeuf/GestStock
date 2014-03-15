@@ -77,7 +77,6 @@ $OcC=$LesOc->affiche_objetC();
                      </form>
                        </div>                    
                    </div>
-               <input type="button" value="Imprimer cette page" onClick="window.print()">
            </div>
         </div>
         <!--Js -->

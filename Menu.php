@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<?php 
-//include('menu.class.php');
-//include ('connexion.php');
-?>
            <script type="text/javascript">
             $(document).ready(function(){
  
@@ -19,14 +15,18 @@
                     <?php 
                     $page= pathinfo($_SERVER['PHP_SELF']);
                     $menu=new Menu();
-                    $lesMenus=$menu->affiche_menu();
+                    $leMenus=$menu->affiche_menu();
+                     $TotalMenus=$leMenus[1];
+                     if($TotalMenus==0){header("location: probleme.php");}
+                    $lesMenus=$leMenus[0];
                     foreach ($lesMenus as $UnMenu)                        
                      {
                         
                         ?><li <?php if($page['basename']==$UnMenu['Madresse']) {echo "class='active'";}?>><a href="<?php echo $UnMenu['Ladresse']?>"><?php echo $UnMenu['Mdetail']?></a></li>
                     
                         <?php    
-                     }?>
+                     }
+                     ?>
                         <li><a href="deconnexion.php">Déconnexion</a></li>
                     
                         

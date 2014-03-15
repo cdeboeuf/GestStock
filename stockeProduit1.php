@@ -220,7 +220,7 @@ if(isset($_POST['RefFournisseurs']))
                                                         <option value=""> </option>
                                                         <?php
                                                         
-                                                        $tab1 = $Produit->ListeOC();
+                                                        $tab1 = $Produit->ListeOCSortie();
                                                         foreach ($tab1 as $valeur1)
                                                         {
                                                             

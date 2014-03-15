@@ -162,7 +162,7 @@ include('connexion.php');
   
  
         //Récupère le nombre total d'items
-        $result = Produit::$bdd->query('SELECT COUNT(*) FROM objetconfectionne Where Quantite>0');
+        $result = Produit::$bdd->query('SELECT COUNT(*) FROM objetconfectionne Where NbRealise>0');
         $result1 = $result->fetchAll(); 
             foreach ($result1 as $unid)
             {
@@ -186,7 +186,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where Quantite>0 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
+        $requete = 'SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
  
         $resul = Produit::$bdd->query($requete);
         $resul1 = $resul->fetchAll(); 
@@ -289,7 +289,7 @@ include('connexion.php');
  }
  
         //Récupère le nombre total d'items
-        $result = Produit::$bdd->query("SELECT COUNT(*) FROM ObjetConfectionne Where Quantite>0");
+        $result = Produit::$bdd->query("SELECT COUNT(*) FROM ObjetConfectionne Where NbRealise>0");
         $result1 = $result->fetchAll(); 
             foreach ($result1 as $unid)
             {
@@ -313,7 +313,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where Quantite>0 '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $requete = 'SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0 '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
  
         $resul = Produit::$bdd->query($requete);
         $resul1 = $resul->fetchAll(); 
@@ -453,14 +453,14 @@ include('connexion.php');
         
         public function MajValorisationStock($QuantiteTotal, $Id)
         {
-            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal',StockInital='$QuantiteTotal' where Produit.Id = '$Id';"; 
+            $requete1 = "UPDATE Produit SET QuantiteTotal = '$QuantiteTotal',StockInitial='$QuantiteTotal' where Produit.Id = '$Id';"; 
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 
         }
          public function MajValorisationStockOC($QuantiteTotal, $Id)
         {
-            $requete1 = "UPDATE objetconfectionne SET Quantite = '$QuantiteTotal',StockInital='$QuantiteTotal' where Id = '$Id';"; 
+            $requete1 = "UPDATE objetconfectionne SET Quantite = '$QuantiteTotal',StockInitial='$QuantiteTotal' where Id = '$Id';"; 
             
             $this->retour = Produit::$bdd->prepare($requete1);
             $this->retour->execute(); 
@@ -521,7 +521,19 @@ include('connexion.php');
                  echo 'Échec lors de la connexion : ' . $e->getMessage();
             }	
         }
-        
+              public function ListeOCSortie()
+        {
+            try 
+            {
+                $requete = "SELECT * From objetconfectionne WHERE NbRealise >0;";
+                $tab = Produit::$bdd->query($requete);
+                return $tab->fetchAll();
+            } 
+            catch (Exception $e) 
+            {
+                 echo 'Échec lors de la connexion : ' . $e->getMessage();
+            }	
+        }
         public function ListeSection()
         {
             try 
@@ -865,7 +877,7 @@ function variationMS($type)
 }
 function variationO()
 {  
-    $req="SELECT SUM(StockInital*PrixUnitairePublic) as variation FROM objetconfectionne";
+    $req="SELECT SUM(StockInitial*PrixUnitairePublic) as variation FROM objetconfectionne";
     $req1="SELECT SUM(Quantite*PrixUnitairePublic) as variation FROM objetconfectionne";
     $rs1 = Produit::$bdd->query($req);
     $result1 = $rs1->fetchAll();
@@ -1165,7 +1177,7 @@ function variationO()
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Ref,Designation,Quantite,NbRealise, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0 '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $requete = 'SELECT Ref,Designation,Quantite,NbRealise, StockInitial,Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0 '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
         $resul = Produit::$bdd->query($requete);
         $resultl = $resul->rowCount();
         $result = $resul->fetchAll();      
@@ -1174,7 +1186,7 @@ function variationO()
         {
         foreach ($result as $res)
         {
-        $quantite=$res['StockInital'];
+        $quantite=$res['StockInitial'];
         $ref= $res['Ref'];
         $requete1 = "SELECT * From sortieoc Where RefOC='$ref' and Date $date ORDER BY Date";
         $resul1 = Produit::$bdd->query($requete1);
@@ -1226,9 +1238,19 @@ function variationO()
         }
         function TOC()
         {
-        $requete1 = "SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne";
+        $requete1 = "SELECT Ref,Designation,Quantite, Id,PrixEleveUnitaire,PrixUnitairePublic, (Quantite*PrixEleveUnitaire)As TotalE,(Quantite*PrixUnitairePublic)As TotalP FROM objetconfectionne Where NbRealise>0";
         $resul1 = Produit::$bdd->query($requete1);
         return  $resultt1 = $resul1->fetchAll(); 
         }
+                Public function DerniereAnnee()
+    {
+        $bdd1=connexion_annee();
+        $req="SELECT Max(Ans) FROM annee;";
+        $ligne= $bdd1->query($req);
+        while ($donnees = $ligne->fetch()) 
+        {
+        return $donnees[0];
+        }
+    }
 }
 ?>
