@@ -44,7 +44,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT StockAlerte, Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 2 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -386,11 +386,11 @@ include('connexion.php');
             $pageCourante = $_GET['idPage'];
         else
             $pageCourante = $nbPages;
- 
+  
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial, 
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1 and Idfournisseur'.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -435,7 +435,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT StockAlerte, Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1 ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
  

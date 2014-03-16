@@ -179,12 +179,33 @@ if(isset($_POST['four']))
                                                     echo $value["Coloris"];
                                                     echo "</td>";
                                                     echo "<td>";
-                                                    ?>  
-                                                        <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini"  <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value["QuantiteTotal"],2,$dec_point = ',' ,$thousands_sep = ' '); ?>"
-                                                             OnKeyUp="javascript:calcul(<?php echo $nb?>);">
-                                                        </div>
-                                                    <?php
+                                                   if($value['StockAlerte'] == $value['QuantiteTotal']) 
+                                                   { 
+                                                   ?>
+                                                    <div class="controls">
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
+                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#FF0000;">
+                                                    </div>
+                                                   <?php
+                                                   } 
+                                                    else if($value['StockAlerte']< $value['QuantiteTotal']) 
+                                                   { 
+                                                   ?>
+                                                    <div class="controls">
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
+                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#0055FF;">
+                                                    </div>
+                                                   <?php
+                                                   } 
+                                                    else 
+                                                    {
+                                                   ?>
+                                                    <div class="controls">
+                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
+                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#C0C0C0;">
+                                                    </div>
+                                                   <?php
+                                                    }
                                                     echo "</td>";
                                                   
                                                     echo "<td>";
