@@ -46,7 +46,28 @@ class ObjectConfectionne
         $rs=ObjectConfectionne::$bdd->query($req);
         return $result=$rs->fetchAll();
     }
-    
+      function NumSortie($Ref)
+    {
+        $req="SELECT max(Id)As Id FROM sortieoc Where RefOc='$Ref'";
+        $rs=ObjectConfectionne::$bdd->query($req);
+        $res=$rs->fetchAll();
+        foreach($res as $resultat)
+        {
+            $Id=$resultat['Id'];
+        }
+        return $Id;
+    }
+      function Quantite($Ref)
+    {
+        $req="SELECT Quantite FROM Objetconfectionne Where Ref='$Ref'";
+        $rs=ObjectConfectionne::$bdd->query($req);
+        $res=$rs->fetchAll();
+        foreach($res as $resultat)
+        {
+            $Id=$resultat['Quantite'];
+        }
+        return $Id;
+    }
     function NewOc($designation,$destination,$DateOrdre,$NombrePrevu)
     {
         $idVisiteur=$_SESSION['idVisiteur'];
@@ -94,6 +115,17 @@ class ObjectConfectionne
     $prixUnitaireEleve=$totalCoutEleve/$nbprevu;
     $req="UPDATE objetconfectionne set CoefCorrection='$Coef'  ,NbRealise='$ObjetRealise',Quantite='$ObjetRealise'  , Temps='$temp' ,TotalMatiere='$totalmatiere' ,TotalFrais='$totalfrais'  ,TotalCoutEleve='$totalCoutEleve'  ,CoutMachine='$coutmachine'  ,TotalCoutPublic='$totalCoutPublic' ,DateFabri='$DateFabriquation'  ,PrixUnitairePublic='$prixUnitairePublic'  ,PrixEleveUnitaire='$prixUnitaireEleve'  ,CoutMachinePU='$Cout' where ref='$ref'";
     ObjectConfectionne::$bdd->query($req);
+    }
+    
+    function sortieOc($Ref,$Date,$Quantite,$Prix){
+        $Id=  $this->NumSortie($Ref);
+        $Id=$Id+1;
+        $req="Insert into sortieoc (`RefOC`,`Id`,`Quantite`,`Date`,`PrixU`) value('$Ref',$Id,$Quantite,'$Date',$Prix)";
+        ObjectConfectionne::$bdd->query($req);
+        $QuantiteActuelle=  $this->Quantite($Ref);
+        $NewQuantite=$QuantiteActuelle-$Quantite;
+        $req="UPDATE objetconfectionne set Quantite='$NewQuantite' Where Ref='$Ref'";
+        ObjectConfectionne::$bdd->query($req);
     }
 }
  ?>

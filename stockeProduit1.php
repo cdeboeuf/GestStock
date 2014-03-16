@@ -7,6 +7,23 @@ $Produit = new Produit();
 if(!isset($_SESSION['idVisiteur'])) 
 {header('location: index.php');  }
 
+    if (isset($_POST['envoyer1'])=='valider')
+    { 
+
+        
+        if (!isset($_POST['OC'])|| $_POST['OC'] == '')
+        {
+            extract($_POST);
+            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']) );
+        }
+        else
+        {
+            extract($_POST);
+            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']), $_POST['OC']);
+        }
+        
+
+    }
 if(isset($_GET)&&  !empty($_GET))
 { 
     extract($_GET);
@@ -62,23 +79,6 @@ if(isset($_POST['RefFournisseurs']))
         $value['dDateChangement'];
     }
 }
-    if (isset($_POST['envoyer1'])=='valider')
-    { 
-
-        
-        if (!isset($_POST['OC'])|| $_POST['OC'] == '')
-        {
-            extract($_POST);
-            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']) );
-        }
-        else
-        {
-            extract($_POST);
-            $rep = $Produit->AddProduit2($_POST['RefLycee'], $_POST['DateEntree'], $_POST['Quantite'], $_SESSION['idVisiteur'], implode($_POST['Choix']), $_POST['OC']);
-        }
-        
-
-    }
 
 ?>
 

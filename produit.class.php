@@ -525,7 +525,7 @@ include('connexion.php');
         {
             try 
             {
-                $requete = "SELECT * From objetconfectionne WHERE NbRealise >0;";
+                $requete = "SELECT * From objetconfectionne WHERE NbRealise =0;";
                 $tab = Produit::$bdd->query($requete);
                 return $tab->fetchAll();
             } 
@@ -753,8 +753,11 @@ include('connexion.php');
          public function AddProduit2($RefLycee, $DateEntree, $Quantite, $Users, $Utilisation, $OC = null)
         {
             $Quantite=str_replace ( ',', '.', $Quantite);
+            $Stock = $this->obtenirstock($RefLycee);
             if (is_numeric($Quantite))
             {
+                if($Quantite<=$Stock)
+                {
                 $req1="SELECT Max(id)as id From detailsligneproduit WHERE RefLycee='$RefLycee'";
                 $rs1 = Produit::$bdd->query($req1);
                 $result1 = $rs1->fetchAll(); 
@@ -788,21 +791,25 @@ include('connexion.php');
                     $req1 = "INSERT INTO ligneoc (RefOC, RefLycee, Quantite, PuTTC) VALUES ('$OC','$RefLycee', '$stockOCajouter', '$puTTC'); ";
                     $this->retour = Produit::$bdd->prepare($req1);
                     $this->retour->execute();
-                }
-                else
-                {
-                    $stockaenlever = $Quantite;
-
-                    $Stock = $this->obtenirstock($RefLycee);
+                    
+                    $stockaenlever = $Quantite;                 
                     $newstock = $Stock - $stockaenlever;
 
                     $req1 = "UPDATE Produit SET QuantiteTotal = '$newstock' where RefLycee = '$RefLycee'; ";
                     $this->retour = Produit::$bdd->prepare($req1);
                     $this->retour->execute();
                 }
+                else
+                {
+                    $stockaenlever = $Quantite;
+                    $newstock = $Stock - $stockaenlever;
+
+                    $req1 = "UPDATE Produit SET QuantiteTotal = '$newstock' where RefLycee = '$RefLycee'; ";
+                    $this->retour = Produit::$bdd->prepare($req1);
+                    $this->retour->execute();
+                }             
                 
-                
-                
+                }else { $rep = "Erreur, Il n'y a pas assez de stocke."; }
             }
             else
             {
