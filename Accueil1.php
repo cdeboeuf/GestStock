@@ -161,34 +161,22 @@ if(isset($_GET['trie']))
                                                     echo "<td nowrap>";
                                                     echo $value["Designation"];
                                                     echo "</td>";
-                                                    echo "<td>";
-                                                                                                      if($value['StockAlerte'] == $value['QuantiteTotal']) 
+                                                     if($value['StockAlerte'] >= $value['QuantiteTotal']) 
+                                                     {$couleur= "#FF0000";}
+                                                      else if($value['StockAlerte']< $value['QuantiteTotal']) 
                                                    { 
-                                                   ?>
-                                                    <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
-                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#FF0000;">
-                                                    </div>
+                                                          $couleur="#0055FF";
+                                                   }
+                                                   else{$couleur="#C0C0C0";}
+                                                      
+                                                     ?> 
+                                                    <td style="color: <?php echo $couleur; ?>">
+                                                                                                   
+                                                  
+                                                            <?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>
+                                                    
                                                    <?php
-                                                   } 
-                                                    else if($value['StockAlerte']< $value['QuantiteTotal']) 
-                                                   { 
-                                                   ?>
-                                                    <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
-                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#0055FF;">
-                                                    </div>
-                                                   <?php
-                                                   } 
-                                                    else 
-                                                    {
-                                                   ?>
-                                                    <div class="controls">
-                                                            <input type="text" name="QuantiteTotal[]" class="input-mini" <?php if($produit->QuantiteNonModifiable()>0) { ?> disabled="disabled" <?php } ?> id="QuantiteTotal<?php echo $nb ?>" value="<?php echo number_format($value['QuantiteTotal'],2,$dec_point = ',' ,$thousands_sep = ' ') ?>"
-                                                            OnKeyUp="javascript:calcul(<?php echo $nb?>);" style="color:#C0C0C0;">
-                                                    </div>
-                                                   <?php
-                                                    }
+                                                    
                                                     echo "</td>";
                                                     echo "<td>";
                                                     echo $value["Coloris"];

@@ -225,7 +225,7 @@ if(isset($_POST['RefFournisseurs']))
                                                         {
                                                             
                                                           echo "<option value=".$valeur1['Ref']."";
-                                                          echo "> ".$valeur1["Ref"]."</option>";
+                                                          echo "> ".$valeur1["Ref"]." ".$valeur1["Designation"]."</option>";
                                                         }
                                                     ?>
                                                     </select>

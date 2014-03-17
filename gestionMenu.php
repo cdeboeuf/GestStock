@@ -157,8 +157,12 @@ $LesType= $Typeuser->affiche_Type();
                     <br>
                     <br>                   
                     <br>
+                    <br>
+                    <br>
+                    <div Class="menu">
                      <div class="alert alert-info">Vous ne pouvez pas supprimer un type d'utilisateur utilisé <br> Valider un type pour modifier son menu</div>
-                   <?php
+                    </div>
+                         <?php
                     if(isset($rep)){?><div class="alert alert-danger"> <?php echo  $rep;?></div><?php }
                     ?>
                 </div>

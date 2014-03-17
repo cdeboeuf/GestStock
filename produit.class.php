@@ -92,7 +92,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT StockAlerte,Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1 and Idfournisseur'.$fournisseur.' ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -140,7 +140,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT StockAlerte,Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 2 and Idfournisseur'.$fournisseur.' ORDER BY id LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -258,7 +258,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
+        $requete = 'SELECT StockAlerte,Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial,
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 2 and Idfournisseur'.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -390,7 +390,7 @@ include('connexion.php');
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
  
-        $requete = 'SELECT Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial, 
+        $requete = 'SELECT StockAlerte,Produit.Id, RefLycee, RefFournisseur, Fournisseurs.Nom, Designation, QuantiteTotal, PUTTCPondere, Coloris, PondereInitial, 
                        (QuantiteTotal*PUTTCPondere) As Total From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id
                         Where IdSection = 1 and Idfournisseur'.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
  
@@ -923,7 +923,7 @@ function variationMS($type)
 }
 function variationO()
 {  
-    $req="SELECT SUM(StockInitial*PrixUnitairePublic) as variation FROM objetconfectionne";
+    $req="SELECT SUM(StockInital*PrixUnitairePublic) as variation FROM objetconfectionne";
     $req1="SELECT SUM(Quantite*PrixUnitairePublic) as variation FROM objetconfectionne";
     $rs1 = Produit::$bdd->query($req);
     $result1 = $rs1->fetchAll();
@@ -1008,7 +1008,7 @@ function variationO()
  
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
-        $requete = 'SELECT Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 1 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $requete = 'SELECT StockAlerte,Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 1 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
         $resul = Produit::$bdd->query($requete);
         $resultl = $resul->rowCount();
         $result = $resul->fetchAll();      
@@ -1038,17 +1038,17 @@ function variationO()
 }       $quantite=$stock;         
            }
            $Total=$quantite*$pondereinital;
-     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'Designation'=>$res['Designation'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
+     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'StockAlerte'=>$res['StockAlerte'],'Designation'=>$res['Designation'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
         }
         else {
             $Total=$quantite*$pondereinital;
-            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
+            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'StockAlerte'=>$res['StockAlerte'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
         }
         $tab[$i]=$tab1;  
         $i=$i+1;    
         
           
-        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'Designation'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
+        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'Designation'=>null,'StockAlerte'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
 
         return array($tab,$nbPages,$pageCourante); 
            } 
@@ -1126,7 +1126,7 @@ function variationO()
  
         //Calcul de la clause LIMIT
         $limitstart = $pageCourante*$itemsParPage-$itemsParPage;
-        $requete = 'SELECT Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 2 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
+        $requete = 'SELECT StockAlerte,Produit.Id as idp, RefLycee, RefFournisseur, Fournisseurs.Nom as nom1, Designation, Coloris, StockInitial, PondereInitial From Produit inner join Fournisseurs on Produit.IdFournisseur = Fournisseurs.Id Where IdSection = 2 and  IdFournisseur '.$fournisseur.' '.$trie.' LIMIT '.$limitstart.','.$itemsParPage.'';
         $resul = Produit::$bdd->query($requete);
         $resultl = $resul->rowCount();
         $result = $resul->fetchAll();      
@@ -1156,17 +1156,17 @@ function variationO()
 }       $quantite=$stock;         
            }
            $Total=$quantite*$pondereinital;
-     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'Designation'=>$res['Designation'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
+     $tab1=array('RefLycee'=>$ref,'Id'=>$res['idp'],'Designation'=>$res['Designation'],'StockAlerte'=>$res['StockAlerte'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=>$pondereinital,'Total'=>$Total,'QuantiteTotal'=>$quantite);     
         }
         else {
             $Total=$quantite*$pondereinital;
-            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
+            $tab1=array('RefLycee'=>$ref,'Designation'=>$res['Designation'],'StockAlerte'=>$res['StockAlerte'],'Id'=>$res['idp'],'RefFournisseur'=>$res['RefFournisseur'],'Coloris'=>$res['Coloris'], 'Nom'=>$res['nom1'],'PUTTCPondere'=> $res['PondereInitial'],'Total'=>$Total,'QuantiteTotal'=>$res['StockInitial']);     
         }
         $tab[$i]=$tab1;  
         $i=$i+1;    
         
           
-        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'Designation'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
+        }}else{$tab[0]=array('RefLycee'=>null,'Id'=>null,'StockAlerte'=>null,'Designation'=>null,'RefFournisseur'=>null,'Coloris'=>null, 'Nom'=>null,'PUTTCPondere'=>null,'Total'=>null,'QuantiteTotal'=>null);}
 
         return array($tab,$nbPages,$pageCourante); 
            } 
